@@ -59,8 +59,8 @@ const photos = [
 const tileHtml = photos.map(([cat, id, ar, cap]) => {
   const [w, h] = ar > 1 ? [1200, 800] : [800, 1200];
   const b = base(id);
-  const sizes = ar > 1 ? '(min-width:1000px) 50vw, 100vw' : '(min-width:1000px) 25vw, 50vw';
-  return `<li class="tile${ar > 1 ? ' wide' : ''}" data-cat="${cat}"><button class="shot" type="button" data-full="${b}&w=1800" data-cap="${esc(I.CAP[id][0])}" data-i18n-attr="data-cap:cap.${id}" data-ar="${ar}" data-glow="${GLOW[cat]}"><span class="ph"><img src="${b}&w=800" srcset="${b}&w=480 480w, ${b}&w=800 800w, ${b}&w=1200 1200w, ${b}&w=1600 1600w" sizes="${sizes}" width="${w}" height="${h}" alt="${esc(I.CAP[id][0])}" data-i18n-attr="alt:cap.${id}" loading="lazy" decoding="async"></span></button></li>`;
+  const sizes = ar > 1 ? '(min-width:1000px) 64vw, 100vw' : '(min-width:1000px) 32vw, 64vw';
+  return `<li class="tile${ar > 1 ? ' wide' : ''}" data-cat="${cat}"><button class="shot" type="button" data-full="${b}&${ar > 1 ? 'w' : 'h'}=3000" data-cap="${esc(I.CAP[id][0])}" data-i18n-attr="data-cap:cap.${id}" data-ar="${ar}" data-glow="${GLOW[cat]}"><span class="ph"><img src="${b}&w=900" srcset="${b}&w=600 600w, ${b}&w=900 900w, ${b}&w=1200 1200w, ${b}&w=1600 1600w, ${b}&w=2000 2000w" sizes="${sizes}" width="${w}" height="${h}" alt="${esc(I.CAP[id][0])}" data-i18n-attr="alt:cap.${id}" loading="lazy" decoding="async"></span></button></li>`;
 }).join('\n        ');
 
 const irisHtml = `<div class="iris" aria-hidden="true">

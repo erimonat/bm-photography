@@ -12,7 +12,7 @@ const sats = [
   ['15297914', 'L', 's5'], ['15069348', 'P', 's6'], ['15194875', 'P', 's7'], ['15518200', 'P', 's8']
 ];
 const wallHtml = `<div class="wall">
-          ${sats.map(([id, o, cls], i) => `<figure class="wi ${cls}" style="--s:${S.wallA + i * 6};--e:${S.wallB - (7 - i) * 3}"><img src="${base(id)}&w=${o === 'L' ? 700 : 500}" width="${o === 'L' ? 700 : 500}" height="${o === 'L' ? 467 : 750}" alt="" loading="lazy" decoding="async"></figure>`).join('\n          ')}
+          ${sats.map(([id, o, cls], i) => `<figure class="wi ${cls}" style="--s:${S.wallA + i * 6};--e:${S.wallB - (7 - i) * 3}"><img src="${base(id)}&w=${o === 'L' ? 1100 : 800}" srcset="${(o === 'L' ? [700, 1100, 1500] : [500, 800, 1100]).map(w => base(id) + '&w=' + w + ' ' + w + 'w').join(', ')}" sizes="(min-width:900px) 30vw, 46vw" width="${o === 'L' ? 1100 : 800}" height="${o === 'L' ? 733 : 1200}" alt="" loading="lazy" decoding="async"></figure>`).join('\n          ')}
         </div>`;
 
 /* the first photograph after the opening is picked at random on every visit (see the script below); the markup carries no src until then */
