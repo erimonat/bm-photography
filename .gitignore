@@ -1,0 +1,7 @@
+# local-only: original frames, product notes, tooling state
+Assets/
+archive/
+PRODUCT.md
+.impeccable/
+.playwright-cli/
+node_modules/
