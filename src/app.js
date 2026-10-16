@@ -141,6 +141,53 @@
     $$('img').forEach(i => { i.draggable = false; });
   })();
 
+  /* ---------- cursor: a dot on the pointer and a ring that follows it on a spring (fine pointers only) ---------- */
+  (() => {
+    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const root = document.createElement('div');
+    root.className = 'cur'; root.setAttribute('aria-hidden', 'true');
+    root.innerHTML = '<i class="c-ring"></i><i class="c-dot"></i>';
+    document.body.append(root);
+    const ring = root.firstChild, dot = root.lastChild, html = document.documentElement;
+    html.classList.add('cur-on');
+
+    /* the same springs as the reference: ring position (stiffness 250, damping 25, mass .6), ring size (stiffness 300, damping 22) */
+    const spring = (k, c, m) => ({ k, c, m, x: 0, v: 0 });
+    const step = (s, target, dt) => { const a = (-s.k * (s.x - target) - s.c * s.v) / s.m; s.v += a * dt; s.x += s.v * dt; };
+    const px = spring(250, 25, 0.6), py = spring(250, 25, 0.6), sz = spring(300, 22, 1), op = spring(300, 22, 1);
+    let mx = -100, my = -100, seen = false, active = false, ink = false, last = 0, raf = 0;
+    const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function frame(now) {
+      raf = 0;
+      const dt = Math.min(0.032, (now - last) / 1000 || 0.016); last = now;
+      const targetS = active ? 1 : 0.7895, targetO = active ? 1 : 0.5;   // 30px resting ring, 38px on links and photos
+      if (reduced()) { px.x = mx; py.x = my; px.v = py.v = 0; sz.x = targetS; op.x = targetO; sz.v = op.v = 0; }
+      else { for (let n = 0; n < 2; n += 1) { step(px, mx, dt / 2); step(py, my, dt / 2); step(sz, targetS, dt / 2); step(op, targetO, dt / 2); } }
+      ring.style.transform = 'translate3d(' + px.x.toFixed(1) + 'px,' + py.x.toFixed(1) + 'px,0) scale(' + (sz.x * 1.2667).toFixed(3) + ')';
+      ring.style.opacity = Math.max(0, Math.min(1, op.x)).toFixed(2);
+      const settled = Math.abs(px.x - mx) < 0.1 && Math.abs(py.x - my) < 0.1 && Math.abs(px.v) + Math.abs(py.v) < 0.5 && Math.abs(sz.x - targetS) < 0.002 && Math.abs(op.x - targetO) < 0.004 && Math.abs(sz.v) + Math.abs(op.v) < 0.01;
+      if (!settled) raf = requestAnimationFrame(frame);
+    }
+    const kick = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+
+    addEventListener('pointermove', e => {
+      if (e.pointerType && e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
+      if (!seen) { seen = true; px.x = mx; py.x = my; root.classList.add('on'); }
+      const t = e.target && e.target.closest ? e.target : null;
+      const field = t && t.closest('input, textarea, select, [contenteditable=""], [contenteditable="true"]');
+      root.classList.toggle('hide', !!field);
+      active = !!(t && t.closest('a, button, [role="button"], label, summary, .shot'));
+      const onOrange = !!(t && t.closest('.btn, .cta'));
+      if (onOrange !== ink) { ink = onOrange; root.classList.toggle('ink', ink); }
+      kick();
+    }, { passive: true });
+    html.addEventListener('mouseleave', () => root.classList.remove('on'));
+    html.addEventListener('mouseenter', () => seen && root.classList.add('on'));
+  })();
+
   /* ---------- nav: a solid bar after the hero ---------- */
   const nav = $('.nav');
   if ('IntersectionObserver' in window) {

@@ -21,6 +21,16 @@ html{scrollbar-gutter:stable;-webkit-text-size-adjust:100%;-webkit-tap-highlight
 html.lb-open{overflow:hidden}
 /* photographs cannot be dragged out or long-press saved */
 img,canvas{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+/* cursor: native cursor hidden on fine pointers, but kept in fields and inside the lightbox */
+html.cur-on:not(.lb-open) :not(input):not(textarea):not(select):not(option){cursor:none}
+.cur{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:0;transition:opacity .2s ease-out}
+.cur.on:not(.hide){opacity:1}
+html.lb-open .cur{display:none}
+.cur>i{position:absolute;left:0;top:0;border-radius:50%;will-change:transform}
+.c-ring{width:30px;height:30px;margin:-15px 0 0 -15px;border:1px solid rgba(255,90,31,.6);transition:border-color .15s ease-out}
+.c-dot{width:7px;height:7px;margin:-3.5px 0 0 -3.5px;background:var(--accent);box-shadow:0 0 0 1px rgba(8,8,10,.35);transition:background-color .15s ease-out}
+.cur.ink .c-dot{background:var(--black)}
+.cur.ink .c-ring{border-color:rgba(8,8,10,.6)}
 /* slim scrollbar in the page's own colours */
 html{scrollbar-width:thin;scrollbar-color:rgba(238,234,226,.34) #05070d}
 ::-webkit-scrollbar{width:9px;height:9px}

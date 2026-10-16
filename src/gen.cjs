@@ -91,8 +91,8 @@ const html = `<!doctype html>
 <meta property="og:description" content="${T('ogdesc')}" data-i18n-attr="content:ogdesc">
 <meta property="og:image" content="${hero}&w=1200">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308080a'/%3E%3Cpath d='M11 20V44' stroke='%23eeeae2' stroke-width='5.5'/%3E%3Cpath d='M11 22.75H17.6A4.6 4.6 0 0 1 17.6 32H11M11 32H18.6A4.6 4.6 0 0 1 18.6 41.25H11' stroke='%23eeeae2' stroke-width='5.5' fill='none' stroke-linejoin='miter'/%3E%3Cpolygon points='28,44 28,20 33.2,20 42.2,32.6 51.2,20 56.4,20 56.4,44 50.9,44 50.9,28.6 42.2,40.8 33.5,28.6 33.5,44' fill='%23eeeae2'/%3E%3Crect x='8.25' y='49' width='15' height='3' fill='%23ff5a1f'/%3E%3C/svg%3E" type="image/svg+xml">
-<link rel="icon" href="favicon.ico" sizes="48x48">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="media/icons/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="media/icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://images.pexels.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
