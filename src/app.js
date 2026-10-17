@@ -395,7 +395,7 @@
     copyTimer = setTimeout(() => { copyBtn.textContent = t('copy'); copyNote.textContent = ''; }, 2200);
   });
 
-  /* ---------- contact form (demo: opens the visitor's mail app) ---------- */
+  /* ---------- contact form (opens the visitor's mail app) ---------- */
   const form = $('#contact-form'), status = $('#f-status');
   const fields = { name: $('#f-name'), email: $('#f-email'), msg: $('#f-msg') };
   const rules = {
@@ -412,7 +412,7 @@
     Object.keys(fields).forEach(k => { const m = rules[k](fields[k].value); mark(k, m); if (m && !first) first = fields[k]; });
     if (first) { first.focus(); return; }
     const n = fields.name.value.trim(), em = fields.email.value.trim(), m = fields.msg.value.trim();
-    const url = 'mailto:berkaymavral@gmail.com?subject=' + encodeURIComponent(t('mailSubject') + n) + '&body=' + encodeURIComponent(m + '\n\n' + n + ' (' + em + ')');
+    const url = 'mailto:' + SITE.email + '?subject=' + encodeURIComponent(t('mailSubject') + n) + '&body=' + encodeURIComponent(m + '\n\n' + n + ' (' + em + ')');
     status.textContent = t('fStatus');
     location.href = url;
   });

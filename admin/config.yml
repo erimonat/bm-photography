@@ -1,0 +1,170 @@
+# Sveltia CMS configuration. Editors sign in with GitHub; they never see Git.
+# Sign-in: token by default. To get a "Sign in with GitHub" button, deploy the Sveltia CMS Authenticator
+# (a small Cloudflare Worker) and add its address as backend.base_url below.
+backend:
+  name: github
+  repo: erimonat/bm-photography
+  branch: main
+  # base_url: https://YOUR-AUTH-WORKER.workers.dev
+
+# Photographs are stored in Cloudinary, never in this repository. Enable after the Cloudinary account exists:
+# media_libraries:
+#   cloudinary:
+#     config:
+#       cloud_name: YOUR_CLOUD_NAME
+#       api_key: YOUR_API_KEY   # the API secret must never be put here
+
+media_folder: media/uploads
+public_folder: /media/uploads
+
+collections:
+  - name: gallery
+    label: Galeri
+    files:
+      - name: photos
+        label: Fotoğraflar
+        file: content/photos.json
+        format: json
+        fields:
+          - name: photos
+            label: Fotoğraflar
+            label_singular: fotoğraf
+            widget: list
+            summary: "{{fields.caption.tr}}"
+            fields:
+              - { name: id, label: Kimlik, widget: uuid }
+              - name: source
+                label: Fotoğrafın kaynağı
+                widget: select
+                options:
+                  - { label: Pexels, value: pexels }
+                  - { label: Cloudinary (kendi yüklediğim), value: cloudinary }
+                default: cloudinary
+              - { name: ref, label: "Pexels fotoğraf numarası ya da Cloudinary adı", widget: string, required: true }
+              - name: light
+                label: Işık türü
+                widget: select
+                options:
+                  - { label: Altın saat, value: gold }
+                  - { label: Gün ışığı, value: day }
+                  - { label: Mavi saat, value: blue }
+                  - { label: Gece, value: dark }
+              - name: orientation
+                label: Yön
+                widget: select
+                options:
+                  - { label: Yatay, value: landscape }
+                  - { label: Dikey, value: portrait }
+              - { name: hero, label: Açılışta ilk fotoğraf olarak çıkabilir, widget: boolean, default: false }
+              - name: caption
+                label: Açıklama
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+
+  - name: settings
+    label: Site ayarları
+    files:
+      - name: site
+        label: İletişim ve metinler
+        file: content/site.json
+        format: json
+        fields:
+          - { name: email, label: E-posta, widget: string, pattern: ["^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$", "Geçerli bir e-posta adresi yazın"] }
+          - { name: instagram, label: Instagram bağlantısı, widget: string }
+          - { name: pexels, label: Pexels bağlantısı, widget: string }
+          - name: texts
+            label: Metinler
+            widget: object
+            fields:
+              - name: workH2
+                label: "Galeri başlığı"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: contactH2
+                label: "İletişim başlığı"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: lead
+                label: "Hakkımda: büyük giriş cümlesi"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: text, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false }
+              - name: note
+                label: "Hakkımda: kısa not (kalın yazı için yazıyı <strong> ve </strong> arasına alın)"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: text, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false }
+              - name: shUrban
+                label: "Çalışma türü 1: ad"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: shUrbanD
+                label: "Çalışma türü 1: açıklama"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: shArch
+                label: "Çalışma türü 2: ad"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: shArchD
+                label: "Çalışma türü 2: açıklama"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: shPort
+                label: "Çalışma türü 3: ad"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: shPortD
+                label: "Çalışma türü 3: açıklama"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: portraitCap
+                label: "Portre altyazısı"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: portraitAlt
+                label: "Portre açıklaması (ekran okuyucular için)"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: footLead
+                label: "Alt bölüm: büyük cümle"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: footNote
+                label: "Alt bölüm: telif satırının devamı (başındaki © ve yıl otomatik eklenir)"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: place
+                label: "Yer (alt bölümde)"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }

@@ -4,7 +4,7 @@ const dir = __dirname;
 let css = fs.readFileSync(dir + '/style.css', 'utf8');
 const I = require('./i18n.cjs');
 const T = k => I.S[k][0];
-const js = 'const I18N = ' + JSON.stringify(I.DICT) + ';\n' + fs.readFileSync(dir + '/app.js', 'utf8');
+const js = 'const I18N = ' + JSON.stringify(I.DICT) + ';\nconst SITE = ' + JSON.stringify({ email: I.SITE.email }) + ';\n' + fs.readFileSync(dir + '/app.js', 'utf8');
 
 /* seven-sided polygons, computed once here and written as CSS calc() with cos() and sin() */
 const STEP = 360 / 7;
@@ -29,33 +29,7 @@ const base = id => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jp
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 const GLOW = { day: '#8c8270', gold: '#d27a2c', blue: '#3a6a98', dark: '#b0483a' };
 const P = 0.6667, L = 1.5;
-const photos = [
-  ['gold', '15518197', L, 'Silhouettes by the harbor at sunset, a ferry and a lighthouse behind them'],
-  ['gold', '15297914', L, 'The sun going down behind a bridge railing'],
-  ['gold', '15297911', P, 'Galata Bridge at sunset with Galata Tower in the distance'],
-  ['gold', '15069348', P, 'An illuminated mosque under a dramatic dusk sky'],
-  ['gold', '15207900', P, 'Ortaköy Mosque on the Bosphorus'],
-  ['gold', '15297912', P, 'Dusk on a city sidewalk, minarets against the sunset'],
-  ['gold', '15069347', P, 'Silhouettes at the harbor as a ferry comes in'],
-  ['gold', '18349761', L, 'Palm silhouettes on the shore at sunset'],
-  ['day', '15194859', L, 'A passenger ferry on open water under a clear sky'],
-  ['day', '15069349', P, 'A man at a tram stop, his shadow on the pavement'],
-  ['day', '15207781', P, 'A sunlit sidewalk seen from above'],
-  ['day', '15069351', P, 'A crowded street of old buildings and market stalls'],
-  ['day', '15194878', P, 'Sun beams across a terminal waiting room'],
-  ['day', '15194877', L, 'Silhouettes in a ferry terminal, sunlight through the glass doors'],
-  ['blue', '15297913', L, 'A silhouette walking inside, the street beyond the glass doors'],
-  ['blue', '15207754', P, 'A man sitting alone in a dim alley at dusk'],
-  ['blue', '15518194', P, 'Commuters inside a dim subway car'],
-  ['blue', '15194860', P, 'A red metro train reflected in the dark'],
-  ['blue', '16638283', L, 'Two people with umbrellas walking down a grey street'],
-  ['dark', '15518200', P, 'A lit building reflected on wet pavement'],
-  ['dark', '15194876', P, 'A rainy street, reflections on the wet pavement'],
-  ['dark', '15194875', P, 'People around a street food stall on a rainy night'],
-  ['dark', '15518199', P, 'A café glowing at night'],
-  ['dark', '18030433', P, 'A lamp-lit path through a park at night'],
-  ['dark', '15069350', P, 'People in raincoats at the harbor, a ferry behind them']
-];
+const photos = I.PHOTOS.photos.map(p => [p.light, p.ref, p.orientation === 'landscape' ? L : P, p.caption.en || p.caption.tr]);
 const tileHtml = photos.map(([cat, id, ar, cap]) => {
   const [w, h] = ar > 1 ? [1200, 800] : [800, 1200];
   const b = base(id);
@@ -191,16 +165,16 @@ ${css}
       <div>
         <h2 id="contact-title" data-i18n="contactH2">${T('contactH2')}</h2>
         <div class="mail-row">
-          <a class="mail" id="mail" href="mailto:berkaymavral@gmail.com">berkaymavral@gmail.com</a>
+          <a class="mail" id="mail" href="mailto:${I.SITE.email}">${I.SITE.email}</a>
           <button class="textbtn" type="button" id="copy-mail" data-i18n="copy">${T('copy')}</button>
         </div>
         <p class="status" id="copy-note" role="status" aria-live="polite"></p>
         <div class="links">
-          <a href="https://www.instagram.com/berkaymavral/" target="_blank" rel="noopener noreferrer">Instagram</a>
-          <a href="https://www.pexels.com/@Berkay-Mavral-389232961" target="_blank" rel="noopener noreferrer">Pexels</a>
+          <a href="${I.SITE.instagram}" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="${I.SITE.pexels}" target="_blank" rel="noopener noreferrer">Pexels</a>
         </div>
       </div>
-      <!-- Demo form: no backend. On submit it validates, then opens the visitor's mail app with the message prefilled. -->
+      <!-- Contact form: no backend. On submit it validates, then opens the visitor's mail app with the message prefilled. -->
       <form id="contact-form" novalidate>
         <div class="field">
           <label for="f-name" data-i18n="lName">${T('lName')}</label>
@@ -235,21 +209,21 @@ ${css}
     <div>
       <h2 class="o-h" data-i18n="footElse">${T('footElse')}</h2>
       <ul class="o-list">
-        <li><a href="https://www.instagram.com/berkaymavral/" target="_blank" rel="noopener noreferrer">Instagram <span class="vh" data-i18n="newTab">${T('newTab')}</span></a></li>
-        <li><a href="https://www.pexels.com/@Berkay-Mavral-389232961" target="_blank" rel="noopener noreferrer">Pexels <span class="vh" data-i18n="newTab">${T('newTab')}</span></a></li>
+        <li><a href="${I.SITE.instagram}" target="_blank" rel="noopener noreferrer">Instagram <span class="vh" data-i18n="newTab">${T('newTab')}</span></a></li>
+        <li><a href="${I.SITE.pexels}" target="_blank" rel="noopener noreferrer">Pexels <span class="vh" data-i18n="newTab">${T('newTab')}</span></a></li>
       </ul>
     </div>
     <div>
       <h2 class="o-h" data-i18n="footContact">${T('footContact')}</h2>
       <ul class="o-list">
-        <li><a class="o-mail" href="mailto:berkaymavral@gmail.com">berkaymavral@gmail.com</a></li>
+        <li><a class="o-mail" href="mailto:${I.SITE.email}">${I.SITE.email}</a></li>
         <li data-i18n="place">${T('place')}</li>
       </ul>
     </div>
   </div>
   <span class="outro-mark" aria-hidden="true">Berkay Mavral</span>
   <div class="o-base">
-    <span data-i18n="footNote">${T('footNote')}</span>
+    <span>© ${new Date().getFullYear()} ${I.SITE.owner || ''}. <span data-i18n="footNote">${T('footNote')}</span></span>
     <a href="#top" data-i18n="footBack">${T('footBack')}</a>
   </div>
 </footer>

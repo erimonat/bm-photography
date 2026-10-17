@@ -24,8 +24,8 @@ const I18 = require('./i18n.cjs');
 const cap3 = ids => JSON.stringify(ids.map(id => [id, I18.CAP[id][0], I18.CAP[id][1]]));
 const pickScript = String.raw`<script>
 (function(){
-  var L=${cap3(["15518197","15297914","18349761","15194859","15194877","15297913","16638283"])};
-  var P=${cap3(["15297912","15297911","15069348","15207900","15069347","15069349","15069351","15194878","15207754","15194860"])};
+  var L=${cap3(I18.PHOTOS.photos.filter(p => p.hero && p.orientation === 'landscape').map(p => p.ref))};
+  var P=${cap3(I18.PHOTOS.photos.filter(p => p.hero && p.orientation === 'portrait').map(p => p.ref))};
   var lg=(location.search.match(/[?&]lang=(tr|en)/)||[])[1];if(!lg){try{lg=localStorage.getItem('bm-lang')}catch(e){}}if(lg!=='en')lg='tr';var li=lg==='en'?2:1;
   function pick(pool,key){
     var last='';try{last=localStorage.getItem(key)||''}catch(e){}

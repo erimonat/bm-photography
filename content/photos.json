@@ -1,0 +1,304 @@
+{
+  "photos": [
+    {
+      "id": "15518197",
+      "source": "pexels",
+      "ref": "15518197",
+      "light": "gold",
+      "orientation": "landscape",
+      "hero": true,
+      "caption": {
+        "tr": "Gün batımında limanda siluetler, arkada bir vapur ve bir deniz feneri",
+        "en": "Silhouettes by the harbor at sunset, a ferry and a lighthouse behind them"
+      }
+    },
+    {
+      "id": "15297914",
+      "source": "pexels",
+      "ref": "15297914",
+      "light": "gold",
+      "orientation": "landscape",
+      "hero": true,
+      "caption": {
+        "tr": "Bir köprü korkuluğunun ardında batan güneş",
+        "en": "The sun going down behind a bridge railing"
+      }
+    },
+    {
+      "id": "15297911",
+      "source": "pexels",
+      "ref": "15297911",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": true,
+      "caption": {
+        "tr": "Gün batımında Galata Köprüsü, uzakta Galata Kulesi",
+        "en": "Galata Bridge at sunset with Galata Tower in the distance"
+      }
+    },
+    {
+      "id": "15069348",
+      "source": "pexels",
+      "ref": "15069348",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": true,
+      "caption": {
+        "tr": "Dramatik bir alacakaranlık gökyüzü altında ışıklandırılmış bir cami",
+        "en": "An illuminated mosque under a dramatic dusk sky"
+      }
+    },
+    {
+      "id": "15207900",
+      "source": "pexels",
+      "ref": "15207900",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": true,
+      "caption": {
+        "tr": "Boğaz kıyısında Ortaköy Camii",
+        "en": "Ortaköy Mosque on the Bosphorus"
+      }
+    },
+    {
+      "id": "15297912",
+      "source": "pexels",
+      "ref": "15297912",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": true,
+      "caption": {
+        "tr": "Şehir kaldırımında akşam vakti, gün batımına karşı minareler",
+        "en": "Dusk on a city sidewalk, minarets against the sunset"
+      }
+    },
+    {
+      "id": "15069347",
+      "source": "pexels",
+      "ref": "15069347",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": true,
+      "caption": {
+        "tr": "Bir vapur yanaşırken limanda siluetler",
+        "en": "Silhouettes at the harbor as a ferry comes in"
+      }
+    },
+    {
+      "id": "18349761",
+      "source": "pexels",
+      "ref": "18349761",
+      "light": "gold",
+      "orientation": "landscape",
+      "hero": true,
+      "caption": {
+        "tr": "Gün batımında kıyıda palmiye siluetleri",
+        "en": "Palm silhouettes on the shore at sunset"
+      }
+    },
+    {
+      "id": "15194859",
+      "source": "pexels",
+      "ref": "15194859",
+      "light": "day",
+      "orientation": "landscape",
+      "hero": true,
+      "caption": {
+        "tr": "Açık denizde, berrak bir gökyüzü altında yolcu vapuru",
+        "en": "A passenger ferry on open water under a clear sky"
+      }
+    },
+    {
+      "id": "15069349",
+      "source": "pexels",
+      "ref": "15069349",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": true,
+      "caption": {
+        "tr": "Tramvay durağında bir adam, gölgesi kaldırımda",
+        "en": "A man at a tram stop, his shadow on the pavement"
+      }
+    },
+    {
+      "id": "15207781",
+      "source": "pexels",
+      "ref": "15207781",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yukarıdan görünen, güneş ışığı altında bir kaldırım",
+        "en": "A sunlit sidewalk seen from above"
+      }
+    },
+    {
+      "id": "15069351",
+      "source": "pexels",
+      "ref": "15069351",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": true,
+      "caption": {
+        "tr": "Eski binaların ve pazar tezgâhlarının olduğu kalabalık bir sokak",
+        "en": "A crowded street of old buildings and market stalls"
+      }
+    },
+    {
+      "id": "15194878",
+      "source": "pexels",
+      "ref": "15194878",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": true,
+      "caption": {
+        "tr": "Bir terminalin bekleme salonuna uzanan güneş ışınları",
+        "en": "Sun beams across a terminal waiting room"
+      }
+    },
+    {
+      "id": "15194877",
+      "source": "pexels",
+      "ref": "15194877",
+      "light": "day",
+      "orientation": "landscape",
+      "hero": true,
+      "caption": {
+        "tr": "Vapur iskelesinde siluetler, cam kapılardan giren güneş ışığı",
+        "en": "Silhouettes in a ferry terminal, sunlight through the glass doors"
+      }
+    },
+    {
+      "id": "15297913",
+      "source": "pexels",
+      "ref": "15297913",
+      "light": "blue",
+      "orientation": "landscape",
+      "hero": true,
+      "caption": {
+        "tr": "İçeride yürüyen bir siluet, cam kapıların ardında sokak",
+        "en": "A silhouette walking inside, the street beyond the glass doors"
+      }
+    },
+    {
+      "id": "15207754",
+      "source": "pexels",
+      "ref": "15207754",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": true,
+      "caption": {
+        "tr": "Alacakaranlıkta loş bir sokakta yalnız oturan bir adam",
+        "en": "A man sitting alone in a dim alley at dusk"
+      }
+    },
+    {
+      "id": "15518194",
+      "source": "pexels",
+      "ref": "15518194",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Loş bir metro vagonunda yolcular",
+        "en": "Commuters inside a dim subway car"
+      }
+    },
+    {
+      "id": "15194860",
+      "source": "pexels",
+      "ref": "15194860",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": true,
+      "caption": {
+        "tr": "Karanlıkta yansıyan kırmızı bir metro treni",
+        "en": "A red metro train reflected in the dark"
+      }
+    },
+    {
+      "id": "16638283",
+      "source": "pexels",
+      "ref": "16638283",
+      "light": "blue",
+      "orientation": "landscape",
+      "hero": true,
+      "caption": {
+        "tr": "Şemsiyeli iki kişi gri bir sokakta yürüyor",
+        "en": "Two people with umbrellas walking down a grey street"
+      }
+    },
+    {
+      "id": "15518200",
+      "source": "pexels",
+      "ref": "15518200",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Islak kaldırıma yansıyan ışıklı bir bina",
+        "en": "A lit building reflected on wet pavement"
+      }
+    },
+    {
+      "id": "15194876",
+      "source": "pexels",
+      "ref": "15194876",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yağmurlu bir sokak, ıslak kaldırımda yansımalar",
+        "en": "A rainy street, reflections on the wet pavement"
+      }
+    },
+    {
+      "id": "15194875",
+      "source": "pexels",
+      "ref": "15194875",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yağmurlu bir gecede sokak yemeği tezgâhının çevresinde insanlar",
+        "en": "People around a street food stall on a rainy night"
+      }
+    },
+    {
+      "id": "15518199",
+      "source": "pexels",
+      "ref": "15518199",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece ışıldayan bir kafe",
+        "en": "A café glowing at night"
+      }
+    },
+    {
+      "id": "18030433",
+      "source": "pexels",
+      "ref": "18030433",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece, bir parkın içinden geçen lambalarla aydınlatılmış yol",
+        "en": "A lamp-lit path through a park at night"
+      }
+    },
+    {
+      "id": "15069350",
+      "source": "pexels",
+      "ref": "15069350",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Limanda yağmurluklu insanlar, arkalarında bir vapur",
+        "en": "People in raincoats at the harbor, a ferry behind them"
+      }
+    }
+  ]
+}

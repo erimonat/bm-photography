@@ -59,7 +59,7 @@ const S = {
   footContact: ['İletişim', 'Contact'],
   newTab: ['(yeni sekmede açılır)', '(opens in a new tab)'],
   place: ['İstanbul, Türkiye', 'Istanbul, Türkiye'],
-  footNote: ['Tasarım demosu. Fotoğraflar Pexels kütüphanesinden.', 'Design demo. Photographs from the Pexels library.'],
+  footNote: ['Fotoğraflar: Berkay Mavral.', 'Photography: Berkay Mavral.'],
   footBack: ['İlk kareye dön', 'Back to the first frame'],
   lbLabel: ['Fotoğraf görüntüleyici', 'Photo viewer'],
   lbClose: ['Kapat', 'Close'],
@@ -67,37 +67,19 @@ const S = {
   lbNext: ['Sonraki', 'Next']
 };
 
-/* photo id -> [tr, en] */
-const CAP = {
-  '15518197': ['Gün batımında limanda siluetler, arkada bir vapur ve bir deniz feneri', 'Silhouettes by the harbor at sunset, a ferry and a lighthouse behind them'],
-  '15297914': ['Bir köprü korkuluğunun ardında batan güneş', 'The sun going down behind a bridge railing'],
-  '15297911': ['Gün batımında Galata Köprüsü, uzakta Galata Kulesi', 'Galata Bridge at sunset with Galata Tower in the distance'],
-  '15069348': ['Dramatik bir alacakaranlık gökyüzü altında ışıklandırılmış bir cami', 'An illuminated mosque under a dramatic dusk sky'],
-  '15207900': ['Boğaz kıyısında Ortaköy Camii', 'Ortaköy Mosque on the Bosphorus'],
-  '15297912': ['Şehir kaldırımında akşam vakti, gün batımına karşı minareler', 'Dusk on a city sidewalk, minarets against the sunset'],
-  '15069347': ['Bir vapur yanaşırken limanda siluetler', 'Silhouettes at the harbor as a ferry comes in'],
-  '18349761': ['Gün batımında kıyıda palmiye siluetleri', 'Palm silhouettes on the shore at sunset'],
-  '15194859': ['Açık denizde, berrak bir gökyüzü altında yolcu vapuru', 'A passenger ferry on open water under a clear sky'],
-  '15069349': ['Tramvay durağında bir adam, gölgesi kaldırımda', 'A man at a tram stop, his shadow on the pavement'],
-  '15207781': ['Yukarıdan görünen, güneş ışığı altında bir kaldırım', 'A sunlit sidewalk seen from above'],
-  '15069351': ['Eski binaların ve pazar tezgâhlarının olduğu kalabalık bir sokak', 'A crowded street of old buildings and market stalls'],
-  '15194878': ['Bir terminalin bekleme salonuna uzanan güneş ışınları', 'Sun beams across a terminal waiting room'],
-  '15194877': ['Vapur iskelesinde siluetler, cam kapılardan giren güneş ışığı', 'Silhouettes in a ferry terminal, sunlight through the glass doors'],
-  '15297913': ['İçeride yürüyen bir siluet, cam kapıların ardında sokak', 'A silhouette walking inside, the street beyond the glass doors'],
-  '15207754': ['Alacakaranlıkta loş bir sokakta yalnız oturan bir adam', 'A man sitting alone in a dim alley at dusk'],
-  '15518194': ['Loş bir metro vagonunda yolcular', 'Commuters inside a dim subway car'],
-  '15194860': ['Karanlıkta yansıyan kırmızı bir metro treni', 'A red metro train reflected in the dark'],
-  '16638283': ['Şemsiyeli iki kişi gri bir sokakta yürüyor', 'Two people with umbrellas walking down a grey street'],
-  '15518200': ['Islak kaldırıma yansıyan ışıklı bir bina', 'A lit building reflected on wet pavement'],
-  '15194876': ['Yağmurlu bir sokak, ıslak kaldırımda yansımalar', 'A rainy street, reflections on the wet pavement'],
-  '15194875': ['Yağmurlu bir gecede sokak yemeği tezgâhının çevresinde insanlar', 'People around a street food stall on a rainy night'],
-  '15518199': ['Gece ışıldayan bir kafe', 'A café glowing at night'],
-  '18030433': ['Gece, bir parkın içinden geçen lambalarla aydınlatılmış yol', 'A lamp-lit path through a park at night'],
-  '15069350': ['Limanda yağmurluklu insanlar, arkalarında bir vapur', 'People in raincoats at the harbor, a ferry behind them']
-};
+/* content files: photos and the texts Berkay edits */
+const fs = require('fs'), path = require('path');
+const readJson = f => JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'content', f), 'utf8'));
+const SITE = readJson('site.json'), PHOTOS = readJson('photos.json');
+const OLD_MAIL = 'berkaymavral@gmail.com';
+for (const [k, v] of Object.entries(SITE.texts || {})) S[k] = [v.tr, v.en || v.tr];
+S.fStatus = S.fStatus.map(t => t.split(OLD_MAIL).join(SITE.email));
+/* photo ref -> [tr, en] caption */
+const CAP = {};
+for (const p of PHOTOS.photos) CAP[p.ref] = [p.caption.tr, p.caption.en || p.caption.tr];
 
 const DICT = { tr: {}, en: {} };
 for (const [k, [tr, en]] of Object.entries(S)) { DICT.tr[k] = tr; DICT.en[k] = en; }
 for (const [id, [tr, en]] of Object.entries(CAP)) { DICT.tr['cap.' + id] = tr; DICT.en['cap.' + id] = en; }
 
-module.exports = { S, CAP, DICT };
+module.exports = { S, CAP, DICT, SITE, PHOTOS };

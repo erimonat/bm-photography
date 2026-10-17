@@ -1,0 +1,68 @@
+{
+  "email": "berkaymavral@gmail.com",
+  "instagram": "https://www.instagram.com/berkaymavral/",
+  "pexels": "https://www.pexels.com/@Berkay-Mavral-389232961",
+  "owner": "Berkay Mavral",
+  "texts": {
+    "workH2": {
+      "tr": "İstanbul, dört farklı ışıkta.",
+      "en": "Istanbul, in four kinds of light."
+    },
+    "contactH2": {
+      "tr": "Çekiminizi bana anlatın.",
+      "en": "Tell me about the shoot."
+    },
+    "lead": {
+      "tr": "Ben Berkay, İstanbul’da yaşayan bir fotoğrafçıyım. Şehir hayatı, mimari ve portreler, sabah yolculuğundan geceye kadar.",
+      "en": "I’m Berkay, a photographer from Istanbul. Urban life, architecture and portraits, from the morning commute to after dark."
+    },
+    "note": {
+      "tr": "Pexels kütüphanem <strong>4,2 milyon görüntülenmeyi</strong> aştı. Çekim talepleri ve iş birlikleri için aşağıdan mesaj gönderebilirsiniz.",
+      "en": "My library on Pexels has passed <strong>4.2 million views</strong>. For commissions and collaborations, send a message below."
+    },
+    "shUrban": {
+      "tr": "Şehir",
+      "en": "Urban"
+    },
+    "shUrbanD": {
+      "tr": "Sokak hayatı, toplu taşıma, limanlar",
+      "en": "Street life, transit, harbors"
+    },
+    "shArch": {
+      "tr": "Mimari",
+      "en": "Architecture"
+    },
+    "shArchD": {
+      "tr": "Binalar, camiler, siluetler",
+      "en": "Buildings, mosques, skylines"
+    },
+    "shPort": {
+      "tr": "Portre",
+      "en": "Portrait"
+    },
+    "shPortD": {
+      "tr": "İnsanlar, kendi çevrelerinde",
+      "en": "People in their own surroundings"
+    },
+    "portraitCap": {
+      "tr": "Berkay Mavral, İstanbul",
+      "en": "Berkay Mavral, Istanbul"
+    },
+    "portraitAlt": {
+      "tr": "Berkay Mavral’ın dışarıda çekilmiş portresi: koyu renk kapüşonlu mont, gülümsüyor, omuzlarında sırt çantası",
+      "en": "Portrait of Berkay Mavral outdoors in a dark hooded jacket, smiling, a backpack on his shoulders"
+    },
+    "footLead": {
+      "tr": "Bir sonraki kareyi birlikte çekelim.",
+      "en": "Let’s make the next frame."
+    },
+    "footNote": {
+      "tr": "Fotoğraflar: Berkay Mavral.",
+      "en": "Photography: Berkay Mavral."
+    },
+    "place": {
+      "tr": "İstanbul, Türkiye",
+      "en": "Istanbul, Türkiye"
+    }
+  }
+}
