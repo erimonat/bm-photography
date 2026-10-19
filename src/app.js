@@ -396,25 +396,35 @@
   });
 
   /* ---------- contact form (opens the visitor's mail app) ---------- */
-  const form = $('#contact-form'), status = $('#f-status');
+  const form = $('#contact-form'), status = $('#f-status'), formShown = Date.now();
   const fields = { name: $('#f-name'), email: $('#f-email'), msg: $('#f-msg') };
   const rules = {
     name: v => v.trim().length < 2 && t('eName'),
     email: v => !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) && t('eEmail'),
     msg: v => v.trim().length < 10 && t('eMsg')
   };
+  let sayKey = '';
+  const say = k => { sayKey = k; status.textContent = k ? t(k) : ''; };
+  onLang(() => { if (sayKey) status.textContent = t(sayKey); });
   const mark = (k, msg) => { fields[k].setAttribute('aria-invalid', String(!!msg)); $('#' + fields[k].id + '-err').textContent = msg || ''; };
   Object.keys(fields).forEach(k => fields[k].addEventListener('input', () => fields[k].getAttribute('aria-invalid') === 'true' && mark(k, rules[k](fields[k].value))));
   onLang(() => { Object.keys(fields).forEach(k => fields[k].getAttribute('aria-invalid') === 'true' && mark(k, rules[k](fields[k].value))); });
   form.addEventListener('submit', e => {
-    e.preventDefault(); status.textContent = '';
+    e.preventDefault(); say('');
     let first = null;
     Object.keys(fields).forEach(k => { const m = rules[k](fields[k].value); mark(k, m); if (m && !first) first = fields[k]; });
     if (first) { first.focus(); return; }
-    const n = fields.name.value.trim(), em = fields.email.value.trim(), m = fields.msg.value.trim();
-    const url = 'mailto:' + SITE.email + '?subject=' + encodeURIComponent(t('mailSubject') + n) + '&body=' + encodeURIComponent(m + '\n\n' + n + ' (' + em + ')');
-    status.textContent = t('fStatus');
-    location.href = url;
+    const btn = $('button[type=submit]', form);
+    const body = { name: fields.name.value, email: fields.email.value, message: fields.msg.value, website: $('[name=website]', form).value, t: formShown };
+    btn.disabled = true; say('fSending');
+    fetch('/api/contact', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) })
+      .then(r => r.json().catch(() => ({})).then(j => ({ r, j })))
+      .then(({ r, j }) => {
+        if (r.ok && j.ok) { say('fOk'); form.reset(); Object.keys(fields).forEach(k => mark(k, '')); return; }
+        say(r.status === 429 ? 'fRate' : 'fFail');
+      })
+      .catch(() => { say('fFail'); })
+      .finally(() => { btn.disabled = false; });
   });
   /* ---------- prints: photos slide through a column of frames, both loop forever, then buy by email ---------- */
   (() => {

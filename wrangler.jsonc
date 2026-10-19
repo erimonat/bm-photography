@@ -1,5 +1,13 @@
 {
   "name": "bm-photography",
+  "main": "src/worker.mjs",
   "compatibility_date": "2025-10-01",
-  "assets": { "directory": "./dist" }
+  "assets": { "directory": "./dist", "binding": "ASSETS", "run_worker_first": ["/api/*"] },
+  "vars": {
+    "MAIL_TO": "berkaymavral@gmail.com",
+    "MAIL_FROM": "Berkay Mavral <onboarding@resend.dev>"
+  },
+  "ratelimits": [
+    { "name": "RL", "namespace_id": "1001", "simple": { "limit": 3, "period": 60 } }
+  ]
 }

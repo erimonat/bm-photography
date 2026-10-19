@@ -236,6 +236,7 @@ button{-webkit-user-select:none;user-select:none;cursor:pointer}
 @media (prefers-reduced-motion:reduce){.pc{transition:opacity 160ms ease-out}}
 
 /* ===== contact ===== */
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .contact-sec{background:var(--black);border-top:1px solid var(--line);padding-block:clamp(96px,10vw,160px);scroll-margin-top:var(--nav-h)}
 .contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px clamp(32px,8vw,128px);align-items:start}
 .contact h2{font:700 clamp(2.6rem,5.6vw,5.4rem)/.95 var(--sans);font-stretch:108%;letter-spacing:-.03em;text-wrap:balance;margin-bottom:40px}

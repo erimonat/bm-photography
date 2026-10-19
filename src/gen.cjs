@@ -70,11 +70,20 @@ const html = `<!doctype html>
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#08080a">
 <meta property="og:type" content="website">
-<meta property="og:title" content="${T('title')}" data-i18n-attr="content:title">
+<meta property="og:title" content="Berkay Mavral Photography">
+<meta property="og:site_name" content="Berkay Mavral Photography">
+<meta property="og:url" content="${I.SITE.url}/">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:locale:alternate" content="en_US">
 <meta property="og:description" content="${T('ogdesc')}" data-i18n-attr="content:ogdesc">
-<meta property="og:image" content="${hero}&w=1200">
+<meta property="og:image" content="${I.SITE.url}/media/og-logo.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="1200">
+<meta property="og:image:alt" content="Berkay Mavral Photography">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Berkay Mavral Photography">
+<meta name="twitter:image" content="${I.SITE.url}/media/og-logo.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308080a'/%3E%3Cpath d='M11 20V44' stroke='%23eeeae2' stroke-width='5.5'/%3E%3Cpath d='M11 22.75H17.6A4.6 4.6 0 0 1 17.6 32H11M11 32H18.6A4.6 4.6 0 0 1 18.6 41.25H11' stroke='%23eeeae2' stroke-width='5.5' fill='none' stroke-linejoin='miter'/%3E%3Cpolygon points='28,44 28,20 33.2,20 42.2,32.6 51.2,20 56.4,20 56.4,44 50.9,44 50.9,28.6 42.2,40.8 33.5,28.6 33.5,44' fill='%23eeeae2'/%3E%3Crect x='8.25' y='49' width='15' height='3' fill='%23ff5a1f'/%3E%3C/svg%3E" type="image/svg+xml">
 <link rel="icon" href="media/icons/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="media/icons/apple-touch-icon.png">
@@ -218,7 +227,7 @@ ${css}
           <a href="${I.SITE.pexels}" target="_blank" rel="noopener noreferrer">Pexels</a>
         </div>
       </div>
-      <!-- Contact form: no backend. On submit it validates, then opens the visitor's mail app with the message prefilled. -->
+      <!-- Contact form: validated here for convenience, validated again and sent by the Worker at /api/contact. -->
       <form id="contact-form" novalidate>
         <div class="field">
           <label for="f-name" data-i18n="lName">${T('lName')}</label>
@@ -235,6 +244,7 @@ ${css}
           <textarea id="f-msg" name="message" autocomplete="off" maxlength="800" aria-required="true" placeholder="${T('pMsg')}" data-i18n-attr="placeholder:pMsg" aria-describedby="f-msg-err"></textarea>
           <p class="err" id="f-msg-err"></p>
         </div>
+        <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
         <div><button class="btn" type="submit" data-i18n="send">${T('send')}</button></div>
         <p class="status" id="f-status" role="status" aria-live="polite"></p>
       </form>
