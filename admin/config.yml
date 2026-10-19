@@ -157,13 +157,73 @@ collections:
                   - { name: tr, label: Türkçe, widget: string, required: true }
                   - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
               - name: footNote
-                label: "Alt bölüm: telif satırının devamı (başındaki © ve yıl otomatik eklenir)"
+                label: "Alt bölüm: küçük not"
                 widget: object
                 fields:
                   - { name: tr, label: Türkçe, widget: string, required: true }
                   - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
               - name: place
                 label: "Yer (alt bölümde)"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: prH2
+                label: "Çerçeve bölümü: başlık"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: prSub
+                label: "Çerçeve bölümü: alt yazı"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: prBuy
+                label: "Çerçeve bölümü: satın al düğmesi"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: prNote
+                label: "Çerçeve bölümü: satın alma notu"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: text, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false }
+              - name: prMsg
+                label: "Çerçeve bölümü: satın alma mesajı (içindeki {p} fotoğraf adı, {f} çerçeve adı yerine geçer, silmeyin)"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: text, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false }
+              - name: fr1
+                label: "Çerçeve 1 adı (siyah)"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: fr2
+                label: "Çerçeve 2 adı (paspartulu beyaz)"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: fr3
+                label: "Çerçeve 3 adı (ince beyaz)"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: fr4
+                label: "Çerçeve 4 adı (meşe)"
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+              - name: fr5
+                label: "Çerçeve 5 adı (altın)"
                 widget: object
                 fields:
                   - { name: tr, label: Türkçe, widget: string, required: true }

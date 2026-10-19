@@ -296,3 +296,11 @@ ${js}
 `;
 fs.writeFileSync(require('path').join(__dirname, '..', 'index.html'), html);
 console.log(html.length, 'bytes; dashes:', (html.match(/—|–/g) || []).length);
+
+/* publish folder for Cloudflare: only what visitors and the admin panel need */
+const fsx = require('fs'), px = require('path');
+const root = px.join(__dirname, '..'), out = px.join(root, 'dist');
+fsx.rmSync(out, { recursive: true, force: true });
+fsx.mkdirSync(out, { recursive: true });
+for (const f of ['index.html', 'admin', 'media']) fsx.cpSync(px.join(root, f), px.join(out, f), { recursive: true });
+console.log('dist ready:', fsx.readdirSync(out).join(', '));

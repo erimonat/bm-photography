@@ -5,3 +5,4 @@ PRODUCT.md
 .impeccable/
 .playwright-cli/
 node_modules/
+dist/

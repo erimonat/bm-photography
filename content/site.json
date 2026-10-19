@@ -63,6 +63,46 @@
     "place": {
       "tr": "İstanbul, Türkiye",
       "en": "Istanbul, Türkiye"
+    },
+    "prH2": {
+      "tr": "Fotoğraflarımı çerçevede dene, beğendiğini satın al.",
+      "en": "Try my photos in a frame, then buy the one you like."
+    },
+    "prSub": {
+      "tr": "Bir fotoğraf seç, sonra çerçeveleri kaydırarak dene.",
+      "en": "Pick a photo, then scroll through the frames to try them."
+    },
+    "prBuy": {
+      "tr": "Satın al",
+      "en": "Buy"
+    },
+    "prNote": {
+      "tr": "Satın alma e-posta ile tamamlanır: seçimin mesaja otomatik eklenir.",
+      "en": "Buying is finished by email: your choice is added to the message for you."
+    },
+    "prMsg": {
+      "tr": "Merhaba Berkay, “{p}” fotoğrafını “{f}” ile satın almak istiyorum.",
+      "en": "Hi Berkay, I would like to buy “{p}” with the “{f}” frame."
+    },
+    "fr1": {
+      "tr": "Siyah çerçeve",
+      "en": "Black frame"
+    },
+    "fr2": {
+      "tr": "Paspartulu beyaz",
+      "en": "White with mat"
+    },
+    "fr3": {
+      "tr": "İnce beyaz, yüzen",
+      "en": "Thin white, floating"
+    },
+    "fr4": {
+      "tr": "Meşe",
+      "en": "Oak"
+    },
+    "fr5": {
+      "tr": "Altın",
+      "en": "Gold"
     }
   }
 }
