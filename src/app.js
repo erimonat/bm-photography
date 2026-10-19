@@ -416,5 +416,188 @@
     status.textContent = t('fStatus');
     location.href = url;
   });
+  /* ---------- prints: photos slide through a column of frames, both loop forever, then buy by email ---------- */
+  (() => {
+    const sec = $('#prints');
+    if (!sec) return;
+    const stage = $('.pr-stage', sec), strip = $('.pr-strip', sec), rail = $('#pr-rail');
+    const N = $$('.pcl', strip).length, M = $$('.fr', rail).length;
+    /* photo strip: three copies of the list, the middle one is real, the outer two let the loop wrap invisibly */
+    const items = [...strip.children];
+    const copy = () => items.map(li => {
+      const c = li.cloneNode(true);
+      c.dataset.clone = '1'; c.setAttribute('aria-hidden', 'true');
+      c.querySelectorAll('button').forEach(b => { b.tabIndex = -1; });
+      return c;
+    });
+    strip.prepend(...copy()); strip.append(...copy());
+    const lis = $$('.pcl', strip), cards = $$('.pc', strip), frs = $$('.fr', rail);
+    const imgs = $$('.win img', rail), chips = $$('.chip', sec);
+    const capEl = $('#pr-cap'), frEl = $('#pr-frame');
+    const prev = $('#pr-prev'), next = $('#pr-next'), up = $('#pr-up'), down = $('#pr-down'), buy = $('#pr-buy');
+    const mob = matchMedia('(max-width: 900px)');
+    const smooth = () => (reduce.matches ? 'auto' : 'smooth');
+    const frac = n => parseFloat(getComputedStyle(stage).getPropertyValue(n)) || .5;
+    const clamp = (v, n) => Math.max(0, Math.min(n - 1, v));
+    const mod = (v, n) => ((v % n) + n) % n;
+    /* strip indexes are raw (0 .. 3n-1), the real photo sits at n + logical; frames are 0 .. m-1 */
+    let cur = 0, sel = -1, af = 0, lastAuto = '', st1 = 0;
+
+    const summary = () => {
+      const ref = cards[N + Math.max(sel, 0)].dataset.ref;
+      capEl.textContent = t('cap.' + ref);
+      frEl.textContent = t('prFrameLbl') + t('fr' + (af + 1));
+      imgs.forEach(i => { i.alt = t('cap.' + ref); });
+    };
+    /* the photo that has settled under the frame column: the other frames show it too */
+    let token = 0;
+    const settle = () => {
+      const lg = mod(cur, N);
+      if (sel === lg) return;
+      sel = lg;
+      const c = cards[N + lg], url = c.dataset.base + (c.dataset.o === 'portrait' ? '&h=1000' : '&w=1000');
+      const mine = ++token, pre = new Image();
+      const swap = () => { if (mine === token) imgs.forEach(im => { im.src = url; }); };
+      pre.onload = swap; pre.onerror = swap; pre.src = url;
+      summary();
+    };
+
+    /* ----- frame column: positioned by script, so looping is arithmetic (no scrolling, no snapping, no jumps) ----- */
+    let pos = 0, goal = 0, raf = 0, last = 0;
+    const pitch = () => Math.max(...frs.map(f => f.offsetHeight)) + Math.max(36, Math.min(56, innerHeight * .05));
+    const render = () => {
+      const P = pitch(), half = M / 2;
+      frs.forEach((f, i) => {
+        const d = mod(i - pos + half, M) - half, a = Math.abs(d), k = Math.min(a, 1);
+        const op = (1 - .58 * k) * Math.max(0, Math.min(1, (2.3 - a) / .5));
+        f.style.transform = 'translate(-50%,-50%) translateY(' + (d * P).toFixed(1) + 'px) scale(' + (1 - .12 * k).toFixed(3) + ')';
+        f.style.opacity = op.toFixed(3);
+        f.style.zIndex = String(10 - Math.round(a * 2));
+        f.style.visibility = op < .01 ? 'hidden' : '';
+      });
+      const nearest = mod(Math.round(pos), M);
+      if (nearest !== af) setFrame(nearest);
+    };
+    const tick = now => {
+      raf = 0;
+      const dt = Math.min(64, now - last || 16); last = now;
+      const d = goal - pos;
+      if (Math.abs(d) < .002) { pos = goal; render(); last = 0; return; }
+      pos += d * (1 - Math.exp(-dt / 95));
+      render();
+      raf = requestAnimationFrame(tick);
+    };
+    const go = g => {
+      goal = g;
+      if (mob.matches || reduce.matches) { pos = goal; render(); return; }
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    const setFrame = i => {
+      af = mod(i, M);
+      frs.forEach((f, k) => $('.fr-b', f).setAttribute('aria-current', String(k === af)));
+      chips.forEach((c, k) => c.setAttribute('aria-pressed', String(k === af)));
+      summary();
+    };
+    const step = n => go(Math.round(goal) + n);
+    /* a frame you click takes the shortest way to the middle */
+    const toFrame = i => { const base = Math.round(goal); go(base + mod(i - base + M / 2, M) - M / 2); };
+    frs.forEach((f, k) => $('.fr-b', f).addEventListener('click', () => { if (mob.matches) { setFrame(k); return; } if (!fDrag.moved) toFrame(k); }));
+    chips.forEach((c, k) => c.addEventListener('click', () => setFrame(k)));
+    up.addEventListener('click', () => step(-1));
+    down.addEventListener('click', () => step(1));
+    rail.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      step(e.key === 'ArrowDown' ? 1 : -1);
+      $('.fr-b', frs[mod(Math.round(goal), M)]).focus({ preventScroll: true });
+    });
+    /* drag the column with the mouse or a finger; let go with a flick and it carries on */
+    const fDrag = { on: false, moved: false, y0: 0, p0: 0, hist: [] };
+    rail.addEventListener('pointerdown', e => {
+      if (mob.matches || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      fDrag.on = true; fDrag.moved = false; fDrag.y0 = e.clientY; fDrag.p0 = pos; fDrag.hist = [[performance.now(), e.clientY]];
+    });
+    window.addEventListener('pointermove', e => {
+      if (!fDrag.on) return;
+      const dy = e.clientY - fDrag.y0;
+      if (!fDrag.moved && Math.abs(dy) > 5) { fDrag.moved = true; goal = pos; }
+      if (!fDrag.moved) return;
+      pos = fDrag.p0 - dy / pitch(); goal = pos;
+      fDrag.hist.push([performance.now(), e.clientY]); if (fDrag.hist.length > 6) fDrag.hist.shift();
+      render();
+    });
+    window.addEventListener('pointerup', () => {
+      if (!fDrag.on) return;
+      fDrag.on = false;
+      if (fDrag.moved) {
+        const h = fDrag.hist, a = h[0], b = h[h.length - 1], v = b[0] > a[0] ? -(b[1] - a[1]) / (b[0] - a[0]) / pitch() : 0;
+        go(Math.round(pos + Math.max(-2, Math.min(2, v * 220))));
+      }
+      setTimeout(() => { fDrag.moved = false; }, 0);
+    });
+
+    /* ----- photo strip ----- */
+    const snapX = () => strip.clientWidth * frac('--cx');
+    const centreOf = li => li.offsetLeft + li.offsetWidth / 2;
+    const goCard = (i, instant) => strip.scrollTo({ left: centreOf(lis[clamp(i, lis.length)]) - snapX(), behavior: instant ? 'auto' : smooth() });
+    const setCur = i => {
+      cur = i;
+      lis.forEach((li, k) => li.classList.toggle('is-cur', k === i));
+      if (sec.dataset.o !== cards[i].dataset.o) { sec.dataset.o = cards[i].dataset.o; render(); }
+    };
+    /* jump one whole copy sideways without anyone seeing it */
+    const rebaseStrip = () => {
+      const len = lis[N].offsetLeft - lis[0].offsetLeft, d = cur < N ? len : cur >= 2 * N ? -len : 0;
+      if (!d) return;
+      strip.style.scrollSnapType = 'none';
+      strip.scrollLeft += d;
+      setTimeout(() => { strip.style.scrollSnapType = ''; }, 60);
+    };
+    const onStrip = () => {
+      const m = strip.scrollLeft + snapX(); let b = 0, bd = Infinity;
+      lis.forEach((li, k) => { const d = Math.abs(centreOf(li) - m); if (d < bd) { bd = d; b = k; } });
+      if (b !== cur) setCur(b);
+      clearTimeout(st1); st1 = setTimeout(() => { settle(); rebaseStrip(); }, 160);
+    };
+    strip.addEventListener('scroll', onStrip, { passive: true });
+    prev.addEventListener('click', () => goCard(cur - 1));
+    next.addEventListener('click', () => goCard(cur + 1));
+
+    /* mouse drag on the strip; touch and trackpad already scroll natively */
+    const sDrag = { on: false, drag: false, p0: 0, s0: 0 };
+    strip.addEventListener('pointerdown', e => {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      sDrag.on = true; sDrag.drag = false; sDrag.p0 = e.clientX; sDrag.s0 = strip.scrollLeft;
+    });
+    window.addEventListener('pointermove', e => {
+      if (!sDrag.on) return;
+      const d = e.clientX - sDrag.p0;
+      if (!sDrag.drag && Math.abs(d) > 5) { sDrag.drag = true; strip.style.scrollSnapType = 'none'; }
+      if (sDrag.drag) strip.scrollLeft = sDrag.s0 - d;
+    });
+    window.addEventListener('pointerup', () => {
+      if (!sDrag.on) return;
+      sDrag.on = false; strip.style.scrollSnapType = '';
+      setTimeout(() => { sDrag.drag = false; }, 0);
+    });
+    cards.forEach((c, i) => c.addEventListener('click', () => { if (!sDrag.drag) goCard(i); }));
+
+    buy.addEventListener('click', () => {
+      const msg = t('prMsg').replace('{p}', t('cap.' + cards[N + Math.max(sel, 0)].dataset.ref)).replace('{f}', t('fr' + (af + 1)));
+      const ta = $('#f-msg'), have = ta.value.trim();
+      ta.value = !have || have === lastAuto ? msg : have + '\n\n' + msg;
+      lastAuto = msg;
+      ta.dispatchEvent(new Event('input'));
+      $('#contact').scrollIntoView({ behavior: smooth() });
+      setTimeout(() => ta.focus({ preventScroll: true }), reduce.matches ? 0 : 500);
+    });
+
+    onLang(summary);
+    mob.addEventListener('change', () => { goCard(cur, true); pos = goal = Math.round(goal); render(); });
+    const START = N + Math.min(2, N - 1);
+    setCur(START); settle(); setFrame(0);
+    render(); goCard(START, true); onStrip();
+    window.addEventListener('resize', () => { goCard(cur, true); render(); });
+  })();
   applyLang(lang);
 })();

@@ -325,6 +325,75 @@ html.lb-open .prog{opacity:0!important}
   @keyframes pZoom{from{transform:scale(1.3)}to{transform:scale(1)}}
 }
 
+/* ===== prints: photos slide sideways through a column of frames ===== */
+.prints{--L:clamp(240px,min(24vw,36vh),350px);--cx:.68;--cy:.55;--sh:clamp(760px,94vh,860px);--ww:var(--L);--wh:calc(var(--L)*.6667);background:var(--black);border-top:1px solid var(--line);padding-block:clamp(96px,11vw,170px);scroll-margin-top:var(--nav-h);overflow:hidden}
+.prints[data-o=portrait]{--ww:calc(var(--L)*.6667);--wh:var(--L)}
+.pr-stage{position:relative;height:var(--sh)}
+.pr-head{position:absolute;left:0;top:0;z-index:3;max-width:calc(var(--cx)*100% - var(--L)*.5 - 60px)}
+.pr-h{margin:0;font:600 clamp(2rem,3.5vw,3.5rem)/1.05 var(--sans);font-stretch:106%;letter-spacing:-.025em;text-wrap:balance}
+.pr-sub{margin:18px 0 0;color:var(--muted);font-size:1.1rem;line-height:1.5;max-width:40ch;text-wrap:pretty}
+.pr-cross{position:absolute;inset:0}
+/* horizontal strip: its snap point is the centre of the frame column */
+.pr-strip{position:absolute;left:0;right:0;top:calc(var(--sh)*var(--cy));height:var(--L);translate:0 -50%;display:flex;align-items:center;gap:clamp(14px,2vw,28px);margin:0;padding:0;overflow-x:auto;list-style:none;scroll-snap-type:x mandatory;scroll-padding-left:calc((2*var(--cx) - 1)*100%);scrollbar-width:none;-webkit-mask-image:linear-gradient(to right,transparent,#000 9%,#000 94%,transparent);mask-image:linear-gradient(to right,transparent,#000 9%,#000 94%,transparent)}
+.pr-strip::-webkit-scrollbar{display:none}
+.pcl{flex:0 0 auto;scroll-snap-align:center}
+.pc{display:block;padding:0;border:0;border-radius:0;background:var(--panel);overflow:hidden;opacity:.5;touch-action:manipulation;transition:opacity 200ms ease-out,transform 200ms var(--ease-out)}
+.pc[data-o=landscape]{width:var(--L);height:calc(var(--L)*.6667)}
+.pc[data-o=portrait]{width:calc(var(--L)*.6667);height:var(--L)}
+.pc img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.pcl.is-cur .pc{opacity:1}
+.pc:active{transform:scale(.98)}
+@media (hover:hover) and (pointer:fine){.pc:hover{opacity:.9}}
+/* vertical column of frames: each one is a real window onto whatever slides behind it */
+.pr-rail-wrap{position:absolute;top:0;height:var(--sh);left:calc((2*var(--cx) - 1)*100%);width:calc(2*(1 - var(--cx))*100%);pointer-events:none}
+.pr-rail{position:relative;height:100%;margin:0;padding:0;overflow:hidden;list-style:none;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 10%,#000 90%,transparent)}
+.pr-rbtns{position:absolute;right:0;top:calc(var(--sh)*var(--cy));display:flex;flex-direction:column;gap:8px;translate:0 -50%}
+.pr-rbtns button{pointer-events:auto}
+/* the column is positioned by script (transform and opacity only), so a frame is just a box at the snap line */
+.fr{position:absolute;left:50%;top:calc(var(--sh)*var(--cy));will-change:transform,opacity}
+.fr-b{display:block;padding:0;border:0;border-radius:0;background:none;pointer-events:auto;touch-action:manipulation}
+.fr-name{position:absolute;top:100%;left:50%;margin-top:12px;translate:-50% 0;white-space:nowrap;color:var(--muted);font-size:.95rem;line-height:1.2}
+/* one frame: mitered wood, a mat and a transparent window */
+.frm{position:relative;display:block;box-sizing:content-box;width:calc(var(--ww) + 2*var(--m));height:calc(var(--wh) + 2*var(--m));border:var(--b) solid;border-color:var(--bt) var(--br) var(--bb) var(--bl);box-shadow:0 16px 26px -12px rgba(0,0,0,.7)}
+.frm::before{content:"";position:absolute;inset:calc(var(--b)*-1);padding:var(--b);background:var(--tex);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);pointer-events:none}
+.mat{position:absolute;inset:0;border:var(--m) solid var(--mat)}
+.win{position:absolute;inset:var(--m);overflow:hidden;outline:var(--cw,0px) solid var(--core,transparent)}
+.win img{display:block;width:100%;height:100%;object-fit:cover}
+.win::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px var(--lip,rgba(0,0,0,.35)),inset 0 4px 12px rgba(0,0,0,.45);pointer-events:none}
+.fr:has([aria-current=true]) .win img{visibility:hidden}
+.fr[data-k=black]{--b:12px;--m:0px;--bt:#3a3a40;--bl:#2a2a2f;--br:#17171a;--bb:#0b0b0d;--mat:transparent;--tex:linear-gradient(135deg,rgba(255,255,255,.1),transparent 38%,rgba(0,0,0,.4));--lip:rgba(255,255,255,.14)}
+.fr[data-k=mat]{--b:9px;--m:clamp(20px,2.6vw,34px);--bt:#f8f4eb;--bl:#ede8dc;--br:#dad4c6;--bb:#cbc4b4;--mat:#f4f0e7;--core:#fffdf8;--cw:2px;--tex:linear-gradient(135deg,rgba(255,255,255,.55),transparent 40%,rgba(0,0,0,.1));--lip:rgba(0,0,0,.18)}
+.fr[data-k=float]{--b:3px;--m:clamp(14px,2vw,24px);--bt:#fbf9f4;--bl:#efebe2;--br:#d7d1c3;--bb:#c6bfaf;--mat:#0d0d0f;--tex:linear-gradient(135deg,rgba(255,255,255,.4),transparent 50%,rgba(0,0,0,.12));--lip:rgba(255,255,255,.12)}
+.fr[data-k=oak]{--b:17px;--m:13px;--bt:#e0b47a;--bl:#cc9d62;--br:#a67843;--bb:#8f6638;--mat:#efe9dd;--core:#fffdf8;--cw:2px;--tex:repeating-linear-gradient(88deg,rgba(70,40,15,.16) 0 1px,transparent 1px 6px),repeating-linear-gradient(92deg,rgba(255,232,190,.1) 0 2px,transparent 2px 9px),linear-gradient(135deg,rgba(255,255,255,.2),transparent 35%,rgba(0,0,0,.22));--lip:rgba(0,0,0,.2)}
+.fr[data-k=gold]{--b:15px;--m:11px;--bt:#f6dd92;--bl:#e5bd5e;--br:#b98c30;--bb:#8e6a1f;--mat:#17120a;--tex:linear-gradient(135deg,rgba(255,255,255,.6),transparent 26%,rgba(0,0,0,.28) 55%,rgba(255,255,255,.35) 80%,transparent);--lip:rgba(246,221,146,.35)}
+/* strip controls, frame chips and the buy bar */
+.pr-ctl{position:absolute;left:0;top:calc(var(--sh)*var(--cy) + var(--L)/2 + 30px);display:flex;align-items:center;gap:12px;width:calc(var(--cx)*100% - var(--L)*.45 - 24px)}
+.pr-arrow{display:inline-flex;align-items:center;justify-content:center;min-width:44px;padding:0;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.pr-arrow:disabled{opacity:.35}
+.pr-arrow:active:not(:disabled){transform:scale(.97)}
+.pr-chips{display:none}
+.pr-buy{position:absolute;left:0;bottom:0;display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;width:min(560px,calc(var(--cx)*100% - var(--L)*.45 - 24px));padding-top:18px;border-top:1px solid var(--line)}
+.pr-sel{flex:1 1 220px;margin:0;color:var(--muted);line-height:1.4}
+.pr-sel b{display:block;color:var(--text);font-weight:600;font-size:1.05rem;text-wrap:balance}
+.pr-note{flex:1 1 100%;margin:0;color:var(--muted);font-size:.9rem;line-height:1.45}
+@media (max-width:900px){
+  .prints{--L:min(64vw,300px);--cx:.5;--cy:.5;--sh:calc(var(--L) + 120px);overflow:hidden}
+  .pr-stage{height:auto}
+  .pr-head{position:static;max-width:none}
+  .pr-cross{position:relative;inset:auto;height:var(--sh);margin-top:clamp(28px,6vw,48px)}
+  .pr-rail-wrap{left:0;width:100%}
+  .fr:not(:has([aria-current=true])){display:none}
+  .fr{opacity:1!important;transform:translate(-50%,-50%)!important;visibility:visible!important}
+  .fr-name,.pr-rbtns{display:none}
+  .fr-b{pointer-events:none}
+  .pr-ctl{position:static;width:auto;margin-top:8px}
+  .pr-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .chip{min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:0;background:none;color:var(--muted);font:500 .95rem/1 var(--sans);touch-action:manipulation;transition:color 160ms ease,border-color 160ms ease}
+  .chip[aria-pressed=true]{color:var(--text);border-color:var(--accent)}
+  .pr-buy{position:static;width:auto;margin-top:28px}
+}
+@media (prefers-reduced-motion:reduce){.pc{transition:opacity 160ms ease-out}}
+
 /* ===== contact ===== */
 .contact-sec{background:var(--black);border-top:1px solid var(--line);padding-block:clamp(96px,10vw,160px);scroll-margin-top:var(--nav-h)}
 .contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px clamp(32px,8vw,128px);align-items:start}
@@ -561,6 +630,67 @@ dialog#lb::backdrop{background:transparent}
     </div>
   </section>
 
+  <section class="prints wrap" id="prints" data-o="landscape" aria-labelledby="prints-title">
+    <div class="pr-stage">
+      <div class="pr-head">
+        <h2 id="prints-title" class="pr-h" data-i18n="prH2">Fotoğraflarımı çerçevede dene, beğendiğini satın al.</h2>
+        <p class="pr-sub" data-i18n="prSub">Bir fotoğraf seç, sonra çerçeveleri kaydırarak dene.</p>
+      </div>
+      <div class="pr-cross">
+        <ul class="pr-strip" role="list" data-i18n-attr="aria-label:prPhotos" aria-label="Fotoğraflar">
+          <li class="pcl"><button class="pc" type="button" data-ref="15518197" data-o="landscape" data-base="https://images.pexels.com/photos/15518197/pexels-photo-15518197.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15518197/pexels-photo-15518197.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Gün batımında limanda siluetler, arkada bir vapur ve bir deniz feneri" data-i18n-attr="alt:cap.15518197" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15297914" data-o="landscape" data-base="https://images.pexels.com/photos/15297914/pexels-photo-15297914.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15297914/pexels-photo-15297914.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Bir köprü korkuluğunun ardında batan güneş" data-i18n-attr="alt:cap.15297914" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15297911" data-o="portrait" data-base="https://images.pexels.com/photos/15297911/pexels-photo-15297911.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15297911/pexels-photo-15297911.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Gün batımında Galata Köprüsü, uzakta Galata Kulesi" data-i18n-attr="alt:cap.15297911" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15069348" data-o="portrait" data-base="https://images.pexels.com/photos/15069348/pexels-photo-15069348.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15069348/pexels-photo-15069348.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Dramatik bir alacakaranlık gökyüzü altında ışıklandırılmış bir cami" data-i18n-attr="alt:cap.15069348" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15207900" data-o="portrait" data-base="https://images.pexels.com/photos/15207900/pexels-photo-15207900.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15207900/pexels-photo-15207900.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Boğaz kıyısında Ortaköy Camii" data-i18n-attr="alt:cap.15207900" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15297912" data-o="portrait" data-base="https://images.pexels.com/photos/15297912/pexels-photo-15297912.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15297912/pexels-photo-15297912.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Şehir kaldırımında akşam vakti, gün batımına karşı minareler" data-i18n-attr="alt:cap.15297912" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15069347" data-o="portrait" data-base="https://images.pexels.com/photos/15069347/pexels-photo-15069347.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15069347/pexels-photo-15069347.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Bir vapur yanaşırken limanda siluetler" data-i18n-attr="alt:cap.15069347" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="18349761" data-o="landscape" data-base="https://images.pexels.com/photos/18349761/pexels-photo-18349761.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/18349761/pexels-photo-18349761.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Gün batımında kıyıda palmiye siluetleri" data-i18n-attr="alt:cap.18349761" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15194859" data-o="landscape" data-base="https://images.pexels.com/photos/15194859/pexels-photo-15194859.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15194859/pexels-photo-15194859.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Açık denizde, berrak bir gökyüzü altında yolcu vapuru" data-i18n-attr="alt:cap.15194859" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15069349" data-o="portrait" data-base="https://images.pexels.com/photos/15069349/pexels-photo-15069349.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15069349/pexels-photo-15069349.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Tramvay durağında bir adam, gölgesi kaldırımda" data-i18n-attr="alt:cap.15069349" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15207781" data-o="portrait" data-base="https://images.pexels.com/photos/15207781/pexels-photo-15207781.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15207781/pexels-photo-15207781.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Yukarıdan görünen, güneş ışığı altında bir kaldırım" data-i18n-attr="alt:cap.15207781" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15069351" data-o="portrait" data-base="https://images.pexels.com/photos/15069351/pexels-photo-15069351.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15069351/pexels-photo-15069351.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Eski binaların ve pazar tezgâhlarının olduğu kalabalık bir sokak" data-i18n-attr="alt:cap.15069351" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15194878" data-o="portrait" data-base="https://images.pexels.com/photos/15194878/pexels-photo-15194878.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15194878/pexels-photo-15194878.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Bir terminalin bekleme salonuna uzanan güneş ışınları" data-i18n-attr="alt:cap.15194878" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15194877" data-o="landscape" data-base="https://images.pexels.com/photos/15194877/pexels-photo-15194877.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15194877/pexels-photo-15194877.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Vapur iskelesinde siluetler, cam kapılardan giren güneş ışığı" data-i18n-attr="alt:cap.15194877" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15297913" data-o="landscape" data-base="https://images.pexels.com/photos/15297913/pexels-photo-15297913.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15297913/pexels-photo-15297913.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="İçeride yürüyen bir siluet, cam kapıların ardında sokak" data-i18n-attr="alt:cap.15297913" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15207754" data-o="portrait" data-base="https://images.pexels.com/photos/15207754/pexels-photo-15207754.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15207754/pexels-photo-15207754.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Alacakaranlıkta loş bir sokakta yalnız oturan bir adam" data-i18n-attr="alt:cap.15207754" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15518194" data-o="portrait" data-base="https://images.pexels.com/photos/15518194/pexels-photo-15518194.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15518194/pexels-photo-15518194.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Loş bir metro vagonunda yolcular" data-i18n-attr="alt:cap.15518194" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15194860" data-o="portrait" data-base="https://images.pexels.com/photos/15194860/pexels-photo-15194860.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15194860/pexels-photo-15194860.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Karanlıkta yansıyan kırmızı bir metro treni" data-i18n-attr="alt:cap.15194860" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="16638283" data-o="landscape" data-base="https://images.pexels.com/photos/16638283/pexels-photo-16638283.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/16638283/pexels-photo-16638283.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Şemsiyeli iki kişi gri bir sokakta yürüyor" data-i18n-attr="alt:cap.16638283" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15518200" data-o="portrait" data-base="https://images.pexels.com/photos/15518200/pexels-photo-15518200.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15518200/pexels-photo-15518200.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Islak kaldırıma yansıyan ışıklı bir bina" data-i18n-attr="alt:cap.15518200" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15194876" data-o="portrait" data-base="https://images.pexels.com/photos/15194876/pexels-photo-15194876.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15194876/pexels-photo-15194876.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Yağmurlu bir sokak, ıslak kaldırımda yansımalar" data-i18n-attr="alt:cap.15194876" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15194875" data-o="portrait" data-base="https://images.pexels.com/photos/15194875/pexels-photo-15194875.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15194875/pexels-photo-15194875.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Yağmurlu bir gecede sokak yemeği tezgâhının çevresinde insanlar" data-i18n-attr="alt:cap.15194875" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15518199" data-o="portrait" data-base="https://images.pexels.com/photos/15518199/pexels-photo-15518199.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15518199/pexels-photo-15518199.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Gece ışıldayan bir kafe" data-i18n-attr="alt:cap.15518199" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="18030433" data-o="portrait" data-base="https://images.pexels.com/photos/18030433/pexels-photo-18030433.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/18030433/pexels-photo-18030433.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Gece, bir parkın içinden geçen lambalarla aydınlatılmış yol" data-i18n-attr="alt:cap.18030433" loading="lazy" decoding="async"></button></li>
+          <li class="pcl"><button class="pc" type="button" data-ref="15069350" data-o="portrait" data-base="https://images.pexels.com/photos/15069350/pexels-photo-15069350.jpeg?auto=compress&cs=tinysrgb"><img src="https://images.pexels.com/photos/15069350/pexels-photo-15069350.jpeg?auto=compress&cs=tinysrgb&h=800" width="533" height="800" alt="Limanda yağmurluklu insanlar, arkalarında bir vapur" data-i18n-attr="alt:cap.15069350" loading="lazy" decoding="async"></button></li>
+        </ul>
+        <div class="pr-rail-wrap">
+          <ul class="pr-rail" id="pr-rail" role="list" data-i18n-attr="aria-label:prFrames" aria-label="Çerçeve seçenekleri">
+          <li class="fr" data-k="black"><button class="fr-b" type="button" aria-current="false" data-i18n-attr="aria-label:fr1" aria-label="Siyah çerçeve"><span class="frm"><span class="mat"></span><span class="win"><img alt="" width="600" height="400" decoding="async"></span></span></button><span class="fr-name" data-i18n="fr1">Siyah çerçeve</span></li>
+          <li class="fr" data-k="mat"><button class="fr-b" type="button" aria-current="false" data-i18n-attr="aria-label:fr2" aria-label="Paspartulu beyaz"><span class="frm"><span class="mat"></span><span class="win"><img alt="" width="600" height="400" decoding="async"></span></span></button><span class="fr-name" data-i18n="fr2">Paspartulu beyaz</span></li>
+          <li class="fr" data-k="float"><button class="fr-b" type="button" aria-current="false" data-i18n-attr="aria-label:fr3" aria-label="İnce beyaz, yüzen"><span class="frm"><span class="mat"></span><span class="win"><img alt="" width="600" height="400" decoding="async"></span></span></button><span class="fr-name" data-i18n="fr3">İnce beyaz, yüzen</span></li>
+          <li class="fr" data-k="oak"><button class="fr-b" type="button" aria-current="false" data-i18n-attr="aria-label:fr4" aria-label="Meşe"><span class="frm"><span class="mat"></span><span class="win"><img alt="" width="600" height="400" decoding="async"></span></span></button><span class="fr-name" data-i18n="fr4">Meşe</span></li>
+          <li class="fr" data-k="gold"><button class="fr-b" type="button" aria-current="false" data-i18n-attr="aria-label:fr5" aria-label="Altın"><span class="frm"><span class="mat"></span><span class="win"><img alt="" width="600" height="400" decoding="async"></span></span></button><span class="fr-name" data-i18n="fr5">Altın</span></li>
+          </ul>
+          <div class="pr-rbtns">
+            <button class="textbtn pr-arrow" type="button" id="pr-up" data-i18n-attr="aria-label:prUp" aria-label="Önceki çerçeve"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3 10l5-5 5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></button>
+            <button class="textbtn pr-arrow" type="button" id="pr-down" data-i18n-attr="aria-label:prDown" aria-label="Sonraki çerçeve"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <div class="pr-ctl">
+        <button class="textbtn pr-arrow" type="button" id="pr-prev" data-i18n-attr="aria-label:prPrev" aria-label="Önceki fotoğraflar"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></button>
+        <button class="textbtn pr-arrow" type="button" id="pr-next" data-i18n-attr="aria-label:prNext" aria-label="Sonraki fotoğraflar"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></button>
+      </div>
+      <div class="pr-chips" role="group" data-i18n-attr="aria-label:prFrames" aria-label="Çerçeve seçenekleri"><button class="chip" type="button" aria-pressed="false" data-i18n="fr1">Siyah çerçeve</button><button class="chip" type="button" aria-pressed="false" data-i18n="fr2">Paspartulu beyaz</button><button class="chip" type="button" aria-pressed="false" data-i18n="fr3">İnce beyaz, yüzen</button><button class="chip" type="button" aria-pressed="false" data-i18n="fr4">Meşe</button><button class="chip" type="button" aria-pressed="false" data-i18n="fr5">Altın</button></div>
+      <div class="pr-buy">
+        <p class="pr-sel" role="status" aria-live="polite"><b id="pr-cap"></b><span id="pr-frame"></span></p>
+        <button class="btn" type="button" id="pr-buy" data-i18n="prBuy">Satın al</button>
+        <p class="pr-note" data-i18n="prNote">Satın alma e-posta ile tamamlanır: seçimin mesaja otomatik eklenir.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="contact-sec wrap" id="contact" aria-labelledby="contact-title">
     <div class="contact">
       <div>
@@ -646,7 +776,7 @@ dialog#lb::backdrop{background:transparent}
 </dialog>
 
 <script>
-const I18N = {"tr":{"title":"Berkay Mavral, İstanbul’da Fotoğrafçı","desc":"Berkay Mavral’dan, sabah yolculuğundan geceye İstanbul’da sokak ve şehir fotoğrafçılığı.","ogdesc":"İstanbul’dan sokak ve şehir fotoğrafçılığı, sabah yolculuğundan geceye.","skip":"Fotoğraflara geç","brandLabel":"Berkay Mavral, sayfa başına dön","navLabel":"Ana menü","navFrames":"Fotoğraflar","navAbout":"Hakkımda","cta":"Çekim Planla","langLabel":"Dil / Language","heroLabel":"Giriş","heroH1":"Berkay Mavral, İstanbul’da fotoğrafçı. İstanbul, kare kare.","heroP":"Berkay Mavral’dan, sabah yolculuğundan geceye sokak ve şehir fotoğrafçılığı.","hnSub":"Photography","cue":"Açmak için kaydır","heroHl":"İstanbul, kare kare.","workH2":"İstanbul, dört farklı ışıkta.","photos":"fotoğraf","filterLabel":"Fotoğrafları ışığa göre filtrele","fAll":"Tümü","fGold":"Altın saat","fDay":"Gün ışığı","fBlue":"Mavi saat","fDark":"Gece","aboutH2":"Hakkımda","portraitAlt":"Berkay Mavral’ın dışarıda çekilmiş portresi: koyu renk kapüşonlu mont, gülümsüyor, omuzlarında sırt çantası","portraitCap":"Berkay Mavral, İstanbul","lead":"Ben Berkay, İstanbul’da yaşayan bir fotoğrafçıyım. Şehir hayatı, mimari ve portreler, sabah yolculuğundan geceye kadar.","note":"Pexels kütüphanem <strong>4,2 milyon görüntülenmeyi</strong> aştı. Çekim talepleri ve iş birlikleri için aşağıdan mesaj gönderebilirsiniz.","shUrban":"Şehir","shUrbanD":"Sokak hayatı, toplu taşıma, limanlar","shArch":"Mimari","shArchD":"Binalar, camiler, siluetler","shPort":"Portre","shPortD":"İnsanlar, kendi çevrelerinde","contactH2":"Çekiminizi bana anlatın.","copy":"Kopyala","copied":"Kopyalandı","copyNote":"E-posta adresi kopyalandı.","copyFail":"Kopyalanamadı. Adres seçildi, Ctrl+C ile kopyalayabilirsiniz.","lName":"Ad Soyad","lEmail":"E-posta","lMsg":"Mesaj","pName":"Adınız ve soyadınız…","pEmail":"ad@ornek.com…","pMsg":"Tarih, yer ve aklınızdaki fikir…","send":"Mesajı Gönder","eName":"Size nasıl hitap edeceğimi bilmem için adınızı yazın.","eEmail":"ad@ornek.com gibi bir e-posta adresi girin.","eMsg":"Çekim hakkında bir iki cümle yazın.","fStatus":"Posta uygulamanız mesaj hazır şekilde açılmalı. Açılmazsa berkaymavral@gmail.com adresine yazın.","mailSubject":"Çekim talebi: ","footLabel":"Site altbilgisi","footLead":"Bir sonraki kareyi birlikte çekelim.","footPages":"Sayfalar","footElse":"Diğer yerler","footContact":"İletişim","newTab":"(yeni sekmede açılır)","place":"İstanbul, Türkiye","footNote":"Fotoğraflar: Berkay Mavral.","footBack":"İlk kareye dön","lbLabel":"Fotoğraf görüntüleyici","lbClose":"Kapat","lbPrev":"Önceki","lbNext":"Sonraki","cap.15069347":"Bir vapur yanaşırken limanda siluetler","cap.15069348":"Dramatik bir alacakaranlık gökyüzü altında ışıklandırılmış bir cami","cap.15069349":"Tramvay durağında bir adam, gölgesi kaldırımda","cap.15069350":"Limanda yağmurluklu insanlar, arkalarında bir vapur","cap.15069351":"Eski binaların ve pazar tezgâhlarının olduğu kalabalık bir sokak","cap.15194859":"Açık denizde, berrak bir gökyüzü altında yolcu vapuru","cap.15194860":"Karanlıkta yansıyan kırmızı bir metro treni","cap.15194875":"Yağmurlu bir gecede sokak yemeği tezgâhının çevresinde insanlar","cap.15194876":"Yağmurlu bir sokak, ıslak kaldırımda yansımalar","cap.15194877":"Vapur iskelesinde siluetler, cam kapılardan giren güneş ışığı","cap.15194878":"Bir terminalin bekleme salonuna uzanan güneş ışınları","cap.15207754":"Alacakaranlıkta loş bir sokakta yalnız oturan bir adam","cap.15207781":"Yukarıdan görünen, güneş ışığı altında bir kaldırım","cap.15207900":"Boğaz kıyısında Ortaköy Camii","cap.15297911":"Gün batımında Galata Köprüsü, uzakta Galata Kulesi","cap.15297912":"Şehir kaldırımında akşam vakti, gün batımına karşı minareler","cap.15297913":"İçeride yürüyen bir siluet, cam kapıların ardında sokak","cap.15297914":"Bir köprü korkuluğunun ardında batan güneş","cap.15518194":"Loş bir metro vagonunda yolcular","cap.15518197":"Gün batımında limanda siluetler, arkada bir vapur ve bir deniz feneri","cap.15518199":"Gece ışıldayan bir kafe","cap.15518200":"Islak kaldırıma yansıyan ışıklı bir bina","cap.16638283":"Şemsiyeli iki kişi gri bir sokakta yürüyor","cap.18030433":"Gece, bir parkın içinden geçen lambalarla aydınlatılmış yol","cap.18349761":"Gün batımında kıyıda palmiye siluetleri"},"en":{"title":"Berkay Mavral, Photographer in Istanbul","desc":"Street and city photography from Istanbul by Berkay Mavral, from the morning commute to after dark.","ogdesc":"Street and city photography from Istanbul, from the morning commute to after dark.","skip":"Skip to Frames","brandLabel":"Berkay Mavral, back to top","navLabel":"Main","navFrames":"Frames","navAbout":"About","cta":"Book a Shoot","langLabel":"Dil / Language","heroLabel":"Introduction","heroH1":"Berkay Mavral, photographer in Istanbul. Istanbul, frame by frame.","heroP":"Street and city photography by Berkay Mavral, from the morning commute to after dark.","hnSub":"Photography","cue":"Scroll to open","heroHl":"Istanbul, frame by frame.","workH2":"Istanbul, in four kinds of light.","photos":"photographs","filterLabel":"Filter photos by light","fAll":"All","fGold":"Golden hour","fDay":"Daylight","fBlue":"Blue hour","fDark":"After dark","aboutH2":"About","portraitAlt":"Portrait of Berkay Mavral outdoors in a dark hooded jacket, smiling, a backpack on his shoulders","portraitCap":"Berkay Mavral, Istanbul","lead":"I’m Berkay, a photographer from Istanbul. Urban life, architecture and portraits, from the morning commute to after dark.","note":"My library on Pexels has passed <strong>4.2 million views</strong>. For commissions and collaborations, send a message below.","shUrban":"Urban","shUrbanD":"Street life, transit, harbors","shArch":"Architecture","shArchD":"Buildings, mosques, skylines","shPort":"Portrait","shPortD":"People in their own surroundings","contactH2":"Tell me about the shoot.","copy":"Copy","copied":"Copied","copyNote":"Email address copied.","copyFail":"Copy failed. The address is selected, press Ctrl+C.","lName":"Name","lEmail":"Email","lMsg":"Message","pName":"Your full name…","pEmail":"name@example.com…","pMsg":"Date, place and what you have in mind…","send":"Send Message","eName":"Add your name so I know who to reply to.","eEmail":"Enter an email address like name@example.com.","eMsg":"Write a sentence or two about the shoot.","fStatus":"Your mail app should open with the message ready. If it does not, write to berkaymavral@gmail.com.","mailSubject":"Shoot enquiry from ","footLabel":"Site footer","footLead":"Let’s make the next frame.","footPages":"Index","footElse":"Elsewhere","footContact":"Contact","newTab":"(opens in a new tab)","place":"Istanbul, Türkiye","footNote":"Photography: Berkay Mavral.","footBack":"Back to the first frame","lbLabel":"Photo viewer","lbClose":"Close","lbPrev":"Previous","lbNext":"Next","cap.15069347":"Silhouettes at the harbor as a ferry comes in","cap.15069348":"An illuminated mosque under a dramatic dusk sky","cap.15069349":"A man at a tram stop, his shadow on the pavement","cap.15069350":"People in raincoats at the harbor, a ferry behind them","cap.15069351":"A crowded street of old buildings and market stalls","cap.15194859":"A passenger ferry on open water under a clear sky","cap.15194860":"A red metro train reflected in the dark","cap.15194875":"People around a street food stall on a rainy night","cap.15194876":"A rainy street, reflections on the wet pavement","cap.15194877":"Silhouettes in a ferry terminal, sunlight through the glass doors","cap.15194878":"Sun beams across a terminal waiting room","cap.15207754":"A man sitting alone in a dim alley at dusk","cap.15207781":"A sunlit sidewalk seen from above","cap.15207900":"Ortaköy Mosque on the Bosphorus","cap.15297911":"Galata Bridge at sunset with Galata Tower in the distance","cap.15297912":"Dusk on a city sidewalk, minarets against the sunset","cap.15297913":"A silhouette walking inside, the street beyond the glass doors","cap.15297914":"The sun going down behind a bridge railing","cap.15518194":"Commuters inside a dim subway car","cap.15518197":"Silhouettes by the harbor at sunset, a ferry and a lighthouse behind them","cap.15518199":"A café glowing at night","cap.15518200":"A lit building reflected on wet pavement","cap.16638283":"Two people with umbrellas walking down a grey street","cap.18030433":"A lamp-lit path through a park at night","cap.18349761":"Palm silhouettes on the shore at sunset"}};
+const I18N = {"tr":{"title":"Berkay Mavral, İstanbul’da Fotoğrafçı","desc":"Berkay Mavral’dan, sabah yolculuğundan geceye İstanbul’da sokak ve şehir fotoğrafçılığı.","ogdesc":"İstanbul’dan sokak ve şehir fotoğrafçılığı, sabah yolculuğundan geceye.","skip":"Fotoğraflara geç","brandLabel":"Berkay Mavral, sayfa başına dön","navLabel":"Ana menü","navFrames":"Fotoğraflar","navAbout":"Hakkımda","cta":"Çekim Planla","langLabel":"Dil / Language","heroLabel":"Giriş","heroH1":"Berkay Mavral, İstanbul’da fotoğrafçı. İstanbul, kare kare.","heroP":"Berkay Mavral’dan, sabah yolculuğundan geceye sokak ve şehir fotoğrafçılığı.","hnSub":"Photography","cue":"Açmak için kaydır","heroHl":"İstanbul, kare kare.","workH2":"İstanbul, dört farklı ışıkta.","photos":"fotoğraf","filterLabel":"Fotoğrafları ışığa göre filtrele","fAll":"Tümü","fGold":"Altın saat","fDay":"Gün ışığı","fBlue":"Mavi saat","fDark":"Gece","aboutH2":"Hakkımda","portraitAlt":"Berkay Mavral’ın dışarıda çekilmiş portresi: koyu renk kapüşonlu mont, gülümsüyor, omuzlarında sırt çantası","portraitCap":"Berkay Mavral, İstanbul","lead":"Ben Berkay, İstanbul’da yaşayan bir fotoğrafçıyım. Şehir hayatı, mimari ve portreler, sabah yolculuğundan geceye kadar.","note":"Pexels kütüphanem <strong>4,2 milyon görüntülenmeyi</strong> aştı. Çekim talepleri ve iş birlikleri için aşağıdan mesaj gönderebilirsiniz.","shUrban":"Şehir","shUrbanD":"Sokak hayatı, toplu taşıma, limanlar","shArch":"Mimari","shArchD":"Binalar, camiler, siluetler","shPort":"Portre","shPortD":"İnsanlar, kendi çevrelerinde","contactH2":"Çekiminizi bana anlatın.","copy":"Kopyala","copied":"Kopyalandı","copyNote":"E-posta adresi kopyalandı.","copyFail":"Kopyalanamadı. Adres seçildi, Ctrl+C ile kopyalayabilirsiniz.","lName":"Ad Soyad","lEmail":"E-posta","lMsg":"Mesaj","pName":"Adınız ve soyadınız…","pEmail":"ad@ornek.com…","pMsg":"Tarih, yer ve aklınızdaki fikir…","send":"Mesajı Gönder","eName":"Size nasıl hitap edeceğimi bilmem için adınızı yazın.","eEmail":"ad@ornek.com gibi bir e-posta adresi girin.","eMsg":"Çekim hakkında bir iki cümle yazın.","fStatus":"Posta uygulamanız mesaj hazır şekilde açılmalı. Açılmazsa berkaymavral@gmail.com adresine yazın.","mailSubject":"Çekim talebi: ","footLabel":"Site altbilgisi","footLead":"Bir sonraki kareyi birlikte çekelim.","footPages":"Sayfalar","footElse":"Diğer yerler","footContact":"İletişim","newTab":"(yeni sekmede açılır)","place":"İstanbul, Türkiye","footNote":"Fotoğraflar: Berkay Mavral.","footBack":"İlk kareye dön","prH2":"Fotoğraflarımı çerçevede dene, beğendiğini satın al.","prSub":"Bir fotoğraf seç, sonra çerçeveleri kaydırarak dene.","prPhotos":"Fotoğraflar","prFrames":"Çerçeve seçenekleri","prPrev":"Önceki fotoğraflar","prNext":"Sonraki fotoğraflar","prUp":"Önceki çerçeve","prDown":"Sonraki çerçeve","prBuy":"Satın al","prNote":"Satın alma e-posta ile tamamlanır: seçimin mesaja otomatik eklenir.","prFrameLbl":"Çerçeve: ","prMsg":"Merhaba Berkay, “{p}” fotoğrafını “{f}” ile satın almak istiyorum.","fr1":"Siyah çerçeve","fr2":"Paspartulu beyaz","fr3":"İnce beyaz, yüzen","fr4":"Meşe","fr5":"Altın","lbLabel":"Fotoğraf görüntüleyici","lbClose":"Kapat","lbPrev":"Önceki","lbNext":"Sonraki","cap.15069347":"Bir vapur yanaşırken limanda siluetler","cap.15069348":"Dramatik bir alacakaranlık gökyüzü altında ışıklandırılmış bir cami","cap.15069349":"Tramvay durağında bir adam, gölgesi kaldırımda","cap.15069350":"Limanda yağmurluklu insanlar, arkalarında bir vapur","cap.15069351":"Eski binaların ve pazar tezgâhlarının olduğu kalabalık bir sokak","cap.15194859":"Açık denizde, berrak bir gökyüzü altında yolcu vapuru","cap.15194860":"Karanlıkta yansıyan kırmızı bir metro treni","cap.15194875":"Yağmurlu bir gecede sokak yemeği tezgâhının çevresinde insanlar","cap.15194876":"Yağmurlu bir sokak, ıslak kaldırımda yansımalar","cap.15194877":"Vapur iskelesinde siluetler, cam kapılardan giren güneş ışığı","cap.15194878":"Bir terminalin bekleme salonuna uzanan güneş ışınları","cap.15207754":"Alacakaranlıkta loş bir sokakta yalnız oturan bir adam","cap.15207781":"Yukarıdan görünen, güneş ışığı altında bir kaldırım","cap.15207900":"Boğaz kıyısında Ortaköy Camii","cap.15297911":"Gün batımında Galata Köprüsü, uzakta Galata Kulesi","cap.15297912":"Şehir kaldırımında akşam vakti, gün batımına karşı minareler","cap.15297913":"İçeride yürüyen bir siluet, cam kapıların ardında sokak","cap.15297914":"Bir köprü korkuluğunun ardında batan güneş","cap.15518194":"Loş bir metro vagonunda yolcular","cap.15518197":"Gün batımında limanda siluetler, arkada bir vapur ve bir deniz feneri","cap.15518199":"Gece ışıldayan bir kafe","cap.15518200":"Islak kaldırıma yansıyan ışıklı bir bina","cap.16638283":"Şemsiyeli iki kişi gri bir sokakta yürüyor","cap.18030433":"Gece, bir parkın içinden geçen lambalarla aydınlatılmış yol","cap.18349761":"Gün batımında kıyıda palmiye siluetleri"},"en":{"title":"Berkay Mavral, Photographer in Istanbul","desc":"Street and city photography from Istanbul by Berkay Mavral, from the morning commute to after dark.","ogdesc":"Street and city photography from Istanbul, from the morning commute to after dark.","skip":"Skip to Frames","brandLabel":"Berkay Mavral, back to top","navLabel":"Main","navFrames":"Frames","navAbout":"About","cta":"Book a Shoot","langLabel":"Dil / Language","heroLabel":"Introduction","heroH1":"Berkay Mavral, photographer in Istanbul. Istanbul, frame by frame.","heroP":"Street and city photography by Berkay Mavral, from the morning commute to after dark.","hnSub":"Photography","cue":"Scroll to open","heroHl":"Istanbul, frame by frame.","workH2":"Istanbul, in four kinds of light.","photos":"photographs","filterLabel":"Filter photos by light","fAll":"All","fGold":"Golden hour","fDay":"Daylight","fBlue":"Blue hour","fDark":"After dark","aboutH2":"About","portraitAlt":"Portrait of Berkay Mavral outdoors in a dark hooded jacket, smiling, a backpack on his shoulders","portraitCap":"Berkay Mavral, Istanbul","lead":"I’m Berkay, a photographer from Istanbul. Urban life, architecture and portraits, from the morning commute to after dark.","note":"My library on Pexels has passed <strong>4.2 million views</strong>. For commissions and collaborations, send a message below.","shUrban":"Urban","shUrbanD":"Street life, transit, harbors","shArch":"Architecture","shArchD":"Buildings, mosques, skylines","shPort":"Portrait","shPortD":"People in their own surroundings","contactH2":"Tell me about the shoot.","copy":"Copy","copied":"Copied","copyNote":"Email address copied.","copyFail":"Copy failed. The address is selected, press Ctrl+C.","lName":"Name","lEmail":"Email","lMsg":"Message","pName":"Your full name…","pEmail":"name@example.com…","pMsg":"Date, place and what you have in mind…","send":"Send Message","eName":"Add your name so I know who to reply to.","eEmail":"Enter an email address like name@example.com.","eMsg":"Write a sentence or two about the shoot.","fStatus":"Your mail app should open with the message ready. If it does not, write to berkaymavral@gmail.com.","mailSubject":"Shoot enquiry from ","footLabel":"Site footer","footLead":"Let’s make the next frame.","footPages":"Index","footElse":"Elsewhere","footContact":"Contact","newTab":"(opens in a new tab)","place":"Istanbul, Türkiye","footNote":"Photography: Berkay Mavral.","footBack":"Back to the first frame","prH2":"Try my photos in a frame, then buy the one you like.","prSub":"Pick a photo, then scroll through the frames to try them.","prPhotos":"Photos","prFrames":"Frame options","prPrev":"Previous photos","prNext":"Next photos","prUp":"Previous frame","prDown":"Next frame","prBuy":"Buy","prNote":"Buying is finished by email: your choice is added to the message for you.","prFrameLbl":"Frame: ","prMsg":"Hi Berkay, I would like to buy “{p}” with the “{f}” frame.","fr1":"Black frame","fr2":"White with mat","fr3":"Thin white, floating","fr4":"Oak","fr5":"Gold","lbLabel":"Photo viewer","lbClose":"Close","lbPrev":"Previous","lbNext":"Next","cap.15069347":"Silhouettes at the harbor as a ferry comes in","cap.15069348":"An illuminated mosque under a dramatic dusk sky","cap.15069349":"A man at a tram stop, his shadow on the pavement","cap.15069350":"People in raincoats at the harbor, a ferry behind them","cap.15069351":"A crowded street of old buildings and market stalls","cap.15194859":"A passenger ferry on open water under a clear sky","cap.15194860":"A red metro train reflected in the dark","cap.15194875":"People around a street food stall on a rainy night","cap.15194876":"A rainy street, reflections on the wet pavement","cap.15194877":"Silhouettes in a ferry terminal, sunlight through the glass doors","cap.15194878":"Sun beams across a terminal waiting room","cap.15207754":"A man sitting alone in a dim alley at dusk","cap.15207781":"A sunlit sidewalk seen from above","cap.15207900":"Ortaköy Mosque on the Bosphorus","cap.15297911":"Galata Bridge at sunset with Galata Tower in the distance","cap.15297912":"Dusk on a city sidewalk, minarets against the sunset","cap.15297913":"A silhouette walking inside, the street beyond the glass doors","cap.15297914":"The sun going down behind a bridge railing","cap.15518194":"Commuters inside a dim subway car","cap.15518197":"Silhouettes by the harbor at sunset, a ferry and a lighthouse behind them","cap.15518199":"A café glowing at night","cap.15518200":"A lit building reflected on wet pavement","cap.16638283":"Two people with umbrellas walking down a grey street","cap.18030433":"A lamp-lit path through a park at night","cap.18349761":"Palm silhouettes on the shore at sunset"}};
 const SITE = {"email":"berkaymavral@gmail.com"};
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
@@ -1066,6 +1196,189 @@ const SITE = {"email":"berkaymavral@gmail.com"};
     status.textContent = t('fStatus');
     location.href = url;
   });
+  /* ---------- prints: photos slide through a column of frames, both loop forever, then buy by email ---------- */
+  (() => {
+    const sec = $('#prints');
+    if (!sec) return;
+    const stage = $('.pr-stage', sec), strip = $('.pr-strip', sec), rail = $('#pr-rail');
+    const N = $$('.pcl', strip).length, M = $$('.fr', rail).length;
+    /* photo strip: three copies of the list, the middle one is real, the outer two let the loop wrap invisibly */
+    const items = [...strip.children];
+    const copy = () => items.map(li => {
+      const c = li.cloneNode(true);
+      c.dataset.clone = '1'; c.setAttribute('aria-hidden', 'true');
+      c.querySelectorAll('button').forEach(b => { b.tabIndex = -1; });
+      return c;
+    });
+    strip.prepend(...copy()); strip.append(...copy());
+    const lis = $$('.pcl', strip), cards = $$('.pc', strip), frs = $$('.fr', rail);
+    const imgs = $$('.win img', rail), chips = $$('.chip', sec);
+    const capEl = $('#pr-cap'), frEl = $('#pr-frame');
+    const prev = $('#pr-prev'), next = $('#pr-next'), up = $('#pr-up'), down = $('#pr-down'), buy = $('#pr-buy');
+    const mob = matchMedia('(max-width: 900px)');
+    const smooth = () => (reduce.matches ? 'auto' : 'smooth');
+    const frac = n => parseFloat(getComputedStyle(stage).getPropertyValue(n)) || .5;
+    const clamp = (v, n) => Math.max(0, Math.min(n - 1, v));
+    const mod = (v, n) => ((v % n) + n) % n;
+    /* strip indexes are raw (0 .. 3n-1), the real photo sits at n + logical; frames are 0 .. m-1 */
+    let cur = 0, sel = -1, af = 0, lastAuto = '', st1 = 0;
+
+    const summary = () => {
+      const ref = cards[N + Math.max(sel, 0)].dataset.ref;
+      capEl.textContent = t('cap.' + ref);
+      frEl.textContent = t('prFrameLbl') + t('fr' + (af + 1));
+      imgs.forEach(i => { i.alt = t('cap.' + ref); });
+    };
+    /* the photo that has settled under the frame column: the other frames show it too */
+    let token = 0;
+    const settle = () => {
+      const lg = mod(cur, N);
+      if (sel === lg) return;
+      sel = lg;
+      const c = cards[N + lg], url = c.dataset.base + (c.dataset.o === 'portrait' ? '&h=1000' : '&w=1000');
+      const mine = ++token, pre = new Image();
+      const swap = () => { if (mine === token) imgs.forEach(im => { im.src = url; }); };
+      pre.onload = swap; pre.onerror = swap; pre.src = url;
+      summary();
+    };
+
+    /* ----- frame column: positioned by script, so looping is arithmetic (no scrolling, no snapping, no jumps) ----- */
+    let pos = 0, goal = 0, raf = 0, last = 0;
+    const pitch = () => Math.max(...frs.map(f => f.offsetHeight)) + Math.max(36, Math.min(56, innerHeight * .05));
+    const render = () => {
+      const P = pitch(), half = M / 2;
+      frs.forEach((f, i) => {
+        const d = mod(i - pos + half, M) - half, a = Math.abs(d), k = Math.min(a, 1);
+        const op = (1 - .58 * k) * Math.max(0, Math.min(1, (2.3 - a) / .5));
+        f.style.transform = 'translate(-50%,-50%) translateY(' + (d * P).toFixed(1) + 'px) scale(' + (1 - .12 * k).toFixed(3) + ')';
+        f.style.opacity = op.toFixed(3);
+        f.style.zIndex = String(10 - Math.round(a * 2));
+        f.style.visibility = op < .01 ? 'hidden' : '';
+      });
+      const nearest = mod(Math.round(pos), M);
+      if (nearest !== af) setFrame(nearest);
+    };
+    const tick = now => {
+      raf = 0;
+      const dt = Math.min(64, now - last || 16); last = now;
+      const d = goal - pos;
+      if (Math.abs(d) < .002) { pos = goal; render(); last = 0; return; }
+      pos += d * (1 - Math.exp(-dt / 95));
+      render();
+      raf = requestAnimationFrame(tick);
+    };
+    const go = g => {
+      goal = g;
+      if (mob.matches || reduce.matches) { pos = goal; render(); return; }
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    const setFrame = i => {
+      af = mod(i, M);
+      frs.forEach((f, k) => $('.fr-b', f).setAttribute('aria-current', String(k === af)));
+      chips.forEach((c, k) => c.setAttribute('aria-pressed', String(k === af)));
+      summary();
+    };
+    const step = n => go(Math.round(goal) + n);
+    /* a frame you click takes the shortest way to the middle */
+    const toFrame = i => { const base = Math.round(goal); go(base + mod(i - base + M / 2, M) - M / 2); };
+    frs.forEach((f, k) => $('.fr-b', f).addEventListener('click', () => { if (mob.matches) { setFrame(k); return; } if (!fDrag.moved) toFrame(k); }));
+    chips.forEach((c, k) => c.addEventListener('click', () => setFrame(k)));
+    up.addEventListener('click', () => step(-1));
+    down.addEventListener('click', () => step(1));
+    rail.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      step(e.key === 'ArrowDown' ? 1 : -1);
+      $('.fr-b', frs[mod(Math.round(goal), M)]).focus({ preventScroll: true });
+    });
+    /* drag the column with the mouse or a finger; let go with a flick and it carries on */
+    const fDrag = { on: false, moved: false, y0: 0, p0: 0, hist: [] };
+    rail.addEventListener('pointerdown', e => {
+      if (mob.matches || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      fDrag.on = true; fDrag.moved = false; fDrag.y0 = e.clientY; fDrag.p0 = pos; fDrag.hist = [[performance.now(), e.clientY]];
+    });
+    window.addEventListener('pointermove', e => {
+      if (!fDrag.on) return;
+      const dy = e.clientY - fDrag.y0;
+      if (!fDrag.moved && Math.abs(dy) > 5) { fDrag.moved = true; goal = pos; }
+      if (!fDrag.moved) return;
+      pos = fDrag.p0 - dy / pitch(); goal = pos;
+      fDrag.hist.push([performance.now(), e.clientY]); if (fDrag.hist.length > 6) fDrag.hist.shift();
+      render();
+    });
+    window.addEventListener('pointerup', () => {
+      if (!fDrag.on) return;
+      fDrag.on = false;
+      if (fDrag.moved) {
+        const h = fDrag.hist, a = h[0], b = h[h.length - 1], v = b[0] > a[0] ? -(b[1] - a[1]) / (b[0] - a[0]) / pitch() : 0;
+        go(Math.round(pos + Math.max(-2, Math.min(2, v * 220))));
+      }
+      setTimeout(() => { fDrag.moved = false; }, 0);
+    });
+
+    /* ----- photo strip ----- */
+    const snapX = () => strip.clientWidth * frac('--cx');
+    const centreOf = li => li.offsetLeft + li.offsetWidth / 2;
+    const goCard = (i, instant) => strip.scrollTo({ left: centreOf(lis[clamp(i, lis.length)]) - snapX(), behavior: instant ? 'auto' : smooth() });
+    const setCur = i => {
+      cur = i;
+      lis.forEach((li, k) => li.classList.toggle('is-cur', k === i));
+      if (sec.dataset.o !== cards[i].dataset.o) { sec.dataset.o = cards[i].dataset.o; render(); }
+    };
+    /* jump one whole copy sideways without anyone seeing it */
+    const rebaseStrip = () => {
+      const len = lis[N].offsetLeft - lis[0].offsetLeft, d = cur < N ? len : cur >= 2 * N ? -len : 0;
+      if (!d) return;
+      strip.style.scrollSnapType = 'none';
+      strip.scrollLeft += d;
+      setTimeout(() => { strip.style.scrollSnapType = ''; }, 60);
+    };
+    const onStrip = () => {
+      const m = strip.scrollLeft + snapX(); let b = 0, bd = Infinity;
+      lis.forEach((li, k) => { const d = Math.abs(centreOf(li) - m); if (d < bd) { bd = d; b = k; } });
+      if (b !== cur) setCur(b);
+      clearTimeout(st1); st1 = setTimeout(() => { settle(); rebaseStrip(); }, 160);
+    };
+    strip.addEventListener('scroll', onStrip, { passive: true });
+    prev.addEventListener('click', () => goCard(cur - 1));
+    next.addEventListener('click', () => goCard(cur + 1));
+
+    /* mouse drag on the strip; touch and trackpad already scroll natively */
+    const sDrag = { on: false, drag: false, p0: 0, s0: 0 };
+    strip.addEventListener('pointerdown', e => {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      sDrag.on = true; sDrag.drag = false; sDrag.p0 = e.clientX; sDrag.s0 = strip.scrollLeft;
+    });
+    window.addEventListener('pointermove', e => {
+      if (!sDrag.on) return;
+      const d = e.clientX - sDrag.p0;
+      if (!sDrag.drag && Math.abs(d) > 5) { sDrag.drag = true; strip.style.scrollSnapType = 'none'; }
+      if (sDrag.drag) strip.scrollLeft = sDrag.s0 - d;
+    });
+    window.addEventListener('pointerup', () => {
+      if (!sDrag.on) return;
+      sDrag.on = false; strip.style.scrollSnapType = '';
+      setTimeout(() => { sDrag.drag = false; }, 0);
+    });
+    cards.forEach((c, i) => c.addEventListener('click', () => { if (!sDrag.drag) goCard(i); }));
+
+    buy.addEventListener('click', () => {
+      const msg = t('prMsg').replace('{p}', t('cap.' + cards[N + Math.max(sel, 0)].dataset.ref)).replace('{f}', t('fr' + (af + 1)));
+      const ta = $('#f-msg'), have = ta.value.trim();
+      ta.value = !have || have === lastAuto ? msg : have + '\n\n' + msg;
+      lastAuto = msg;
+      ta.dispatchEvent(new Event('input'));
+      $('#contact').scrollIntoView({ behavior: smooth() });
+      setTimeout(() => ta.focus({ preventScroll: true }), reduce.matches ? 0 : 500);
+    });
+
+    onLang(summary);
+    mob.addEventListener('change', () => { goCard(cur, true); pos = goal = Math.round(goal); render(); });
+    const START = N + Math.min(2, N - 1);
+    setCur(START); settle(); setFrame(0);
+    render(); goCard(START, true); onStrip();
+    window.addEventListener('resize', () => { goCard(cur, true); render(); });
+  })();
   applyLang(lang);
 })();
 

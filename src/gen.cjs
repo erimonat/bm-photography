@@ -37,6 +37,17 @@ const tileHtml = photos.map(([cat, id, ar, cap]) => {
   return `<li class="tile${ar > 1 ? ' wide' : ''}" data-cat="${cat}"><button class="shot" type="button" data-full="${b}&${ar > 1 ? 'w' : 'h'}=3000" data-cap="${esc(I.CAP[id][0])}" data-i18n-attr="data-cap:cap.${id}" data-ar="${ar}" data-glow="${GLOW[cat]}"><span class="ph"><img src="${b}&w=900" srcset="${b}&w=600 600w, ${b}&w=900 900w, ${b}&w=1200 1200w, ${b}&w=1600 1600w, ${b}&w=2000 2000w" sizes="${sizes}" width="${w}" height="${h}" alt="${esc(I.CAP[id][0])}" data-i18n-attr="alt:cap.${id}" loading="lazy" decoding="async"></span></button></li>`;
 }).join('\n        ');
 
+/* "try a photo on a frame": photos slide sideways through a column of frames that scrolls up and down */
+const chev = d => `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>`;
+const CH = { l: chev('M10 3 5 8l5 5'), r: chev('M6 3l5 5-5 5'), u: chev('M3 10l5-5 5 5'), d: chev('M3 6l5 5 5-5') };
+const cardHtml = I.PHOTOS.photos.map(p => {
+  const b = base(p.ref);
+  return `<li class="pcl"><button class="pc" type="button" data-ref="${p.ref}" data-o="${p.orientation === 'landscape' ? 'landscape' : 'portrait'}" data-base="${b}"><img src="${b}&h=800" width="533" height="800" alt="${esc(I.CAP[p.ref][0])}" data-i18n-attr="alt:cap.${p.ref}" loading="lazy" decoding="async"></button></li>`;
+}).join('\n          ');
+const FRAMES = [['black', ''], ['mat', ''], ['float', ''], ['oak', ''], ['gold', '']];
+const frameHtml = FRAMES.map(([k, c], i) => `<li class="fr${c}" data-k="${k}"><button class="fr-b" type="button" aria-current="false" data-i18n-attr="aria-label:fr${i + 1}" aria-label="${T('fr' + (i + 1))}"><span class="frm"><span class="mat"></span><span class="win"><img alt="" width="600" height="400" decoding="async"></span></span></button><span class="fr-name" data-i18n="fr${i + 1}">${T('fr' + (i + 1))}</span></li>`).join('\n          ');
+const chipHtml = FRAMES.map((f, i) => `<button class="chip" type="button" aria-pressed="false" data-i18n="fr${i + 1}">${T('fr' + (i + 1))}</button>`).join('');
+
 const irisHtml = `<div class="iris" aria-hidden="true">
         <div class="iris-base"></div><div class="iris-rim"></div>
         ${Array.from({ length: 7 }, (_, i) => `<i class="blade" style="--i:${i}"></i>`).join('')}
@@ -156,6 +167,39 @@ ${css}
           <div><dt data-i18n="shArch">${T('shArch')}</dt><dd data-i18n="shArchD">${T('shArchD')}</dd></div>
           <div><dt data-i18n="shPort">${T('shPort')}</dt><dd data-i18n="shPortD">${T('shPortD')}</dd></div>
         </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="prints wrap" id="prints" data-o="landscape" aria-labelledby="prints-title">
+    <div class="pr-stage">
+      <div class="pr-head">
+        <h2 id="prints-title" class="pr-h" data-i18n="prH2">${T('prH2')}</h2>
+        <p class="pr-sub" data-i18n="prSub">${T('prSub')}</p>
+      </div>
+      <div class="pr-cross">
+        <ul class="pr-strip" role="list" data-i18n-attr="aria-label:prPhotos" aria-label="${T('prPhotos')}">
+          ${cardHtml}
+        </ul>
+        <div class="pr-rail-wrap">
+          <ul class="pr-rail" id="pr-rail" role="list" data-i18n-attr="aria-label:prFrames" aria-label="${T('prFrames')}">
+          ${frameHtml}
+          </ul>
+          <div class="pr-rbtns">
+            <button class="textbtn pr-arrow" type="button" id="pr-up" data-i18n-attr="aria-label:prUp" aria-label="${T('prUp')}">${CH.u}</button>
+            <button class="textbtn pr-arrow" type="button" id="pr-down" data-i18n-attr="aria-label:prDown" aria-label="${T('prDown')}">${CH.d}</button>
+          </div>
+        </div>
+      </div>
+      <div class="pr-ctl">
+        <button class="textbtn pr-arrow" type="button" id="pr-prev" data-i18n-attr="aria-label:prPrev" aria-label="${T('prPrev')}">${CH.l}</button>
+        <button class="textbtn pr-arrow" type="button" id="pr-next" data-i18n-attr="aria-label:prNext" aria-label="${T('prNext')}">${CH.r}</button>
+      </div>
+      <div class="pr-chips" role="group" data-i18n-attr="aria-label:prFrames" aria-label="${T('prFrames')}">${chipHtml}</div>
+      <div class="pr-buy">
+        <p class="pr-sel" role="status" aria-live="polite"><b id="pr-cap"></b><span id="pr-frame"></span></p>
+        <button class="btn" type="button" id="pr-buy" data-i18n="prBuy">${T('prBuy')}</button>
+        <p class="pr-note" data-i18n="prNote">${T('prNote')}</p>
       </div>
     </div>
   </section>
