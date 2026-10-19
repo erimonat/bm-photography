@@ -50,10 +50,8 @@ const S = {
   eName: ['Size nasıl hitap edeceğimi bilmem için adınızı yazın.', 'Add your name so I know who to reply to.'],
   eEmail: ['ad@ornek.com gibi bir e-posta adresi girin.', 'Enter an email address like name@example.com.'],
   eMsg: ['Çekim hakkında bir iki cümle yazın.', 'Write a sentence or two about the shoot.'],
-  fSending: ['Gönderiliyor…', 'Sending…'],
-  fOk: ['Mesajınız gönderildi. En kısa sürede dönüş yapacağım.', 'Your message was sent. I will get back to you soon.'],
-  fFail: ['Mesaj gönderilemedi. Biraz sonra tekrar deneyin ya da doğrudan {mail} adresine yazın.', 'The message could not be sent. Try again in a moment or write to {mail} directly.'],
-  fRate: ['Çok fazla deneme yapıldı. Bir dakika sonra tekrar deneyin.', 'Too many attempts. Please try again in a minute.'],
+  fStatus: ['Posta uygulamanız mesaj hazır şekilde açılmalı. Açılmazsa berkaymavral@gmail.com adresine yazın.', 'Your mail app should open with the message ready. If it does not, write to berkaymavral@gmail.com.'],
+  mailSubject: ['Çekim talebi: ', 'Shoot enquiry from '],
   footLabel: ['Site altbilgisi', 'Site footer'],
   footLead: ['Bir sonraki kareyi birlikte çekelim.', 'Let’s make the next frame.'],
   footPages: ['Sayfalar', 'Index'],
@@ -90,8 +88,9 @@ const S = {
 const fs = require('fs'), path = require('path');
 const readJson = f => JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'content', f), 'utf8'));
 const SITE = readJson('site.json'), PHOTOS = readJson('photos.json');
+const OLD_MAIL = 'berkaymavral@gmail.com';
 for (const [k, v] of Object.entries(SITE.texts || {})) S[k] = [v.tr, v.en || v.tr];
-S.fFail = S.fFail.map(t => t.split('{mail}').join(SITE.email));
+S.fStatus = S.fStatus.map(t => t.split(OLD_MAIL).join(SITE.email));
 /* photo ref -> [tr, en] caption */
 const CAP = {};
 for (const p of PHOTOS.photos) CAP[p.ref] = [p.caption.tr, p.caption.en || p.caption.tr];

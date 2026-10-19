@@ -227,7 +227,7 @@ ${css}
           <a href="${I.SITE.pexels}" target="_blank" rel="noopener noreferrer">Pexels</a>
         </div>
       </div>
-      <!-- Contact form: validated here for convenience, validated again and sent by the Worker at /api/contact. -->
+      <!-- Contact form: no backend. On submit it validates, then opens the visitor's mail app with the message prefilled. -->
       <form id="contact-form" novalidate>
         <div class="field">
           <label for="f-name" data-i18n="lName">${T('lName')}</label>
@@ -244,7 +244,6 @@ ${css}
           <textarea id="f-msg" name="message" autocomplete="off" maxlength="800" aria-required="true" placeholder="${T('pMsg')}" data-i18n-attr="placeholder:pMsg" aria-describedby="f-msg-err"></textarea>
           <p class="err" id="f-msg-err"></p>
         </div>
-        <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
         <div><button class="btn" type="submit" data-i18n="send">${T('send')}</button></div>
         <p class="status" id="f-status" role="status" aria-live="polite"></p>
       </form>

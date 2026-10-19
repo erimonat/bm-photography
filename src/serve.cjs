@@ -8,10 +8,6 @@ const types = {
   '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.ico': 'image/x-icon'
 };
 http.createServer((req, res) => {
-  if (req.url === '/api/contact' && req.method === 'POST') {
-    let n = 0; req.on('data', c => { n += c.length; }); req.on('end', () => { console.log('contact form posted (dev stub, nothing sent), ' + n + ' bytes'); res.writeHead(200, { 'content-type': 'application/json' }); res.end('{"ok":true}'); });
-    return;
-  }
   let p;
   try { p = decodeURIComponent(new URL(req.url, 'http://x').pathname); } catch { res.writeHead(400); return res.end(); }
   let file = path.normalize(path.join(root, p));
