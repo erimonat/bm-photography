@@ -1,10 +1,12 @@
 /* Hero v4: the client's 25-frame camera sequence (media/seq/NN.webp) played on a canvas, scrubbed by scroll with eased catch-up.
    Frames 1-25: camera in the dark, push-in, cap off, lens, diaphragm opens, Istanbul skyline. Then the canvas zooms and dissolves into the first
    photograph, the headline arrives and the photographs fly in. Frame blending and easing are in app.js; everything else is CSS scroll timelines. */
-const P = 600; // svh of pinned scroll
+/* Timeline is designed on a 600 unit scale (P0). K shortens the real scroll: every window is scaled by it, so the film is the same, just quicker to scroll through. */
+const P0 = 600, K = 0.92, P = Math.round(P0 * K); // P = svh of pinned scroll
+const kv = n => +(n * K).toFixed(1);
 const FRAMES = 30, T0 = 30, STEP = 14; // frame k is centred at T0 + STEP * k svh
 const S = { seqEnd: [T0 + STEP * (FRAMES - 1), 398], heroIn: [394, 428], copyIn: [470, 495], shrink: [515, 555], wallA: 505, wallB: 580 };
-const pc = s => ((s / P) * 100).toFixed(2) + '%';
+const pc = s => ((s / P0) * 100).toFixed(2) + '%';
 const base = id => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb`;
 
 const sats = [
@@ -12,7 +14,7 @@ const sats = [
   ['15297914', 'L', 's5'], ['15069348', 'P', 's6'], ['15194875', 'P', 's7'], ['15518200', 'P', 's8']
 ];
 const wallHtml = `<div class="wall">
-          ${sats.map(([id, o, cls], i) => `<figure class="wi ${cls}" style="--s:${S.wallA + i * 6};--e:${S.wallB - (7 - i) * 3}"><img src="${base(id)}&w=${o === 'L' ? 1100 : 800}" srcset="${(o === 'L' ? [700, 1100, 1500] : [500, 800, 1100]).map(w => base(id) + '&w=' + w + ' ' + w + 'w').join(', ')}" sizes="(min-width:900px) 30vw, 46vw" width="${o === 'L' ? 1100 : 800}" height="${o === 'L' ? 733 : 1200}" alt="" loading="lazy" decoding="async"></figure>`).join('\n          ')}
+          ${sats.map(([id, o, cls], i) => `<figure class="wi ${cls}" style="--s:${kv(S.wallA + i * 6)};--e:${kv(S.wallB - (7 - i) * 3)}"><img src="${base(id)}&w=${o === 'L' ? 1100 : 800}" srcset="${(o === 'L' ? [700, 1100, 1500] : [500, 800, 1100]).map(w => base(id) + '&w=' + w + ' ' + w + 'w').join(', ')}" sizes="(min-width:900px) 30vw, 46vw" width="${o === 'L' ? 1100 : 800}" height="${o === 'L' ? 733 : 1200}" alt="" loading="lazy" decoding="async"></figure>`).join('\n          ')}
         </div>`;
 
 /* the first photograph after the opening is picked at random on every visit (see the script below); the markup carries no src until then */
@@ -60,7 +62,7 @@ const pickScript = String.raw`<script>
 const reelHtml = `${platePic}
       <div class="seq" aria-hidden="true">
         <img class="seq-poster" src="media/seq/01.webp" srcset="media/seq/01-m.webp 960w, media/seq/01.webp 1672w" sizes="100vw" width="1672" height="941" alt="" fetchpriority="high" decoding="async">
-        <canvas class="seq-cv" data-frames="${FRAMES}" data-t0="${T0}" data-step="${STEP}" data-end="${S.seqEnd[0]}"></canvas>
+        <canvas class="seq-cv" data-k="${K}" data-frames="${FRAMES}" data-t0="${T0}" data-step="${STEP}" data-end="${S.seqEnd[0]}"></canvas>
       </div>
       ${wallHtml.replace('</div>', '')}
       ${heroPicture}
@@ -159,14 +161,14 @@ html.lb-open .prog{opacity:0!important}
     .cue{animation:cueOut linear both;animation-timeline:scroll(root);animation-range:0 9svh}
     .seq-poster{animation:posterBoot 2.2s var(--ease-out) both}
     .fstop span:not(:last-child){animation:stopShow linear;animation-timeline:scroll(root)}
-    .fstop span:nth-child(1){animation-range:218svh 250svh}
-    .fstop span:nth-child(2){animation-range:250svh 275svh}
-    .fstop span:nth-child(3){animation-range:275svh 295svh}
-    .fstop span:nth-child(4){animation-range:295svh 315svh}
-    .fstop span:nth-child(5){animation-range:315svh 335svh}
-    .fstop span:nth-child(6){animation-range:335svh 348svh}
-    .fstop span:nth-child(7){animation-range:348svh 358svh}
-    .fstop span:nth-child(8){animation-range:358svh ${P}svh;animation-name:stopLast;animation-fill-mode:forwards}
+    .fstop span:nth-child(1){animation-range:${kv(218)}svh ${kv(250)}svh}
+    .fstop span:nth-child(2){animation-range:${kv(250)}svh ${kv(275)}svh}
+    .fstop span:nth-child(3){animation-range:${kv(275)}svh ${kv(295)}svh}
+    .fstop span:nth-child(4){animation-range:${kv(295)}svh ${kv(315)}svh}
+    .fstop span:nth-child(5){animation-range:${kv(315)}svh ${kv(335)}svh}
+    .fstop span:nth-child(6){animation-range:${kv(335)}svh ${kv(348)}svh}
+    .fstop span:nth-child(7){animation-range:${kv(348)}svh ${kv(358)}svh}
+    .fstop span:nth-child(8){animation-range:${kv(358)}svh ${P}svh;animation-name:stopLast;animation-fill-mode:forwards}
   }
   @keyframes posterBoot{from{scale:1.06;opacity:0}to{scale:1;opacity:1}}
   @keyframes aPlate{0%,${pc(240)}{transform:scale(1.4)}${pc(S.seqEnd[0])},100%{transform:scale(1)}}

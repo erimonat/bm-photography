@@ -35,7 +35,7 @@
   (() => {
     const seq = $('.seq'), cv = $('.seq-cv');
     if (!seq || !cv || reduce.matches || !(window.CSS && CSS.supports('animation-timeline: scroll()'))) return;
-    const N = +cv.dataset.frames, T0 = +cv.dataset.t0, STEP = +cv.dataset.step;
+    const N = +cv.dataset.frames, T0 = +cv.dataset.t0, STEP = +cv.dataset.step, K = +cv.dataset.k || 1;
     const small = matchMedia('(max-width: 820px)').matches;
     const ctx = cv.getContext('2d');
     const imgs = new Array(N), ok = new Array(N).fill(false);
@@ -52,6 +52,7 @@
     };
     /* frame -> scroll (svh): the sequence manifest, 30 + progress * 336 */
     const POS = [30,37.2,44.5,51.7,58.9,66.2,78.1,90,101.9,113.7,125.6,137.5,148.4,159.2,170.1,180.9,191.8,202.7,213.5,224.4,235.2,246.1,259.5,273,286.4,299.8,316.4,332.9,349.5,366];
+    POS.forEach((v, i) => { POS[i] = v * K; }); /* the hero is shortened by K: the frames move with it */
     const targetOf = () => {
       const s = scrollY / sv * 100;
       if (s <= POS[0]) return 0;
@@ -469,7 +470,7 @@
       const P = pitch(), half = M / 2;
       frs.forEach((f, i) => {
         const d = mod(i - pos + half, M) - half, a = Math.abs(d), k = Math.min(a, 1);
-        const op = (1 - .58 * k) * Math.max(0, Math.min(1, (2.3 - a) / .5));
+        const op = (1 - .36 * k) * Math.max(0, Math.min(1, (2.3 - a) / .5));
         f.style.transform = 'translate(-50%,-50%) translateY(' + (d * P).toFixed(1) + 'px) scale(' + (1 - .12 * k).toFixed(3) + ')';
         f.style.opacity = op.toFixed(3);
         f.style.zIndex = String(10 - Math.round(a * 2));
