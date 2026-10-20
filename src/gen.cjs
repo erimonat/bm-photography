@@ -45,7 +45,7 @@ const cardHtml = I.PHOTOS.photos.map(p => {
   return `<li class="pcl"><button class="pc" type="button" data-ref="${p.ref}" data-o="${p.orientation === 'landscape' ? 'landscape' : 'portrait'}" data-base="${b}"><img src="${b}&h=800" width="533" height="800" alt="${esc(I.CAP[p.ref][0])}" data-i18n-attr="alt:cap.${p.ref}" loading="lazy" decoding="async"></button></li>`;
 }).join('\n          ');
 const FRAMES = [['black', ''], ['mat', ''], ['float', ''], ['oak', ''], ['gold', '']];
-const frameHtml = FRAMES.map(([k, c], i) => `<li class="fr${c}" data-k="${k}"><button class="fr-b" type="button" aria-current="false" data-i18n-attr="aria-label:fr${i + 1}" aria-label="${T('fr' + (i + 1))}"><span class="frm"><span class="mat"></span><span class="win"><img alt="" width="600" height="400" decoding="async"></span></span></button><span class="fr-name" data-i18n="fr${i + 1}">${T('fr' + (i + 1))}</span></li>`).join('\n          ');
+const frameHtml = FRAMES.map(([k, c], i) => `<li class="fr${c}" data-k="${k}"><button class="fr-b" type="button" aria-current="false" data-i18n-attr="aria-label:fr${i + 1}" aria-label="${T('fr' + (i + 1))}"><span class="frm"><span class="mold"><i class="mt"></i><i class="mr"></i><i class="mb"></i><i class="ml"></i></span><span class="mat"></span><span class="win"><img alt="" width="600" height="400" decoding="async"></span><span class="glass"></span></span></button><span class="fr-name" data-i18n="fr${i + 1}">${T('fr' + (i + 1))}</span></li>`).join('\n          ');
 const chipHtml = FRAMES.map((f, i) => `<button class="chip" type="button" aria-pressed="false" data-i18n="fr${i + 1}">${T('fr' + (i + 1))}</button>`).join('');
 
 const irisHtml = `<div class="iris" aria-hidden="true">

@@ -194,19 +194,32 @@ button{-webkit-user-select:none;user-select:none;cursor:pointer}
 .fr{position:absolute;left:50%;top:calc(var(--sh)*var(--cy));will-change:transform,opacity}
 .fr-b{display:block;padding:0;border:0;border-radius:0;background:none;pointer-events:auto;touch-action:manipulation}
 .fr-name{position:absolute;top:100%;left:50%;margin-top:12px;translate:-50% 0;white-space:nowrap;color:var(--muted);font-size:.95rem;line-height:1.2}
-/* one frame: mitered wood, a mat and a transparent window */
-.frm{position:relative;display:block;box-sizing:content-box;width:calc(var(--ww) + 2*var(--m));height:calc(var(--wh) + 2*var(--m));border:var(--b) solid;border-color:var(--bt) var(--br) var(--bb) var(--bl);box-shadow:0 16px 26px -12px rgba(0,0,0,.7)}
-.frm::before{content:"";position:absolute;inset:calc(var(--b)*-1);padding:var(--b);background:var(--tex);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);pointer-events:none}
-.mat{position:absolute;inset:0;border:var(--m) solid var(--mat)}
-.win{position:absolute;inset:var(--m);overflow:hidden;outline:var(--cw,0px) solid var(--core,transparent)}
+/* one frame, built like a real one: four mitred mouldings with a cross-section (bevel, face, slope, lip), an optional mat with a bevelled opening, a transparent window and glass over it */
+.frm{position:relative;display:block;box-sizing:border-box;width:calc(var(--ww) + 2*(var(--m) + var(--T)));height:calc(var(--wh) + 2*(var(--m) + var(--T)));box-shadow:0 1px 1px rgba(0,0,0,.55),0 14px 24px -10px rgba(0,0,0,.72)}
+.mold{position:absolute;inset:0;pointer-events:none}
+.mold i{position:absolute;inset:0;background-repeat:no-repeat}
+.mt{clip-path:polygon(0 0,100% 0,calc(100% - var(--T)) var(--T),var(--T) var(--T));background-image:var(--gh,linear-gradient(transparent,transparent)),linear-gradient(to bottom,var(--prof));background-size:100% var(--T);background-position:top;filter:brightness(1.16)}
+.mr{clip-path:polygon(100% 0,100% 100%,calc(100% - var(--T)) calc(100% - var(--T)),calc(100% - var(--T)) var(--T));background-image:var(--gv,linear-gradient(transparent,transparent)),linear-gradient(to left,var(--prof));background-size:var(--T) 100%;background-position:right;filter:brightness(.8)}
+.mb{clip-path:polygon(0 100%,100% 100%,calc(100% - var(--T)) calc(100% - var(--T)),var(--T) calc(100% - var(--T)));background-image:var(--gh,linear-gradient(transparent,transparent)),linear-gradient(to top,var(--prof));background-size:100% var(--T);background-position:bottom;filter:brightness(.62)}
+.ml{clip-path:polygon(0 0,var(--T) var(--T),var(--T) calc(100% - var(--T)),0 100%);background-image:var(--gv,linear-gradient(transparent,transparent)),linear-gradient(to right,var(--prof));background-size:var(--T) 100%;background-position:left;filter:brightness(1)}
+.mat{position:absolute;inset:var(--T);border:var(--m) solid var(--mat)}
+/* the lip of the frame casts a soft shadow on the mat (or on the picture, when there is no mat) */
+.mat::before{content:"";position:absolute;inset:calc(var(--m)*-1);box-shadow:inset 0 7px 9px -5px rgba(0,0,0,.34),inset 7px 0 9px -6px rgba(0,0,0,.18);pointer-events:none}
+.win{position:absolute;inset:calc(var(--T) + var(--m));overflow:hidden;outline:var(--cw,0px) solid var(--core,transparent)}
 .win img{display:block;width:100%;height:100%;object-fit:cover}
-.win::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px var(--lip,rgba(0,0,0,.35)),inset 0 4px 12px rgba(0,0,0,.45);pointer-events:none}
+.win::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.4),inset 0 3px 10px rgba(0,0,0,.35);pointer-events:none}
+.glass{position:absolute;inset:calc(var(--T) + var(--m));pointer-events:none;background:linear-gradient(112deg,rgba(255,255,255,.17) 0,rgba(255,255,255,.06) 24%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 66%,rgba(255,255,255,.07) 84%,rgba(255,255,255,.02) 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
 .fr:has([aria-current=true]) .win img{visibility:hidden}
-.fr[data-k=black]{--b:12px;--m:0px;--bt:#3a3a40;--bl:#2a2a2f;--br:#17171a;--bb:#0b0b0d;--mat:transparent;--tex:linear-gradient(135deg,rgba(255,255,255,.1),transparent 38%,rgba(0,0,0,.4));--lip:rgba(255,255,255,.14)}
-.fr[data-k=mat]{--b:9px;--m:clamp(20px,2.6vw,34px);--bt:#f8f4eb;--bl:#ede8dc;--br:#dad4c6;--bb:#cbc4b4;--mat:#f4f0e7;--core:#fffdf8;--cw:2px;--tex:linear-gradient(135deg,rgba(255,255,255,.55),transparent 40%,rgba(0,0,0,.1));--lip:rgba(0,0,0,.18)}
-.fr[data-k=float]{--b:3px;--m:clamp(14px,2vw,24px);--bt:#fbf9f4;--bl:#efebe2;--br:#d7d1c3;--bb:#c6bfaf;--mat:#0d0d0f;--tex:linear-gradient(135deg,rgba(255,255,255,.4),transparent 50%,rgba(0,0,0,.12));--lip:rgba(255,255,255,.12)}
-.fr[data-k=oak]{--b:17px;--m:13px;--bt:#e0b47a;--bl:#cc9d62;--br:#a67843;--bb:#8f6638;--mat:#efe9dd;--core:#fffdf8;--cw:2px;--tex:repeating-linear-gradient(88deg,rgba(70,40,15,.16) 0 1px,transparent 1px 6px),repeating-linear-gradient(92deg,rgba(255,232,190,.1) 0 2px,transparent 2px 9px),linear-gradient(135deg,rgba(255,255,255,.2),transparent 35%,rgba(0,0,0,.22));--lip:rgba(0,0,0,.2)}
-.fr[data-k=gold]{--b:15px;--m:11px;--bt:#f6dd92;--bl:#e5bd5e;--br:#b98c30;--bb:#8e6a1f;--mat:#17120a;--tex:linear-gradient(135deg,rgba(255,255,255,.6),transparent 26%,rgba(0,0,0,.28) 55%,rgba(255,255,255,.35) 80%,transparent);--lip:rgba(246,221,146,.35)}
+/* black: slim satin gallery frame */
+.fr[data-k=black]{--T:16px;--m:0px;--mat:transparent;--prof:#5a5a62 0,#3a3a40 7%,#222226 20%,#16161a 48%,#0f0f12 76%,#070708 92%,#2e2e34 100%}
+/* white: painted white frame with a wide mat and a bevelled opening */
+.fr[data-k=mat]{--T:13px;--m:clamp(24px,3.2vw,40px);--mat:#f3efe6;--core:#fffdf8;--cw:2px;--prof:#ffffff 0,#f4f1ea 14%,#e6e2d6 40%,#efebe1 68%,#d8d3c6 92%,#b6b1a3 100%}
+/* floater: a thin white frame with a dark gap, the print floats inside it */
+.fr[data-k=float]{--T:8px;--m:clamp(14px,2vw,22px);--mat:#0a0a0c;--prof:#fdfcf8 0,#ebe7dc 50%,#c6c0b1 100%}
+/* oak: wide natural wood with the grain running along each side */
+.fr[data-k=oak]{--T:26px;--m:15px;--mat:#efe9dd;--core:#fffdf8;--cw:2px;--prof:#f1dfbf 0,#e4c89d 9%,#d3b07d 28%,#ddbd8d 55%,#c9a470 80%,#98743f 96%,#6a4a26 100%;--gh:repeating-linear-gradient(90deg,rgba(104,66,30,.17) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(255,242,220,.14) 0 1px,transparent 1px 9px),repeating-linear-gradient(90deg,rgba(120,78,36,.12) 0 2px,transparent 2px 17px),repeating-linear-gradient(90deg,rgba(70,42,18,.1) 0 1px,transparent 1px 23px),repeating-linear-gradient(90deg,rgba(255,244,226,.08) 0 3px,transparent 3px 31px);--gv:repeating-linear-gradient(0deg,rgba(104,66,30,.17) 0 1px,transparent 1px 4px),repeating-linear-gradient(0deg,rgba(255,242,220,.14) 0 1px,transparent 1px 9px),repeating-linear-gradient(0deg,rgba(120,78,36,.12) 0 2px,transparent 2px 17px),repeating-linear-gradient(0deg,rgba(70,42,18,.1) 0 1px,transparent 1px 23px),repeating-linear-gradient(0deg,rgba(255,244,226,.08) 0 3px,transparent 3px 31px)}
+/* gold: a carved moulding with a scoop, a bead and a lip */
+.fr[data-k=gold]{--T:32px;--m:13px;--mat:#17120a;--prof:#fff1bc 0,#f4d57e 5%,#d8ab42 12%,#fff0b8 18%,#b9862a 28%,#86590f 38%,#e9c35f 48%,#fbe6a6 54%,#c79631 64%,#8e6516 78%,#dcae4b 90%,#5d3f0a 100%}
 /* strip controls, frame chips and the buy bar */
 .pr-ctl{position:absolute;left:0;top:calc(var(--sh)*var(--cy) + var(--L)/2 + 30px);display:flex;align-items:center;gap:12px;width:calc(var(--cx)*100% - var(--L)*.45 - 24px)}
 .pr-arrow{display:inline-flex;align-items:center;justify-content:center;min-width:44px;padding:0;touch-action:manipulation;user-select:none;-webkit-user-select:none}
