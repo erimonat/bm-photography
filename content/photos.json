@@ -299,6 +299,1230 @@
         "tr": "Limanda yağmurluklu insanlar, arkalarında bir vapur",
         "en": "People in raincoats at the harbor, a ferry behind them"
       }
+    },
+    {
+      "id": "16741238",
+      "source": "pexels",
+      "ref": "16741238",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Alacakaranlıkta suyun karşısında elektrik direkleriyle tepelik bir kıyı",
+        "en": "A hilly shore with power pylons across the water at dusk"
+      }
+    },
+    {
+      "id": "18030432",
+      "source": "pexels",
+      "ref": "18030432",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Soluk bir gökyüzü altında sahil yolunda tek başına bisikletli",
+        "en": "A lone cyclist on a coastal path under a pale sky"
+      }
+    },
+    {
+      "id": "18030436",
+      "source": "pexels",
+      "ref": "18030436",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Sakin bir günde denizin kıyısında oturan yalnız bir figür",
+        "en": "A lone figure sitting by the sea on a calm day"
+      }
+    },
+    {
+      "id": "18349763",
+      "source": "pexels",
+      "ref": "18349763",
+      "light": "gold",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Bir sanat atölyesinde bisiklet ve tablolar, pencereden görünüyor",
+        "en": "A bicycle and paintings in an art studio, seen through a window"
+      }
+    },
+    {
+      "id": "14953275",
+      "source": "pexels",
+      "ref": "14953275",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Metroda yürüyen merdivenle yukarı çıkan, turuncu çantalı biri",
+        "en": "A figure with an orange bag riding an escalator up from the metro"
+      }
+    },
+    {
+      "id": "15069342",
+      "source": "pexels",
+      "ref": "15069342",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece bir metro peronunda tren yaklaşırken bekleyen insanlar",
+        "en": "People waiting on a metro platform as a train approaches at night"
+      }
+    },
+    {
+      "id": "14953271",
+      "source": "pexels",
+      "ref": "14953271",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece ıslak bir sokakta ışıklı bir bina ve yayalar",
+        "en": "A lit building and pedestrians on a wet street at night"
+      }
+    },
+    {
+      "id": "14953188",
+      "source": "pexels",
+      "ref": "14953188",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Suyun kenarında plaj voleybolu oynayan insanlar, arkada şehir",
+        "en": "People playing beach volleyball by the water, the city behind them"
+      }
+    },
+    {
+      "id": "14953183",
+      "source": "pexels",
+      "ref": "14953183",
+      "light": "dark",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Asfaltın üzerine dağılmış kırmızı sonbahar yaprakları",
+        "en": "Red autumn leaves scattered on the asphalt"
+      }
+    },
+    {
+      "id": "14953181",
+      "source": "pexels",
+      "ref": "14953181",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yumuşak tavan ışıkları altında kalabalık bir kapalı pazar",
+        "en": "A crowded indoor market under soft ceiling lights"
+      }
+    },
+    {
+      "id": "14953192",
+      "source": "pexels",
+      "ref": "14953192",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece ışıklı bir binanın önünde Türk bayraklarıyla toplanan kalabalık",
+        "en": "A crowd with Turkish flags at night in front of a lit building"
+      }
+    },
+    {
+      "id": "14815059",
+      "source": "pexels",
+      "ref": "14815059",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Alacakaranlıkta modern binalar arasında loş bir geçit, yürüyen insanlar",
+        "en": "A dim passage between modern buildings at dusk, people walking"
+      }
+    },
+    {
+      "id": "14815053",
+      "source": "pexels",
+      "ref": "14815053",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Pencereden görünen nehir, tekneler ve köprüler",
+        "en": "A river with boats and bridges seen through a window"
+      }
+    },
+    {
+      "id": "14815049",
+      "source": "pexels",
+      "ref": "14815049",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gün batımında sakin suda küçük bir tekne",
+        "en": "A small boat on calm water at sunset"
+      }
+    },
+    {
+      "id": "14953177",
+      "source": "pexels",
+      "ref": "14953177",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Vapurun penceresinden alacakaranlıkta liman",
+        "en": "The harbor at dusk, seen through a ferry window"
+      }
+    },
+    {
+      "id": "14767389",
+      "source": "pexels",
+      "ref": "14767389",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Şehirde karlı bir sokakta yürüyen insanlar",
+        "en": "People walking in the snow on a city street"
+      }
+    },
+    {
+      "id": "14767393",
+      "source": "pexels",
+      "ref": "14767393",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece kar yağarken kırmızı ışıklı bir bina ve insanlar",
+        "en": "A red-lit building and people under snowfall at night"
+      }
+    },
+    {
+      "id": "14736911",
+      "source": "pexels",
+      "ref": "14736911",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece ışıklı dükkânlar ve kalabalıkla dolu hareketli bir cadde",
+        "en": "A busy street of lit shop fronts and crowds at night"
+      }
+    },
+    {
+      "id": "14767398",
+      "source": "pexels",
+      "ref": "14767398",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece şehirde karda koşan bir pug",
+        "en": "A pug running through snow in the city at night"
+      }
+    },
+    {
+      "id": "14736901",
+      "source": "pexels",
+      "ref": "14736901",
+      "light": "dark",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Hareketli bir gece sokağında insanlarla çevrili bir seyyar tezgâh",
+        "en": "A street food cart surrounded by people on a busy night street"
+      }
+    },
+    {
+      "id": "14736765",
+      "source": "pexels",
+      "ref": "14736765",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Renkli bir duvar resmi ve yayalarla karlı bir sokak",
+        "en": "A snowy street with a colorful mural and pedestrians"
+      }
+    },
+    {
+      "id": "14736761",
+      "source": "pexels",
+      "ref": "14736761",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Karla kaplı ağaçların arasında sarı bir taksi",
+        "en": "A yellow taxi among snow-covered trees"
+      }
+    },
+    {
+      "id": "14736907",
+      "source": "pexels",
+      "ref": "14736907",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Loş bir metro peronunda yolcular",
+        "en": "Commuters on a dim metro platform"
+      }
+    },
+    {
+      "id": "14736220",
+      "source": "pexels",
+      "ref": "14736220",
+      "light": "day",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Dükkânlarla çevrili hareketli bir caddede kırmızı klasik bir araba",
+        "en": "A red vintage car on a busy street lined with shops"
+      }
+    },
+    {
+      "id": "14736218",
+      "source": "pexels",
+      "ref": "14736218",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Güneşli bir günde bir yolcu gemisinin göründüğü sahil yürüyüş yolu",
+        "en": "A waterfront promenade with a cruise ship on a sunny day"
+      }
+    },
+    {
+      "id": "18349762",
+      "source": "pexels",
+      "ref": "18349762",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gün batımında sahil yolunda palmiyeler ve bir motosiklet",
+        "en": "Palm trees and a scooter on a seaside road at sunset"
+      }
+    },
+    {
+      "id": "14736225",
+      "source": "pexels",
+      "ref": "14736225",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yağmurlu bir gece sokağında neon yansımaları ve şemsiyeler",
+        "en": "A rainy night street with neon reflections and umbrellas"
+      }
+    },
+    {
+      "id": "16741261",
+      "source": "pexels",
+      "ref": "16741261",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Kapalı bir gökyüzü altında iskelede insanlar, uzakta tekneler",
+        "en": "People on a pier under overcast skies, boats in the distance"
+      }
+    },
+    {
+      "id": "18030434",
+      "source": "pexels",
+      "ref": "18030434",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gün batımında sahilde yürüyen siluetler",
+        "en": "Silhouettes walking along the seaside at sunset"
+      }
+    },
+    {
+      "id": "15069345",
+      "source": "pexels",
+      "ref": "15069345",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Akşam hareketli bir limanın üzerinde ışıklı bir köprü",
+        "en": "A lit bridge over a busy harbor in the evening"
+      }
+    },
+    {
+      "id": "14953274",
+      "source": "pexels",
+      "ref": "14953274",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Dar bir sokakta duvara yaslanan insanlar, sıcak ışık",
+        "en": "People leaning on a wall in a narrow street, warm light"
+      }
+    },
+    {
+      "id": "14953191",
+      "source": "pexels",
+      "ref": "14953191",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Bir parkta sarı sonbahar ağaçları, arkada tepeler",
+        "en": "Yellow autumn trees in a park, hills behind"
+      }
+    },
+    {
+      "id": "14953270",
+      "source": "pexels",
+      "ref": "14953270",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Alacakaranlıkta kalabalık bir caddede nostaljik tramvay",
+        "en": "A vintage tram on a crowded street at twilight"
+      }
+    },
+    {
+      "id": "14953370",
+      "source": "pexels",
+      "ref": "14953370",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Süslü bir bina ve kalabalıkla bir yılbaşı pazarı",
+        "en": "A Christmas market with a decorated building and a crowd"
+      }
+    },
+    {
+      "id": "14953174",
+      "source": "pexels",
+      "ref": "14953174",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Denizin kıyısında turuncu yağmurluklu bir balıkçı",
+        "en": "A fisherman in an orange raincoat by the sea"
+      }
+    },
+    {
+      "id": "14953178",
+      "source": "pexels",
+      "ref": "14953178",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Sokağın kenarında güneş alan bir korkulukta oturan kedi",
+        "en": "A cat sitting on a sunlit railing by the street"
+      }
+    },
+    {
+      "id": "14953182",
+      "source": "pexels",
+      "ref": "14953182",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece bir sokakta ışıklı bir otel girişi",
+        "en": "A lit hotel front on a street at night"
+      }
+    },
+    {
+      "id": "14953187",
+      "source": "pexels",
+      "ref": "14953187",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece tarihi binaların ışıklandığı bir sokak",
+        "en": "A lit street of historic buildings at night"
+      }
+    },
+    {
+      "id": "14767394",
+      "source": "pexels",
+      "ref": "14767394",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece karlı bir sokakta yürüyen insanlar, ışıklı binalar",
+        "en": "People walking on a snowy street at night, buildings lit"
+      }
+    },
+    {
+      "id": "14815047",
+      "source": "pexels",
+      "ref": "14815047",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yolcularla loş bir vapur içi",
+        "en": "The dim inside of a ferry with passengers"
+      }
+    },
+    {
+      "id": "14815051",
+      "source": "pexels",
+      "ref": "14815051",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Geceleyin sıcak ışıklı rustik bir restoran, yemek yiyen insanlar",
+        "en": "A rustic restaurant at night, warm light and diners"
+      }
+    },
+    {
+      "id": "14815056",
+      "source": "pexels",
+      "ref": "14815056",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yumuşak gün doğumu renklerinde sakin denizde tek bir tekne",
+        "en": "A lone boat on a calm sea in soft sunrise colors"
+      }
+    },
+    {
+      "id": "14736906",
+      "source": "pexels",
+      "ref": "14736906",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Kıyıda gün batımı, yürüyen bir siluet",
+        "en": "A sunset over the shore, a silhouette walking"
+      }
+    },
+    {
+      "id": "14736910",
+      "source": "pexels",
+      "ref": "14736910",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gün batımında yüksekten falezli ve renkli evli bir sahil",
+        "en": "A seaside with cliffs and colorful houses at sunset, from above"
+      }
+    },
+    {
+      "id": "14763987",
+      "source": "pexels",
+      "ref": "14763987",
+      "light": "blue",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Kasvetli bir gökyüzü altında vapur iskelesi yakınında insanlar",
+        "en": "People near a ferry harbor under a moody sky"
+      }
+    },
+    {
+      "id": "14767390",
+      "source": "pexels",
+      "ref": "14767390",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece loş ve karlı bir sokakta yürüyen iki kişi",
+        "en": "Two people walking down a snowy, dim street at night"
+      }
+    },
+    {
+      "id": "14736223",
+      "source": "pexels",
+      "ref": "14736223",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yağmurlu bir akşamda Kadıköy’de ışıklı bir pazar",
+        "en": "A lit night market in Kadıköy on a rainy evening"
+      }
+    },
+    {
+      "id": "14736763",
+      "source": "pexels",
+      "ref": "14736763",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Apartmanlar arasında karla kaplı bir sokak",
+        "en": "A snow-covered street between apartment buildings"
+      }
+    },
+    {
+      "id": "14736759",
+      "source": "pexels",
+      "ref": "14736759",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Karlı ağaçlarla ıslak bir kış sokağında yürüyen insanlar",
+        "en": "People walking along a wet winter street with snowy trees"
+      }
+    },
+    {
+      "id": "14736768",
+      "source": "pexels",
+      "ref": "14736768",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece ışıklı ve karlı bir sokakta siluetler",
+        "en": "Silhouettes on a snowy, lit street at night"
+      }
+    },
+    {
+      "id": "16741279",
+      "source": "pexels",
+      "ref": "16741279",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Güneşli, yeşil bir parkta dolaşan beyaz bir köpek",
+        "en": "A white dog exploring a sunny, green park"
+      }
+    },
+    {
+      "id": "18030435",
+      "source": "pexels",
+      "ref": "18030435",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Hareketli bir limanda ilerleyen vapur",
+        "en": "A ferry crossing a busy harbor"
+      }
+    },
+    {
+      "id": "14736217",
+      "source": "pexels",
+      "ref": "14736217",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Alacakaranlıkta sahilde gezinen insanlar, arkada şehir",
+        "en": "People strolling along the waterfront at twilight, the city behind"
+      }
+    },
+    {
+      "id": "15069344",
+      "source": "pexels",
+      "ref": "15069344",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Perspektifte kaybolan boş bir metro peronu",
+        "en": "An empty metro platform in diminishing perspective"
+      }
+    },
+    {
+      "id": "14953277",
+      "source": "pexels",
+      "ref": "14953277",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gün batımında İstanbul silueti, Boğaz’da tekneler",
+        "en": "The Istanbul skyline at sunset, boats on the Bosphorus"
+      }
+    },
+    {
+      "id": "14953231",
+      "source": "pexels",
+      "ref": "14953231",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Sıcak bir odada eski bir televizyonun üzerinde oturan kedi",
+        "en": "A cat sitting on an old TV in a cozy room"
+      }
+    },
+    {
+      "id": "14953273",
+      "source": "pexels",
+      "ref": "14953273",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "İki bina arasında sıcak ışıklı dar bir sokak",
+        "en": "A narrow street between two buildings in warm light"
+      }
+    },
+    {
+      "id": "14953369",
+      "source": "pexels",
+      "ref": "14953369",
+      "light": "dark",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Yılbaşı pazarında ışıklı bir waffle tezgâhı",
+        "en": "A lit waffle stall at a Christmas market"
+      }
+    },
+    {
+      "id": "14953186",
+      "source": "pexels",
+      "ref": "14953186",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yağmurlu bir şehir sokağında tramvay ve yayalar",
+        "en": "A tram and pedestrians on a rainy city street"
+      }
+    },
+    {
+      "id": "14953176",
+      "source": "pexels",
+      "ref": "14953176",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Güneşli bir sahil yürüyüş yolunda insanlar, uzakta şehir",
+        "en": "People on a sunny seaside promenade, the city in the distance"
+      }
+    },
+    {
+      "id": "14953180",
+      "source": "pexels",
+      "ref": "14953180",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Dükkânlar ve eski binalarla dolu, güneş alan dar bir sokak",
+        "en": "A sunlit narrow street lined with shops and old buildings"
+      }
+    },
+    {
+      "id": "14953190",
+      "source": "pexels",
+      "ref": "14953190",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Limanın kenarında olta hazırlayan iki balıkçı",
+        "en": "Two fishermen setting up a rod by the harbor"
+      }
+    },
+    {
+      "id": "14767397",
+      "source": "pexels",
+      "ref": "14767397",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Taksi ve trafik ışıklarıyla karlı bir sokak",
+        "en": "A snowy street with a taxi and traffic lights"
+      }
+    },
+    {
+      "id": "14815052",
+      "source": "pexels",
+      "ref": "14815052",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Bir park yolundan görünen Boğaz Köprüsü",
+        "en": "The Bosphorus Bridge seen from a park path"
+      }
+    },
+    {
+      "id": "14815048",
+      "source": "pexels",
+      "ref": "14815048",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Loş ışıkta tarihi bir kemerin altından geçen bir çift",
+        "en": "A couple walking through a historic archway in dim light"
+      }
+    },
+    {
+      "id": "14815058",
+      "source": "pexels",
+      "ref": "14815058",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Dramatik bir akşam gökyüzü altında ışıklı bir yemek tezgâhı",
+        "en": "A lit food stall under a dramatic evening sky"
+      }
+    },
+    {
+      "id": "14736908",
+      "source": "pexels",
+      "ref": "14736908",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gün batımı gökyüzünün önünde limanda yürüyen bir kadın",
+        "en": "A woman walking along the harbor against a sunset sky"
+      }
+    },
+    {
+      "id": "14763989",
+      "source": "pexels",
+      "ref": "14763989",
+      "light": "blue",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Alacakaranlıkta ışıkları yanan bir vapur iskelesi",
+        "en": "A ferry pier with its lights on at dusk"
+      }
+    },
+    {
+      "id": "14763986",
+      "source": "pexels",
+      "ref": "14763986",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gün batımında sahilde yürüyen siluetler",
+        "en": "Silhouettes walking on the waterfront at sunset"
+      }
+    },
+    {
+      "id": "14767392",
+      "source": "pexels",
+      "ref": "14767392",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece sıcak lambalarla aydınlanan karlı bir sokakta bir araba",
+        "en": "A car on a snowy street lit by warm lamps at night"
+      }
+    },
+    {
+      "id": "14736764",
+      "source": "pexels",
+      "ref": "14736764",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Karlı bir kış gecesinde parlayan sokak lambaları",
+        "en": "Glowing street lamps on a snowy winter night"
+      }
+    },
+    {
+      "id": "14736760",
+      "source": "pexels",
+      "ref": "14736760",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Park halindeki arabaların arasında karlı bir sokakta oynayan biri",
+        "en": "Someone playing in a snowy street among parked cars"
+      }
+    },
+    {
+      "id": "14736224",
+      "source": "pexels",
+      "ref": "14736224",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gün doğumunda bir sokak, sıcak ışık ve uzun gölgeler",
+        "en": "A street at sunrise, warm light and long shadows"
+      }
+    },
+    {
+      "id": "14736902",
+      "source": "pexels",
+      "ref": "14736902",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece insanlar ve ışıklarla dolu hareketli bir sokak",
+        "en": "A lively street full of people and lights at night"
+      }
+    },
+    {
+      "id": "14736215",
+      "source": "pexels",
+      "ref": "14736215",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Vapurdan görünen denizde batan güneş",
+        "en": "The setting sun on the sea, seen from a ferry"
+      }
+    },
+    {
+      "id": "18349760",
+      "source": "pexels",
+      "ref": "18349760",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Açık bir gökyüzü altında tarihi bir çan kulesi olan kasaba",
+        "en": "A town with a historic bell tower under a clear sky"
+      }
+    },
+    {
+      "id": "14736219",
+      "source": "pexels",
+      "ref": "14736219",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Tramvay ve ışıklı kaldırımlarla bir gece sokağı",
+        "en": "A night street with a tram and lit pavements"
+      }
+    },
+    {
+      "id": "16741239",
+      "source": "pexels",
+      "ref": "16741239",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Öğleden sonra ışığında çatılar ve tepeler",
+        "en": "Rooftops and hills in afternoon light"
+      }
+    },
+    {
+      "id": "15069343",
+      "source": "pexels",
+      "ref": "15069343",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Metro trenine binen ve inen yolcular",
+        "en": "Passengers getting on and off a metro train"
+      }
+    },
+    {
+      "id": "14953276",
+      "source": "pexels",
+      "ref": "14953276",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece Galata Köprüsü ve İstanbul silueti",
+        "en": "The Galata Bridge and the Istanbul skyline at night"
+      }
+    },
+    {
+      "id": "14953272",
+      "source": "pexels",
+      "ref": "14953272",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece bayram ışıklarıyla süslü, yürüyen kalabalıkla dolu bir sokak",
+        "en": "A city street at night with festive lights, a crowd walking"
+      }
+    },
+    {
+      "id": "14953368",
+      "source": "pexels",
+      "ref": "14953368",
+      "light": "dark",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Yılbaşı süsleriyle ışıl ışıl bir bina ve kalabalık",
+        "en": "A building lit with festive decorations and a crowd"
+      }
+    },
+    {
+      "id": "14953194",
+      "source": "pexels",
+      "ref": "14953194",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Sonbahar ışığında ağaçlarla çevrili bir yolda yürüyen insanlar",
+        "en": "People walking along a tree-lined road in autumn light"
+      }
+    },
+    {
+      "id": "14953184",
+      "source": "pexels",
+      "ref": "14953184",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece bir sokak köşesi, ışıklarla süslü balkonlar",
+        "en": "A street corner at night, balconies strung with lights"
+      }
+    },
+    {
+      "id": "14953179",
+      "source": "pexels",
+      "ref": "14953179",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Pencereden görünen limanda bir tekne ve vinç",
+        "en": "A boat and a crane in the harbor, seen through a window"
+      }
+    },
+    {
+      "id": "14953189",
+      "source": "pexels",
+      "ref": "14953189",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yolda uzanan bir figür ve yanında uzun gölgesi",
+        "en": "A figure lying in the road, its long shadow beside it"
+      }
+    },
+    {
+      "id": "14953175",
+      "source": "pexels",
+      "ref": "14953175",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece karanlık bir sokakta ışıkları yanan bir bina",
+        "en": "A lit building on a dark street at night"
+      }
+    },
+    {
+      "id": "14815050",
+      "source": "pexels",
+      "ref": "14815050",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gün batımında sahil yolunda yürüyen insanlar",
+        "en": "People walking on the seaside promenade at sunset"
+      }
+    },
+    {
+      "id": "14815054",
+      "source": "pexels",
+      "ref": "14815054",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yeşil bir orman, uzakta şehir",
+        "en": "A green forest with the city in the distance"
+      }
+    },
+    {
+      "id": "14815057",
+      "source": "pexels",
+      "ref": "14815057",
+      "light": "day",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Sokakta yaşlı bir adam, arkasında bir bayrak",
+        "en": "An elderly man on the street, a flag behind him"
+      }
+    },
+    {
+      "id": "14815046",
+      "source": "pexels",
+      "ref": "14815046",
+      "light": "gold",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Gün batımında suda kürek çeken iki kişi",
+        "en": "Two people rowing out on the water at sunset"
+      }
+    },
+    {
+      "id": "14767391",
+      "source": "pexels",
+      "ref": "14767391",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece neon ışıklı karlı bir sokak",
+        "en": "A snowy street with neon lights at night"
+      }
+    },
+    {
+      "id": "14763988",
+      "source": "pexels",
+      "ref": "14763988",
+      "light": "gold",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Dramatik bir gün batımı gökyüzü altında Yavuz Sultan Selim Köprüsü",
+        "en": "Yavuz Sultan Selim Bridge under a dramatic sunset sky"
+      }
+    },
+    {
+      "id": "14767395",
+      "source": "pexels",
+      "ref": "14767395",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Gece şehir ışıkları altında karlı bir sokaktan geçen insanlar",
+        "en": "People crossing a snowy street at night under city lights"
+      }
+    },
+    {
+      "id": "14736909",
+      "source": "pexels",
+      "ref": "14736909",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Denizin kıyısında çimenlerde yürüyen bir yavru kedi",
+        "en": "A kitten walking on grass by the sea"
+      }
+    },
+    {
+      "id": "14736903",
+      "source": "pexels",
+      "ref": "14736903",
+      "light": "day",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Güneşli bir sokakta park etmiş turuncu bir spor araba",
+        "en": "An orange sports car parked on a sunlit street"
+      }
+    },
+    {
+      "id": "14736767",
+      "source": "pexels",
+      "ref": "14736767",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Karla kaplı ağaçlar ve park halindeki arabalar, yukarıdan",
+        "en": "Snow-covered trees and parked cars, seen from above"
+      }
+    },
+    {
+      "id": "14736762",
+      "source": "pexels",
+      "ref": "14736762",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Karlı bir gecede ışıklarla süslü bir ağaç",
+        "en": "A tree strung with lights on a snowy night"
+      }
+    },
+    {
+      "id": "14736904",
+      "source": "pexels",
+      "ref": "14736904",
+      "light": "gold",
+      "orientation": "landscape",
+      "hero": false,
+      "caption": {
+        "tr": "Gün batımında hareketli bir caddede yürüyen baba ve oğul",
+        "en": "A father and son walking down a busy street at sunset"
+      }
+    },
+    {
+      "id": "14736221",
+      "source": "pexels",
+      "ref": "14736221",
+      "light": "dark",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Yağmurlu bir gecede neon ışıklı bir sokak",
+        "en": "A neon-lit street on a rainy night"
+      }
+    },
+    {
+      "id": "14736216",
+      "source": "pexels",
+      "ref": "14736216",
+      "light": "blue",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Alacakaranlıkta Kız Kulesi, sakin deniz ve arkada şehir",
+        "en": "Maiden’s Tower at twilight, calm sea and the city behind"
+      }
+    },
+    {
+      "id": "14736758",
+      "source": "pexels",
+      "ref": "14736758",
+      "light": "day",
+      "orientation": "portrait",
+      "hero": false,
+      "caption": {
+        "tr": "Karlı bir sokakta cam cepheli bir bina",
+        "en": "A glass-fronted building on a snowy street"
+      }
     }
   ]
 }

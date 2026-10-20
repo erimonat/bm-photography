@@ -30,11 +30,13 @@ const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 const GLOW = { day: '#8c8270', gold: '#d27a2c', blue: '#3a6a98', dark: '#b0483a' };
 const P = 0.6667, L = 1.5;
 const photos = I.PHOTOS.photos.map(p => [p.light, p.ref, p.orientation === 'landscape' ? L : P, p.caption.en || p.caption.tr]);
-const tileHtml = photos.map(([cat, id, ar, cap]) => {
+/* the gallery is paged by the script (25 at a time, the first page picked at random each visit): every tile starts hidden, so no gallery picture is requested before that choice is made */
+const PAGE = 25;
+const tileHtml = photos.map(([cat, id, ar, cap], idx) => {
   const [w, h] = ar > 1 ? [1200, 800] : [800, 1200];
   const b = base(id);
   const sizes = ar > 1 ? '(min-width:1000px) 64vw, 100vw' : '(min-width:1000px) 32vw, 64vw';
-  return `<li class="tile${ar > 1 ? ' wide' : ''}" data-cat="${cat}"><button class="shot" type="button" data-full="${b}&${ar > 1 ? 'w' : 'h'}=3000" data-cap="${esc(I.CAP[id][0])}" data-i18n-attr="data-cap:cap.${id}" data-ar="${ar}" data-glow="${GLOW[cat]}"><span class="ph"><img src="${b}&w=900" srcset="${b}&w=600 600w, ${b}&w=900 900w, ${b}&w=1200 1200w, ${b}&w=1600 1600w, ${b}&w=2000 2000w" sizes="${sizes}" width="${w}" height="${h}" alt="${esc(I.CAP[id][0])}" data-i18n-attr="alt:cap.${id}" loading="lazy" decoding="async"></span></button></li>`;
+  return `<li class="tile${ar > 1 ? ' wide' : ''}" data-cat="${cat}"${' hidden'}><button class="shot" type="button" data-full="${b}&${ar > 1 ? 'w' : 'h'}=3000" data-cap="${esc(I.CAP[id][0])}" data-i18n-attr="data-cap:cap.${id}" data-ar="${ar}" data-glow="${GLOW[cat]}"><span class="ph"><img src="${b}&w=900" srcset="${b}&w=600 600w, ${b}&w=900 900w, ${b}&w=1200 1200w, ${b}&w=1600 1600w, ${b}&w=2000 2000w" sizes="${sizes}" width="${w}" height="${h}" alt="${esc(I.CAP[id][0])}" data-i18n-attr="alt:cap.${id}" loading="lazy" decoding="async"></span></button></li>`;
 }).join('\n        ');
 
 /* "try a photo on a frame": photos slide sideways through a column of frames that scrolls up and down */
@@ -42,7 +44,7 @@ const chev = d => `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="
 const CH = { l: chev('M10 3 5 8l5 5'), r: chev('M6 3l5 5-5 5'), u: chev('M3 10l5-5 5 5'), d: chev('M3 6l5 5 5-5') };
 const cardHtml = I.PHOTOS.photos.map(p => {
   const b = base(p.ref);
-  return `<li class="pcl"><button class="pc" type="button" data-ref="${p.ref}" data-o="${p.orientation === 'landscape' ? 'landscape' : 'portrait'}" data-base="${b}"><img src="${b}&h=800" width="533" height="800" alt="${esc(I.CAP[p.ref][0])}" data-i18n-attr="alt:cap.${p.ref}" loading="lazy" decoding="async"></button></li>`;
+  return `<li class="pcl"><button class="pc" type="button" data-ref="${p.ref}" data-o="${p.orientation === 'landscape' ? 'landscape' : 'portrait'}" data-base="${b}"><img data-src="${b}&h=800" width="533" height="800" alt="${esc(I.CAP[p.ref][0])}" data-i18n-attr="alt:cap.${p.ref}" decoding="async"></button></li>`;
 }).join('\n          ');
 const FRAMES = [['black', ''], ['mat', ''], ['float', ''], ['oak', ''], ['gold', '']];
 const frameHtml = FRAMES.map(([k, c], i) => `<li class="fr${c}" data-k="${k}"><button class="fr-b" type="button" aria-current="false" data-i18n-attr="aria-label:fr${i + 1}" aria-label="${T('fr' + (i + 1))}"><span class="frm"><span class="mold"><i class="mt"></i><i class="mr"></i><i class="mb"></i><i class="ml"></i></span><span class="mat"></span><span class="win"><img alt="" width="600" height="400" decoding="async"></span><span class="glass"></span></span></button><span class="fr-name" data-i18n="fr${i + 1}">${T('fr' + (i + 1))}</span></li>`).join('\n          ');
@@ -93,6 +95,7 @@ const html = `<!doctype html>
 <link rel="preload" as="image" href="media/seq/01.webp" imagesrcset="media/seq/01-m.webp 960w, media/seq/01.webp 1672w" imagesizes="100vw" type="image/webp" fetchpriority="high">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Geist+Mono:wght@400..600&display=swap">
 <script>document.documentElement.classList.add('js')</script>
+<noscript><style>.tile[hidden]{display:block}.tile.wide[hidden]{display:block;grid-column:span 2}</style></noscript>
 <style>
 ${css}
 </style>
@@ -156,6 +159,10 @@ ${css}
     <ul class="grid" id="grid">
         ${tileHtml}
     </ul>
+    <div class="more-wrap">
+      <button class="textbtn more" type="button" id="more" hidden><span data-i18n="more">${T('more')}</span> <span class="more-n" id="more-n"></span></button>
+      <p class="vh" id="more-live" role="status" aria-live="polite"></p>
+    </div>
   </section>
 
   <section class="about wrap" id="about" aria-labelledby="about-title">

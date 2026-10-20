@@ -215,15 +215,31 @@
   const valid = ['all', 'gold', 'day', 'blue', 'dark'];
   let filter = new URLSearchParams(location.search).get('filter');
   if (!valid.includes(filter)) filter = 'all';
-  function apply() {
-    tiles.forEach(t => { t.hidden = !(filter === 'all' || t.dataset.cat === filter); t.classList.remove('fill'); });
+  /* the library is long: show a page at a time (25), and open the next page on request, within the chosen light */
+  const PAGE = 25, more = $('#more'), moreN = $('#more-n'), moreLive = $('#more-live');
+  let limit = PAGE;
+  /* "tiles" stays in the logic order from the data. Each visit draws one random order; the first page of any view is the first 25 of that draw, then the view continues in logic order. */
+  const draw = [...tiles];
+  for (let i = draw.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [draw[i], draw[j]] = [draw[j], draw[i]]; }
+  function apply(reorder) {
+    const match = t => filter === 'all' || t.dataset.cat === filter;
+    const first = draw.filter(match).slice(0, PAGE), lead = new Set(first);
+    const list = [...first, ...tiles.filter(t => match(t) && !lead.has(t))];
+    const rest = tiles.filter(t => !match(t));
+    /* moving nodes only when the view changes keeps "show more" from touching what is already on screen */
+    if (reorder) grid.append(...list, ...rest);
+    tiles.forEach(t => t.classList.remove('fill'));
+    list.forEach((t, i) => { t.hidden = i >= limit; });
+    rest.forEach(t => { t.hidden = true; });
+    const total = list.length, shown = list.filter(t => !t.hidden).length;
     fillRow();
-    const fc = $('#frame-count'); if (fc) fc.textContent = String(tiles.filter(t => !t.hidden).length).padStart(2, '0');
+    const fc = $('#frame-count'); if (fc) fc.textContent = String(total).padStart(2, '0');
+    if (more) { more.hidden = total <= shown; moreN.textContent = '(' + (total - shown) + ')'; }
   }
   /* when the last row would be short, the last portrait tile widens to close the gap */
   function fillRow() {
     const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
-    const shown = tiles.filter(t => !t.hidden);
+    const shown = $$('.tile:not([hidden])', grid);
     const cells = shown.reduce((n, t) => n + (t.classList.contains('wide') ? 2 : 1), 0);
     const gap = (cols - (cells % cols)) % cols;
     if (gap === 1) {
@@ -231,18 +247,19 @@
       if (last) last.classList.add('fill');
     }
   }
-  matchMedia('(max-width:1000px)').addEventListener('change', apply);
-  matchMedia('(max-width:640px)').addEventListener('change', apply);
+  matchMedia('(max-width:1000px)').addEventListener('change', () => apply());
+  matchMedia('(max-width:640px)').addEventListener('change', () => apply());
   function setFilter(f) {
     filter = f;
+    limit = PAGE;
     grid.dataset.f = f;
     $$('.filters button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === f)));
     try { const u = new URL(location.href); f === 'all' ? u.searchParams.delete('filter') : u.searchParams.set('filter', f); history.replaceState(null, '', u); } catch { /* file:// pages cannot change the URL */ }
-    if (reduce.matches) { apply(); return; }
+    if (reduce.matches) { apply(true); return; }
     grid.classList.add('closing');
     setTimeout(() => {
       tiles.forEach(t => { t.classList.remove('in', 'done'); t.querySelector('.shot').style.transitionDelay = '0ms'; });
-      apply();
+      apply(true);
       grid.classList.remove('closing');
       let n = 0;
       requestAnimationFrame(() => requestAnimationFrame(() => tiles.filter(t => !t.hidden).forEach(t => {
@@ -255,7 +272,15 @@
     b.setAttribute('aria-pressed', String(b.dataset.f === filter));
     b.addEventListener('click', () => b.dataset.f !== filter && setFilter(b.dataset.f));
   });
-  apply();
+  if (more) more.addEventListener('click', () => {
+    const before = new Set($$('.tile:not([hidden])', grid));
+    limit += PAGE;
+    apply();
+    const added = $$('.tile:not([hidden])', grid).filter(t => !before.has(t));
+    if (moreLive) moreLive.textContent = t('moreAdded').replace('{n}', added.length);
+    if (added[0]) added[0].querySelector('.shot').focus({ preventScroll: true });
+  });
+  apply(true);
   grid.dataset.f = filter;
 
   /* ---------- about: split the lead into words for the scroll-driven reveal ---------- */
@@ -432,6 +457,17 @@
       return c;
     });
     strip.prepend(...copy()); strip.append(...copy());
+    /* 127 photos in three copies: nothing is requested until the section is near, then a picture only when it is about to scroll into view */
+    const feed = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const im = e.target;
+      if (im.dataset.src) { im.src = im.dataset.src; delete im.dataset.src; }
+      feed.unobserve(im);
+    }), { root: strip, rootMargin: '0px 900px 0px 900px' });
+    let armed = false; const queue = [];
+    const arm = () => { if (armed) return; armed = true; $$('img[data-src]', strip).forEach(im => feed.observe(im)); queue.splice(0).forEach(fn => fn()); };
+    const whenNear = fn => (armed ? fn() : queue.push(fn));
+    new IntersectionObserver((es, o) => { if (es.some(e => e.isIntersecting)) { o.disconnect(); arm(); } }, { rootMargin: '1400px 0px' }).observe(sec);
     const lis = $$('.pcl', strip), cards = $$('.pc', strip), frs = $$('.fr', rail);
     const imgs = $$('.win img', rail), chips = $$('.chip', sec);
     const capEl = $('#pr-cap'), frEl = $('#pr-frame');
@@ -559,7 +595,7 @@
       const m = strip.scrollLeft + snapX(); let b = 0, bd = Infinity;
       lis.forEach((li, k) => { const d = Math.abs(centreOf(li) - m); if (d < bd) { bd = d; b = k; } });
       if (b !== cur) setCur(b);
-      clearTimeout(st1); st1 = setTimeout(() => { settle(); rebaseStrip(); }, 160);
+      clearTimeout(st1); st1 = setTimeout(() => { whenNear(settle); rebaseStrip(); }, 160);
     };
     strip.addEventListener('scroll', onStrip, { passive: true });
     prev.addEventListener('click', () => goCard(cur - 1));
@@ -597,7 +633,7 @@
     onLang(summary);
     mob.addEventListener('change', () => { goCard(cur, true); pos = goal = Math.round(goal); render(); });
     const START = N + Math.min(2, N - 1);
-    setCur(START); settle(); setFrame(0);
+    setCur(START); whenNear(settle); setFrame(0);
     render(); goCard(START, true); onStrip();
     window.addEventListener('resize', () => { goCard(cur, true); render(); });
   })();

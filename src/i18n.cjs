@@ -78,6 +78,8 @@ const S = {
   fr3: ['İnce beyaz, yüzen', 'Thin white, floating'],
   fr4: ['Meşe', 'Oak'],
   fr5: ['Altın', 'Gold'],
+  more: ['Daha fazla göster', 'Show more'],
+  moreAdded: ['{n} fotoğraf daha yüklendi', '{n} more photos loaded'],
   lbLabel: ['Fotoğraf görüntüleyici', 'Photo viewer'],
   lbClose: ['Kapat', 'Close'],
   lbPrev: ['Önceki', 'Previous'],
