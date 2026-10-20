@@ -465,12 +465,13 @@
 
     /* ----- frame column: positioned by script, so looping is arithmetic (no scrolling, no snapping, no jumps) ----- */
     let pos = 0, goal = 0, raf = 0, last = 0;
-    const pitch = () => Math.max(...frs.map(f => f.offsetHeight)) + Math.max(36, Math.min(56, innerHeight * .05));
+    /* neighbours are drawn at .88 scale, so centre-to-centre = half the big one + half the small one + the gap: the next frame sits close, and you can see there is one */
+    const pitch = () => Math.max(...frs.map(f => f.offsetHeight)) * .94 + Math.max(14, Math.min(26, innerHeight * .022));
     const render = () => {
       const P = pitch(), half = M / 2;
       frs.forEach((f, i) => {
         const d = mod(i - pos + half, M) - half, a = Math.abs(d), k = Math.min(a, 1);
-        const op = (1 - .36 * k) * Math.max(0, Math.min(1, (2.3 - a) / .5));
+        const op = (1 - .27 * k) * Math.max(0, Math.min(1, (2.3 - a) / .5));
         f.style.transform = 'translate(-50%,-50%) translateY(' + (d * P).toFixed(1) + 'px) scale(' + (1 - .12 * k).toFixed(3) + ')';
         f.style.opacity = op.toFixed(3);
         f.style.zIndex = String(10 - Math.round(a * 2));
