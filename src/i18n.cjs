@@ -61,6 +61,7 @@ const S = {
   place: ['İstanbul, Türkiye', 'Istanbul, Türkiye'],
   footNote: ['Fotoğraflar: Berkay Mavral.', 'Photography: Berkay Mavral.'],
   footBack: ['İlk kareye dön', 'Back to the first frame'],
+  navPrints: ['Çerçevede Dene', 'Try in a Frame'],
   prH2: ['Fotoğraflarımı çerçevede dene, beğendiğini satın al.', 'Try my photos in a frame, then buy the one you like.'],
   prSub: ['Bir fotoğraf seç, sonra çerçeveleri kaydırarak dene.', 'Pick a photo, then scroll through the frames to try them.'],
   prPhotos: ['Fotoğraflar', 'Photos'],

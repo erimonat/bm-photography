@@ -264,7 +264,7 @@ ${css}
     <p class="o-lead" data-i18n="footLead">${T('footLead')}</p>
     <div>
       <h2 class="o-h" data-i18n="footPages">${T('footPages')}</h2>
-      <ul class="o-list"><li><a href="#work" data-i18n="navFrames">${T('navFrames')}</a></li><li><a href="#about" data-i18n="navAbout">${T('navAbout')}</a></li><li><a href="#contact" data-i18n="footContact">${T('footContact')}</a></li></ul>
+      <ul class="o-list"><li><a href="#work" data-i18n="navFrames">${T('navFrames')}</a></li><li><a href="#about" data-i18n="navAbout">${T('navAbout')}</a></li><li><a href="#prints" data-i18n="navPrints">${T('navPrints')}</a></li><li><a href="#contact" data-i18n="footContact">${T('footContact')}</a></li></ul>
     </div>
     <div>
       <h2 class="o-h" data-i18n="footElse">${T('footElse')}</h2>

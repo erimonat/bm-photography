@@ -242,9 +242,15 @@
     /* moving nodes only when the view changes keeps "show more" from touching what is already on screen */
     if (reorder) grid.append(...list, ...rest);
     tiles.forEach(t => t.classList.remove('fill'));
-    list.forEach((t, i) => { t.hidden = i >= limit; });
+    /* a short last row is closed by also showing the next photos that fit the gap, so nothing gets cropped */
+    const span = t => t.classList.contains("wide") ? 2 : 1;
+    const cols = getComputedStyle(grid).gridTemplateColumns.split(" ").length;
+    const vis = new Set(list.slice(0, limit));
+    let gap = (cols - list.slice(0, limit).reduce((n, t) => n + span(t), 0) % cols) % cols;
+    for (let i = limit; gap && i < list.length; i++) if (span(list[i]) <= gap) { vis.add(list[i]); gap -= span(list[i]); }
+    list.forEach(t => { t.hidden = !vis.has(t); });
     rest.forEach(t => { t.hidden = true; });
-    const total = list.length, shown = list.filter(t => !t.hidden).length;
+    const total = list.length, shown = vis.size;
     fillRow();
     const fc = $('#frame-count'); if (fc) fc.textContent = String(total).padStart(2, '0');
     if (more) { more.hidden = total <= shown; moreN.textContent = '(' + (total - shown) + ')'; }
@@ -255,10 +261,9 @@
     const shown = $$('.tile:not([hidden])', grid);
     const cells = shown.reduce((n, t) => n + (t.classList.contains('wide') ? 2 : 1), 0);
     const gap = (cols - (cells % cols)) % cols;
-    if (gap === 1) {
-      const last = [...shown].reverse().find(t => !t.classList.contains('wide'));
-      if (last) last.classList.add('fill');
-    }
+    /* end of the list, nothing left to pull in: widen the last portrait tiles instead */
+    const ports = [...shown].reverse().filter(t => !t.classList.contains("wide"));
+    for (let i = 0; i < gap && i < ports.length; i++) ports[i].classList.add("fill");
   }
   matchMedia('(max-width:1000px)').addEventListener('change', () => apply());
   matchMedia('(max-width:640px)').addEventListener('change', () => apply());
