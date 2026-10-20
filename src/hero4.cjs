@@ -2,7 +2,7 @@
    Frames 1-25: camera in the dark, push-in, cap off, lens, diaphragm opens, Istanbul skyline. Then the canvas zooms and dissolves into the first
    photograph, the headline arrives and the photographs fly in. Frame blending and easing are in app.js; everything else is CSS scroll timelines. */
 /* Timeline is designed on a 600 unit scale (P0). K shortens the real scroll: every window is scaled by it, so the film is the same, just quicker to scroll through. */
-const P0 = 600, K = 0.92, P = Math.round(P0 * K); // P = svh of pinned scroll
+const P0 = 600, K = 0.85, P = Math.round(P0 * K); // P = svh of pinned scroll
 const kv = n => +(n * K).toFixed(1);
 const FRAMES = 30, T0 = 30, STEP = 14; // frame k is centred at T0 + STEP * k svh
 const S = { seqEnd: [T0 + STEP * (FRAMES - 1), 398], heroIn: [394, 428], copyIn: [470, 495], shrink: [515, 555], wallA: 505, wallB: 580 };
