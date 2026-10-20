@@ -31,6 +31,19 @@
   }
   $$('[data-lang]').forEach(b => b.addEventListener('click', () => b.dataset.lang !== lang && applyLang(b.dataset.lang, true)));
 
+  /* the photographs of the opening wall are lazy, so nothing is fetched for them on arrival. Once the visitor is well into the film, fetch them, so they are there when the wall opens. */
+  (() => {
+    const wall = $$('.wall .wi:not(.hero) img');
+    if (!wall.length) return;
+    const go = () => {
+      if (scrollY < innerHeight * 2.2) return;
+      wall.forEach(i => { i.loading = 'eager'; });
+      removeEventListener('scroll', go);
+    };
+    addEventListener('scroll', go, { passive: true });
+    go();
+  })();
+
   /* ---------- hero: camera sequence on a canvas, scrubbed by scroll with eased catch-up ---------- */
   (() => {
     const seq = $('.seq'), cv = $('.seq-cv');

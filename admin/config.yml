@@ -55,7 +55,7 @@ collections:
                 options:
                   - { label: Yatay, value: landscape }
                   - { label: Dikey, value: portrait }
-              - { name: hero, label: Açılışta ilk fotoğraf olarak çıkabilir, widget: boolean, default: false }
+              - { name: hero, label: Açılış sahnesinde çıkabilir (büyük fotoğraf ve etrafındaki duvar, her ziyarette rastgele), widget: boolean, default: false }
               - name: caption
                 label: Açıklama
                 widget: object

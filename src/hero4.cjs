@@ -9,12 +9,10 @@ const S = { seqEnd: [T0 + STEP * (FRAMES - 1), 398], heroIn: [394, 428], copyIn:
 const pc = s => ((s / P0) * 100).toFixed(2) + '%';
 const base = id => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb`;
 
-const sats = [
-  ['15297911', 'P', 's1'], ['18349761', 'L', 's2'], ['15207754', 'P', 's3'], ['15518194', 'P', 's4'],
-  ['15297914', 'L', 's5'], ['15069348', 'P', 's6'], ['15194875', 'P', 's7'], ['15518200', 'P', 's8']
-];
+/* the eight photographs around the first one: only their shape is fixed here (P portrait, L landscape); which photograph goes where is drawn on every visit */
+const sats = [['P', 's1'], ['L', 's2'], ['P', 's3'], ['P', 's4'], ['L', 's5'], ['P', 's6'], ['P', 's7'], ['P', 's8']];
 const wallHtml = `<div class="wall">
-          ${sats.map(([id, o, cls], i) => `<figure class="wi ${cls}" style="--s:${kv(S.wallA + i * 6)};--e:${kv(S.wallB - (7 - i) * 3)}"><img src="${base(id)}&w=${o === 'L' ? 1100 : 800}" srcset="${(o === 'L' ? [700, 1100, 1500] : [500, 800, 1100]).map(w => base(id) + '&w=' + w + ' ' + w + 'w').join(', ')}" sizes="(min-width:900px) 30vw, 46vw" width="${o === 'L' ? 1100 : 800}" height="${o === 'L' ? 733 : 1200}" alt="" loading="lazy" decoding="async"></figure>`).join('\n          ')}
+          ${sats.map(([o, cls], i) => `<figure class="wi ${cls}" style="--s:${kv(S.wallA + i * 6)};--e:${kv(S.wallB - (7 - i) * 3)}"><img data-o="${o}" sizes="(min-width:900px) 30vw, 46vw" width="${o === 'L' ? 1100 : 800}" height="${o === 'L' ? 733 : 1200}" alt="" loading="lazy" decoding="async"></figure>`).join('\n          ')}
         </div>`;
 
 /* the first photograph after the opening is picked at random on every visit (see the script below); the markup carries no src until then */
@@ -48,13 +46,13 @@ const pickScript = String.raw`<script>
   set(document.querySelector('[data-pick=plate]'),[1100,1600],[900,1600,2200],false);
   set(document.querySelector('[data-pick=hero]'),[700,1100,1600],[900,1600,2200],true);
   window.__heroCap={l:[lp[1],lp[2]],p:[pp[1],pp[2]]};
-  /* the wall around it must not repeat the chosen photograph */
-  var dL='15518197',dP='15297912';
+  /* the wall: each slot draws a different photograph of its own shape from the same set, never the one already chosen above */
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+  var wl=shuffle(L.filter(function(p){return p[0]!==lp[0]})),wp=shuffle(P.filter(function(p){return p[0]!==pp[0]}));
   [].forEach.call(document.querySelectorAll('.wall .wi:not(.hero) img'),function(im){
-    var m=/photos\/(\d+)\//.exec(im.getAttribute('src')||'');
-    if(!m)return;
-    if(m[1]===lp[0])im.src=im.src.split(m[1]).join(dL);
-    else if(m[1]===pp[0])im.src=im.src.split(m[1]).join(dP);
+    var land=im.getAttribute('data-o')==='L',p=(land?wl:wp).shift()||(land?lp:pp),ws=land?[700,1100,1500]:[500,800,1100];
+    im.srcset=ws.map(function(w){return u(p[0],w)+' '+w+'w'}).join(', ');
+    im.src=u(p[0],land?1100:800);
   });
 })();
 </script>`;

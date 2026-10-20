@@ -462,7 +462,7 @@
       "ref": "14815049",
       "light": "gold",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Gün batımında sakin suda küçük bir tekne",
         "en": "A small boat on calm water at sunset"
@@ -534,7 +534,7 @@
       "ref": "14736901",
       "light": "dark",
       "orientation": "landscape",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Hareketli bir gece sokağında insanlarla çevrili bir seyyar tezgâh",
         "en": "A street food cart surrounded by people on a busy night street"
@@ -582,7 +582,7 @@
       "ref": "14736220",
       "light": "day",
       "orientation": "landscape",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Dükkânlarla çevrili hareketli bir caddede kırmızı klasik bir araba",
         "en": "A red vintage car on a busy street lined with shops"
@@ -618,7 +618,7 @@
       "ref": "14736225",
       "light": "dark",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Yağmurlu bir gece sokağında neon yansımaları ve şemsiyeler",
         "en": "A rainy night street with neon reflections and umbrellas"
@@ -642,7 +642,7 @@
       "ref": "18030434",
       "light": "gold",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Gün batımında sahilde yürüyen siluetler",
         "en": "Silhouettes walking along the seaside at sunset"
@@ -690,7 +690,7 @@
       "ref": "14953270",
       "light": "blue",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Alacakaranlıkta kalabalık bir caddede nostaljik tramvay",
         "en": "A vintage tram on a crowded street at twilight"
@@ -714,7 +714,7 @@
       "ref": "14953174",
       "light": "blue",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Denizin kıyısında turuncu yağmurluklu bir balıkçı",
         "en": "A fisherman in an orange raincoat by the sea"
@@ -858,7 +858,7 @@
       "ref": "14736223",
       "light": "dark",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Yağmurlu bir akşamda Kadıköy’de ışıklı bir pazar",
         "en": "A lit night market in Kadıköy on a rainy evening"
@@ -954,7 +954,7 @@
       "ref": "14953277",
       "light": "gold",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Gün batımında İstanbul silueti, Boğaz’da tekneler",
         "en": "The Istanbul skyline at sunset, boats on the Bosphorus"
@@ -1098,7 +1098,7 @@
       "ref": "14736908",
       "light": "gold",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Gün batımı gökyüzünün önünde limanda yürüyen bir kadın",
         "en": "A woman walking along the harbor against a sunset sky"
@@ -1122,7 +1122,7 @@
       "ref": "14763986",
       "light": "gold",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Gün batımında sahilde yürüyen siluetler",
         "en": "Silhouettes walking on the waterfront at sunset"
@@ -1170,7 +1170,7 @@
       "ref": "14736224",
       "light": "gold",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Gün doğumunda bir sokak, sıcak ışık ve uzun gölgeler",
         "en": "A street at sunrise, warm light and long shadows"
@@ -1350,7 +1350,7 @@
       "ref": "14815050",
       "light": "gold",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Gün batımında sahil yolunda yürüyen insanlar",
         "en": "People walking on the seaside promenade at sunset"
@@ -1386,7 +1386,7 @@
       "ref": "14815046",
       "light": "gold",
       "orientation": "landscape",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Gün batımında suda kürek çeken iki kişi",
         "en": "Two people rowing out on the water at sunset"
@@ -1410,7 +1410,7 @@
       "ref": "14763988",
       "light": "gold",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Dramatik bir gün batımı gökyüzü altında Yavuz Sultan Selim Köprüsü",
         "en": "Yavuz Sultan Selim Bridge under a dramatic sunset sky"
@@ -1482,7 +1482,7 @@
       "ref": "14736904",
       "light": "gold",
       "orientation": "landscape",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Gün batımında hareketli bir caddede yürüyen baba ve oğul",
         "en": "A father and son walking down a busy street at sunset"
@@ -1506,7 +1506,7 @@
       "ref": "14736216",
       "light": "blue",
       "orientation": "portrait",
-      "hero": false,
+      "hero": true,
       "caption": {
         "tr": "Alacakaranlıkta Kız Kulesi, sakin deniz ve arkada şehir",
         "en": "Maiden’s Tower at twilight, calm sea and the city behind"
