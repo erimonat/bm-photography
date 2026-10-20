@@ -139,7 +139,7 @@ button{-webkit-user-select:none;user-select:none;cursor:pointer}
 
 
 /* ===== hero: the camera sequence, driven by scroll ===== */
-.hero{position:relative;height:610svh;background:#03060d}
+.hero{position:relative;height:562svh;background:#03060d}
 .stage{position:sticky;top:0;height:100svh;overflow:clip;isolation:isolate;background:#03060d}
 .seq{position:absolute;inset:0;transform-origin:50% 50%}
 .seq-plate{position:absolute;inset:0;overflow:hidden;background:#03060d}
@@ -208,35 +208,35 @@ html.lb-open .prog{opacity:0!important}
 @media (max-width:820px){.hero-copy{gap:18px;padding-bottom:76px}.hl{font-size:clamp(2.5rem,13vw,4.4rem)}}
 @media (max-height:520px) and (orientation:landscape){.hero-copy{padding-bottom:58px;gap:10px}.hl{font-size:clamp(1.8rem,9vh,3rem)}.hero-side p{font-size:.95rem}.hn-sub,.bk{display:none}}
 
-/* hero motion: tied to scroll, no scripts here. Windows are in svh of the 510svh pin. The frames themselves are blended in app.js. */
+/* hero motion: tied to scroll, no scripts here. Windows are in svh of the 462svh pin. The frames themselves are blended in app.js. */
 @supports (animation-timeline:scroll()){
   .prog{display:block;animation:progIn linear both;animation-timeline:scroll(root);animation-range:9svh 15svh}
   .prog i{animation:progFill linear both;animation-timeline:scroll(root);animation-range:9svh 100%}
   @keyframes progIn{from{opacity:0}to{opacity:1}}
   @keyframes progFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
   @media (prefers-reduced-motion:no-preference){
-    .seq{animation:aSeq linear both;animation-timeline:scroll(root);animation-range:0 510svh}
-    .seq-plate img{animation:aPlate linear both;animation-timeline:scroll(root);animation-range:0 510svh}
-    .wi.hero{animation:aHero linear both;animation-timeline:scroll(root);animation-range:0 510svh}
-    .wi.hero img{animation:aHeroImg linear both;animation-timeline:scroll(root);animation-range:0 510svh}
+    .seq{animation:aSeq linear both;animation-timeline:scroll(root);animation-range:0 462svh}
+    .seq-plate img{animation:aPlate linear both;animation-timeline:scroll(root);animation-range:0 462svh}
+    .wi.hero{animation:aHero linear both;animation-timeline:scroll(root);animation-range:0 462svh}
+    .wi.hero img{animation:aHeroImg linear both;animation-timeline:scroll(root);animation-range:0 462svh}
     .wi:not(.hero){animation:wallIn linear both;animation-timeline:scroll(root);animation-range:calc(var(--s) * 1svh) calc(var(--e) * 1svh)}
-    .shade{animation:shadeWin linear both;animation-timeline:scroll(root);animation-range:0 510svh}
-    .hero-copy{animation:copyWin linear both;animation-timeline:scroll(root);animation-range:0 510svh}
-    .hud{animation:hudWin linear both;animation-timeline:scroll(root);animation-range:0 510svh}
+    .shade{animation:shadeWin linear both;animation-timeline:scroll(root);animation-range:0 462svh}
+    .hero-copy{animation:copyWin linear both;animation-timeline:scroll(root);animation-range:0 462svh}
+    .hud{animation:hudWin linear both;animation-timeline:scroll(root);animation-range:0 462svh}
     .hn{animation:hnMove linear both;animation-timeline:scroll(root);animation-range:0 58svh}
     .hn-sub{animation:hnSub linear both;animation-timeline:scroll(root);animation-range:0 26svh}
     .brand{animation:brandIn linear both;animation-timeline:scroll(root);animation-range:0 58svh}
     .cue{animation:cueOut linear both;animation-timeline:scroll(root);animation-range:0 9svh}
     .seq-poster{animation:posterBoot 2.2s var(--ease-out) both}
     .fstop span:not(:last-child){animation:stopShow linear;animation-timeline:scroll(root)}
-    .fstop span:nth-child(1){animation-range:185.3svh 212.5svh}
-    .fstop span:nth-child(2){animation-range:212.5svh 233.8svh}
-    .fstop span:nth-child(3){animation-range:233.8svh 250.8svh}
-    .fstop span:nth-child(4){animation-range:250.8svh 267.8svh}
-    .fstop span:nth-child(5){animation-range:267.8svh 284.8svh}
-    .fstop span:nth-child(6){animation-range:284.8svh 295.8svh}
-    .fstop span:nth-child(7){animation-range:295.8svh 304.3svh}
-    .fstop span:nth-child(8){animation-range:304.3svh 510svh;animation-name:stopLast;animation-fill-mode:forwards}
+    .fstop span:nth-child(1){animation-range:167.9svh 192.5svh}
+    .fstop span:nth-child(2){animation-range:192.5svh 211.8svh}
+    .fstop span:nth-child(3){animation-range:211.8svh 227.2svh}
+    .fstop span:nth-child(4){animation-range:227.2svh 242.6svh}
+    .fstop span:nth-child(5){animation-range:242.6svh 257.9svh}
+    .fstop span:nth-child(6){animation-range:257.9svh 268svh}
+    .fstop span:nth-child(7){animation-range:268svh 275.7svh}
+    .fstop span:nth-child(8){animation-range:275.7svh 462svh;animation-name:stopLast;animation-fill-mode:forwards}
   }
   @keyframes posterBoot{from{scale:1.06;opacity:0}to{scale:1;opacity:1}}
   @keyframes aPlate{0%,40.00%{transform:scale(1.4)}72.67%,100%{transform:scale(1)}}
@@ -543,17 +543,17 @@ dialog#lb::backdrop{background:transparent}
       <div class="seq-plate" aria-hidden="true"><picture data-pick="plate"><source media="(orientation:portrait)" sizes="100vw"><img sizes="100vw" width="1600" height="1067" alt="" decoding="async"></picture></div>
       <div class="seq" aria-hidden="true">
         <img class="seq-poster" src="media/seq/01.webp" srcset="media/seq/01-m.webp 960w, media/seq/01.webp 1672w" sizes="100vw" width="1672" height="941" alt="" fetchpriority="high" decoding="async">
-        <canvas class="seq-cv" data-k="0.85" data-frames="30" data-t0="30" data-step="14" data-end="436"></canvas>
+        <canvas class="seq-cv" data-k="0.77" data-frames="30" data-t0="30" data-step="14" data-end="436"></canvas>
       </div>
       <div class="wall">
-          <figure class="wi s1" style="--s:429.3;--e:475.1"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
-          <figure class="wi s2" style="--s:434.3;--e:477.7"><img data-o="L" sizes="(min-width:900px) 30vw, 46vw" width="1100" height="733" alt="" loading="lazy" decoding="async"></figure>
-          <figure class="wi s3" style="--s:439.4;--e:480.3"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
-          <figure class="wi s4" style="--s:444.6;--e:482.8"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
-          <figure class="wi s5" style="--s:449.6;--e:485.3"><img data-o="L" sizes="(min-width:900px) 30vw, 46vw" width="1100" height="733" alt="" loading="lazy" decoding="async"></figure>
-          <figure class="wi s6" style="--s:454.8;--e:487.9"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
-          <figure class="wi s7" style="--s:459.8;--e:490.4"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
-          <figure class="wi s8" style="--s:464.9;--e:493"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
+          <figure class="wi s1" style="--s:388.9;--e:430.4"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
+          <figure class="wi s2" style="--s:393.5;--e:432.7"><img data-o="L" sizes="(min-width:900px) 30vw, 46vw" width="1100" height="733" alt="" loading="lazy" decoding="async"></figure>
+          <figure class="wi s3" style="--s:398.1;--e:435.1"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
+          <figure class="wi s4" style="--s:402.7;--e:437.4"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
+          <figure class="wi s5" style="--s:407.3;--e:439.7"><img data-o="L" sizes="(min-width:900px) 30vw, 46vw" width="1100" height="733" alt="" loading="lazy" decoding="async"></figure>
+          <figure class="wi s6" style="--s:411.9;--e:442"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
+          <figure class="wi s7" style="--s:416.6;--e:444.3"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
+          <figure class="wi s8" style="--s:421.2;--e:446.6"><img data-o="P" sizes="(min-width:900px) 30vw, 46vw" width="800" height="1200" alt="" loading="lazy" decoding="async"></figure>
         
       <figure class="wi hero"><picture data-pick="hero"><source media="(orientation:portrait)" sizes="100vw"><img sizes="100vw" width="1600" height="1067" alt="" decoding="async"></picture></figure>
       <script>
