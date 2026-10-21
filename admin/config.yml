@@ -7,12 +7,12 @@ backend:
   branch: main
   # base_url: https://YOUR-AUTH-WORKER.workers.dev
 
-# Photographs are stored in Cloudinary, never in this repository. Enable after the Cloudinary account exists:
-# media_libraries:
-#   cloudinary:
-#     config:
-#       cloud_name: YOUR_CLOUD_NAME
-#       api_key: YOUR_API_KEY   # the API secret must never be put here
+# Photographs are stored in Cloudinary, never in this repository. The API key is public by design; the API secret must never be put here.
+media_libraries:
+  cloudinary:
+    config:
+      cloud_name: rnntoe86
+      api_key: "676696769616734"
 
 media_folder: media/uploads
 public_folder: /media/uploads

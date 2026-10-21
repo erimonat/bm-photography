@@ -64,7 +64,7 @@
       if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; shown = -1; }
     };
     /* frame -> scroll (svh): the sequence manifest, 30 + progress * 336 */
-    const POS = [30,37.2,44.5,51.7,58.9,66.2,78.1,90,101.9,113.7,125.6,137.5,148.4,159.2,170.1,180.9,191.8,202.7,213.5,224.4,235.2,246.1,259.5,273,286.4,299.8,316.4,332.9,349.5,366];
+    const POS = JSON.parse(cv.dataset.pos);
     POS.forEach((v, i) => { POS[i] = v * K; }); /* the hero is shortened by K: the frames move with it */
     const targetOf = () => {
       const s = scrollY / sv * 100;
@@ -510,7 +510,7 @@
       const lg = mod(cur, N);
       if (sel === lg) return;
       sel = lg;
-      const c = cards[N + lg], url = c.dataset.base + (c.dataset.o === 'portrait' ? '&h=1000' : '&w=1000');
+      const c = cards[N + lg], url = c.dataset.u.split('{k}').join(c.dataset.o === 'portrait' ? 'h' : 'w').split('{n}').join(1000);
       const mine = ++token, pre = new Image();
       const swap = () => { if (mine === token) imgs.forEach(im => { im.src = url; }); };
       pre.onload = swap; pre.onerror = swap; pre.src = url;

@@ -3,6 +3,7 @@ const H = require('./hero4.cjs');
 const dir = __dirname;
 let css = fs.readFileSync(dir + '/style.css', 'utf8');
 const I = require('./i18n.cjs');
+const PU = require('./photo-url.cjs');
 const T = k => I.S[k][0];
 const js = 'const I18N = ' + JSON.stringify(I.DICT) + ';\nconst SITE = ' + JSON.stringify({ email: I.SITE.email }) + ';\n' + fs.readFileSync(dir + '/app.js', 'utf8');
 
@@ -34,17 +35,17 @@ const photos = I.PHOTOS.photos.map(p => [p.light, p.ref, p.orientation === 'land
 const PAGE = 25;
 const tileHtml = photos.map(([cat, id, ar, cap], idx) => {
   const [w, h] = ar > 1 ? [1200, 800] : [800, 1200];
-  const b = base(id);
+  const p = I.PHOTOS.photos[idx], U = (k, n) => PU.url(p, k, n);
   const sizes = ar > 1 ? '(min-width:1000px) 64vw, 100vw' : '(min-width:1000px) 32vw, 64vw';
-  return `<li class="tile${ar > 1 ? ' wide' : ''}" data-cat="${cat}"${' hidden'}><button class="shot" type="button" data-full="${b}&${ar > 1 ? 'w' : 'h'}=3000" data-cap="${esc(I.CAP[id][0])}" data-i18n-attr="data-cap:cap.${id}" data-ar="${ar}" data-glow="${GLOW[cat]}"><span class="ph"><img src="${b}&w=900" srcset="${b}&w=600 600w, ${b}&w=900 900w, ${b}&w=1200 1200w, ${b}&w=1600 1600w, ${b}&w=2000 2000w" sizes="${sizes}" width="${w}" height="${h}" alt="${esc(I.CAP[id][0])}" data-i18n-attr="alt:cap.${id}" loading="lazy" decoding="async"></span></button></li>`;
+  return `<li class="tile${ar > 1 ? ' wide' : ''}" data-cat="${cat}"${' hidden'}><button class="shot" type="button" data-full="${U(ar > 1 ? 'w' : 'h', 3000)}" data-cap="${esc(I.CAP[id][0])}" data-i18n-attr="data-cap:cap.${id}" data-ar="${ar}" data-glow="${GLOW[cat]}"><span class="ph"><img src="${U('w', 900)}" srcset="${U('w', 600)} 600w, ${U('w', 900)} 900w, ${U('w', 1200)} 1200w, ${U('w', 1600)} 1600w, ${U('w', 2000)} 2000w" sizes="${sizes}" width="${w}" height="${h}" alt="${esc(I.CAP[id][0])}" data-i18n-attr="alt:cap.${id}" loading="lazy" decoding="async"></span></button></li>`;
 }).join('\n        ');
 
 /* "try a photo on a frame": photos slide sideways through a column of frames that scrolls up and down */
 const chev = d => `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>`;
 const CH = { l: chev('M10 3 5 8l5 5'), r: chev('M6 3l5 5-5 5'), u: chev('M3 10l5-5 5 5'), d: chev('M3 6l5 5 5-5') };
 const cardHtml = I.PHOTOS.photos.map(p => {
-  const b = base(p.ref);
-  return `<li class="pcl"><button class="pc" type="button" data-ref="${p.ref}" data-o="${p.orientation === 'landscape' ? 'landscape' : 'portrait'}" data-base="${b}"><img data-src="${b}&h=800" width="533" height="800" alt="${esc(I.CAP[p.ref][0])}" data-i18n-attr="alt:cap.${p.ref}" decoding="async"></button></li>`;
+  const u = PU.tpl(p);
+  return `<li class="pcl"><button class="pc" type="button" data-ref="${p.ref}" data-o="${p.orientation === 'landscape' ? 'landscape' : 'portrait'}" data-u="${esc(u)}"><img data-src="${esc(PU.url(p, 'h', 800))}" width="533" height="800" alt="${esc(I.CAP[p.ref][0])}" data-i18n-attr="alt:cap.${p.ref}" decoding="async"></button></li>`;
 }).join('\n          ');
 const FRAMES = [['black', ''], ['mat', ''], ['float', ''], ['oak', ''], ['gold', '']];
 const frameHtml = FRAMES.map(([k, c], i) => `<li class="fr${c}" data-k="${k}"><button class="fr-b" type="button" aria-current="false" data-i18n-attr="aria-label:fr${i + 1}" aria-label="${T('fr' + (i + 1))}"><span class="frm"><span class="mold"><i class="mt"></i><i class="mr"></i><i class="mb"></i><i class="ml"></i></span><span class="mat"></span><span class="win"><img alt="" width="600" height="400" decoding="async"></span><span class="glass"></span></span></button><span class="fr-name" data-i18n="fr${i + 1}">${T('fr' + (i + 1))}</span></li>`).join('\n          ');
@@ -89,7 +90,7 @@ const html = `<!doctype html>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308080a'/%3E%3Cpath d='M11 20V44' stroke='%23eeeae2' stroke-width='5.5'/%3E%3Cpath d='M11 22.75H17.6A4.6 4.6 0 0 1 17.6 32H11M11 32H18.6A4.6 4.6 0 0 1 18.6 41.25H11' stroke='%23eeeae2' stroke-width='5.5' fill='none' stroke-linejoin='miter'/%3E%3Cpolygon points='28,44 28,20 33.2,20 42.2,32.6 51.2,20 56.4,20 56.4,44 50.9,44 50.9,28.6 42.2,40.8 33.5,28.6 33.5,44' fill='%23eeeae2'/%3E%3Crect x='8.25' y='49' width='15' height='3' fill='%23ff5a1f'/%3E%3C/svg%3E" type="image/svg+xml">
 <link rel="icon" href="media/icons/favicon.ico" sizes="48x48">
 <link rel="apple-touch-icon" href="media/icons/apple-touch-icon.png">
-<link rel="preconnect" href="https://images.pexels.com" crossorigin>
+${PU.hosts(I.PHOTOS.photos).map(h => '<link rel="preconnect" href="' + h + '" crossorigin>').join(String.fromCharCode(10))}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="media/seq/01.webp" imagesrcset="media/seq/01-m.webp 960w, media/seq/01.webp 1672w" imagesizes="100vw" type="image/webp" fetchpriority="high">

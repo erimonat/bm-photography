@@ -2,11 +2,15 @@
    Frames 1-25: camera in the dark, push-in, cap off, lens, diaphragm opens, Istanbul skyline. Then the canvas zooms and dissolves into the first
    photograph, the headline arrives and the photographs fly in. Frame blending and easing are in app.js; everything else is CSS scroll timelines. */
 /* Timeline is designed on a 600 unit scale (P0). K shortens the real scroll: every window is scaled by it, so the film is the same, just quicker to scroll through. */
-const P0 = 600, K = 0.77, P = Math.round(P0 * K); // P = svh of pinned scroll
-const kv = n => +(n * K).toFixed(1);
+const P0d = 600, K = 0.77; // designed scale and scroll shortener
+/* time warp: the lens push-in (frames 21 to 30, designed 235.2 to 366) plays in WF of its original scroll, everything after it moves up by the saved amount */
+const WA = 235.2, WB = 366, WF = 0.6, WD = (WB - WA) * (1 - WF);
+const sh = n => n <= WA ? n : n >= WB ? n - WD : WA + (n - WA) * WF;
+const P0 = P0d - WD, P = Math.round(P0 * K); // P = svh of pinned scroll
+const kv = n => +(sh(n) * K).toFixed(1);
 const FRAMES = 30, T0 = 30, STEP = 14; // frame k is centred at T0 + STEP * k svh
 const S = { seqEnd: [T0 + STEP * (FRAMES - 1), 398], heroIn: [394, 428], copyIn: [470, 495], shrink: [515, 555], wallA: 505, wallB: 580 };
-const pc = s => ((s / P0) * 100).toFixed(2) + '%';
+const pc = s => ((sh(s) / P0) * 100).toFixed(2) + '%';
 const base = id => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb`;
 
 /* the eight photographs around the first one: only their shape is fixed here (P portrait, L landscape); which photograph goes where is drawn on every visit */
@@ -21,11 +25,12 @@ const heroPicture = `<figure class="wi hero"><picture data-pick="hero"><source m
 const platePic = `<div class="seq-plate" aria-hidden="true"><picture data-pick="plate"><source media="(orientation:portrait)" sizes="100vw"><img sizes="100vw" width="1600" height="1067" alt="" decoding="async"></picture></div>`;
 
 const I18 = require('./i18n.cjs');
-const cap3 = ids => JSON.stringify(ids.map(id => [id, I18.CAP[id][0], I18.CAP[id][1]]));
+const PU = require('./photo-url.cjs');
+const cap3 = ps => JSON.stringify(ps.map(p => [p.ref, I18.CAP[p.ref][0], I18.CAP[p.ref][1], PU.widthTpl(p)]));
 const pickScript = String.raw`<script>
 (function(){
-  var L=${cap3(I18.PHOTOS.photos.filter(p => p.hero && p.orientation === 'landscape').map(p => p.ref))};
-  var P=${cap3(I18.PHOTOS.photos.filter(p => p.hero && p.orientation === 'portrait').map(p => p.ref))};
+  var L=${cap3(I18.PHOTOS.photos.filter(p => p.hero && p.orientation === 'landscape'))};
+  var P=${cap3(I18.PHOTOS.photos.filter(p => p.hero && p.orientation === 'portrait'))};
   var lg=(location.search.match(/[?&]lang=(tr|en)/)||[])[1];if(!lg){try{lg=localStorage.getItem('bm-lang')}catch(e){}}if(lg!=='en')lg='tr';var li=lg==='en'?2:1;
   function pick(pool,key){
     var last='';try{last=localStorage.getItem(key)||''}catch(e){}
@@ -35,12 +40,12 @@ const pickScript = String.raw`<script>
     return p;
   }
   var lp=pick(L,'bm-hero-l'),pp=pick(P,'bm-hero-p');
-  function u(id,w){return 'https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&w='+w}
+  function u(p,w){return p[3].split('{n}').join(w)}
   function set(pic,wp,wl,alt){
     var s=pic.querySelector('source'),i=pic.querySelector('img');
-    s.srcset=wp.map(function(w){return u(pp[0],w)+' '+w+'w'}).join(', ');
-    i.srcset=wl.map(function(w){return u(lp[0],w)+' '+w+'w'}).join(', ');
-    i.src=u(lp[0],wl[1]);
+    s.srcset=wp.map(function(w){return u(pp,w)+' '+w+'w'}).join(', ');
+    i.srcset=wl.map(function(w){return u(lp,w)+' '+w+'w'}).join(', ');
+    i.src=u(lp,wl[1]);
     if(alt)i.alt=matchMedia('(orientation:portrait)').matches?pp[li]:lp[li];
   }
   set(document.querySelector('[data-pick=plate]'),[1100,1600],[900,1600,2200],false);
@@ -51,8 +56,8 @@ const pickScript = String.raw`<script>
   var wl=shuffle(L.filter(function(p){return p[0]!==lp[0]})),wp=shuffle(P.filter(function(p){return p[0]!==pp[0]}));
   [].forEach.call(document.querySelectorAll('.wall .wi:not(.hero) img'),function(im){
     var land=im.getAttribute('data-o')==='L',p=(land?wl:wp).shift()||(land?lp:pp),ws=land?[700,1100,1500]:[500,800,1100];
-    im.srcset=ws.map(function(w){return u(p[0],w)+' '+w+'w'}).join(', ');
-    im.src=u(p[0],land?1100:800);
+    im.srcset=ws.map(function(w){return u(p,w)+' '+w+'w'}).join(', ');
+    im.src=u(p,land?1100:800);
   });
 })();
 </script>`;
@@ -60,7 +65,7 @@ const pickScript = String.raw`<script>
 const reelHtml = `${platePic}
       <div class="seq" aria-hidden="true">
         <img class="seq-poster" src="media/seq/01.webp" srcset="media/seq/01-m.webp 960w, media/seq/01.webp 1672w" sizes="100vw" width="1672" height="941" alt="" fetchpriority="high" decoding="async">
-        <canvas class="seq-cv" data-k="${K}" data-frames="${FRAMES}" data-t0="${T0}" data-step="${STEP}" data-end="${S.seqEnd[0]}"></canvas>
+        <canvas class="seq-cv" data-k="${K}" data-pos="${JSON.stringify([30,37.2,44.5,51.7,58.9,66.2,78.1,90,101.9,113.7,125.6,137.5,148.4,159.2,170.1,180.9,191.8,202.7,213.5,224.4,235.2,246.1,259.5,273,286.4,299.8,316.4,332.9,349.5,366].map(v => +sh(v).toFixed(1)))}" data-frames="${FRAMES}" data-t0="${T0}" data-step="${STEP}" data-end="${S.seqEnd[0]}"></canvas>
       </div>
       ${wallHtml.replace('</div>', '')}
       ${heroPicture}
