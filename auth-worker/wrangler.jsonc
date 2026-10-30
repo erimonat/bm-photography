@@ -1,0 +1,9 @@
+{
+  "name": "bm-auth",
+  "main": "index.js",
+  "compatibility_date": "2025-10-01",
+  "routes": [{ "pattern": "auth.berkaymavral.com", "custom_domain": true }],
+  "vars": {
+    "ALLOWED_ORIGIN": "https://www.berkaymavral.com"
+  }
+}

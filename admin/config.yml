@@ -14,6 +14,9 @@ media_libraries:
       cloud_name: rnntoe86
       api_key: "676696769616734"
 
+site_url: https://www.berkaymavral.com
+display_url: https://www.berkaymavral.com
+
 media_folder: media/uploads
 public_folder: /media/uploads
 
@@ -29,18 +32,19 @@ collections:
           - name: photos
             label: Fotoğraflar
             label_singular: fotoğraf
+            hint: "Yeni fotoğraf eklemek için alttaki Ekle düğmesine basın. Sıra, sitedeki arka plan sırasıdır: yukarıdan aşağıya."
             widget: list
             summary: "{{fields.caption.tr}}"
             fields:
-              - { name: id, label: Kimlik, widget: uuid }
-              - name: source
-                label: Fotoğrafın kaynağı
-                widget: select
-                options:
-                  - { label: Pexels, value: pexels }
-                  - { label: Cloudinary (kendi yüklediğim), value: cloudinary }
-                default: cloudinary
-              - { name: ref, label: "Pexels fotoğraf numarası ya da Cloudinary adı", widget: string, required: true }
+              - { name: id, widget: hidden }
+              - { name: source, widget: hidden }
+              - name: image
+                label: Fotoğraf (Cloudinary'den seçin ya da yükleyin)
+                hint: "Fotoğrafın yatay mı dikey mi olduğu otomatik anlaşılır. Eski Pexels fotoğraflarında bu alan boştur."
+                widget: image
+                required: false
+                media_library: { name: cloudinary }
+              - { name: ref, label: Eski Pexels fotoğraf numarası (Cloudinary'den seçtiyseniz boş bırakın), widget: string, required: false }
               - name: light
                 label: Işık türü
                 widget: select
@@ -49,19 +53,14 @@ collections:
                   - { label: Gün ışığı, value: day }
                   - { label: Mavi saat, value: blue }
                   - { label: Gece, value: dark }
-              - name: orientation
-                label: Yön
-                widget: select
-                options:
-                  - { label: Yatay, value: landscape }
-                  - { label: Dikey, value: portrait }
+              - { name: orientation, widget: hidden }
               - { name: hero, label: Açılış sahnesinde çıkabilir (büyük fotoğraf ve etrafındaki duvar, her ziyarette rastgele), widget: boolean, default: false }
               - name: caption
                 label: Açıklama
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,140}$", "En fazla 140 karakter, boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,140}$", "En fazla 140 karakter"] }
 
   - name: settings
     label: Site ayarları
@@ -74,157 +73,185 @@ collections:
           - { name: email, label: E-posta, widget: string, pattern: ["^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$", "Geçerli bir e-posta adresi yazın"] }
           - { name: instagram, label: Instagram bağlantısı, widget: string }
           - { name: pexels, label: Pexels bağlantısı, widget: string }
+          - { name: url, widget: hidden }
+          - { name: cloudinary, widget: hidden }
           - name: texts
             label: Metinler
+            hint: "Her alanın başındaki ad, metnin sitenin hangi bölümünde olduğunu gösterir."
             widget: object
             fields:
               - name: workH2
-                label: "Galeri başlığı"
+                label: "Galeri · Başlık"
+                hint: "Nerede görünür: Galeri bölümünün büyük başlığı."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
-              - name: contactH2
-                label: "İletişim başlığı"
-                widget: object
-                fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,80}$", "80 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,80}$", "80 karakterden uzun olmasın"] }
               - name: lead
-                label: "Hakkımda: büyük giriş cümlesi"
+                label: "Hakkımda · Büyük giriş cümlesi"
+                hint: "Nerede görünür: Hakkımda bölümünde fotoğrafın yanındaki büyük cümle."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: text, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false }
+                  - { name: tr, label: Türkçe, widget: text, required: true, pattern: ["^[\\s\\S]{1,240}$", "240 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false, pattern: ["^[\\s\\S]{0,240}$", "240 karakterden uzun olmasın"] }
               - name: note
-                label: "Hakkımda: kısa not (kalın yazı için yazıyı <strong> ve </strong> arasına alın)"
+                label: "Hakkımda · Kısa not"
+                hint: "Nerede görünür: Büyük cümlenin altındaki küçük yazı. Kalın yazı için yazıyı <strong> ve </strong> arasına alın."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: text, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false }
+                  - { name: tr, label: Türkçe, widget: text, required: true, pattern: ["^[\\s\\S]{1,300}$", "300 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false, pattern: ["^[\\s\\S]{0,300}$", "300 karakterden uzun olmasın"] }
               - name: shUrban
-                label: "Çalışma türü 1: ad"
+                label: "Hakkımda · Çalışma türü 1: ad"
+                hint: "Nerede görünür: Hakkımda bölümünün altındaki üç kutudan birincinin başlığı."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,40}$", "40 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,40}$", "40 karakterden uzun olmasın"] }
               - name: shUrbanD
-                label: "Çalışma türü 1: açıklama"
+                label: "Hakkımda · Çalışma türü 1: açıklama"
+                hint: "Nerede görünür: Birinci kutunun açıklaması."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,90}$", "90 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,90}$", "90 karakterden uzun olmasın"] }
               - name: shArch
-                label: "Çalışma türü 2: ad"
+                label: "Hakkımda · Çalışma türü 2: ad"
+                hint: "Nerede görünür: İkinci kutunun başlığı."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,40}$", "40 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,40}$", "40 karakterden uzun olmasın"] }
               - name: shArchD
-                label: "Çalışma türü 2: açıklama"
+                label: "Hakkımda · Çalışma türü 2: açıklama"
+                hint: "Nerede görünür: İkinci kutunun açıklaması."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,90}$", "90 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,90}$", "90 karakterden uzun olmasın"] }
               - name: shPort
-                label: "Çalışma türü 3: ad"
+                label: "Hakkımda · Çalışma türü 3: ad"
+                hint: "Nerede görünür: Üçüncü kutunun başlığı."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,40}$", "40 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,40}$", "40 karakterden uzun olmasın"] }
               - name: shPortD
-                label: "Çalışma türü 3: açıklama"
+                label: "Hakkımda · Çalışma türü 3: açıklama"
+                hint: "Nerede görünür: Üçüncü kutunun açıklaması."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,90}$", "90 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,90}$", "90 karakterden uzun olmasın"] }
               - name: portraitCap
-                label: "Portre altyazısı"
+                label: "Hakkımda · Portre altyazısı"
+                hint: "Nerede görünür: Portre fotoğrafının altındaki yazı."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,80}$", "80 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,80}$", "80 karakterden uzun olmasın"] }
               - name: portraitAlt
-                label: "Portre açıklaması (ekran okuyucular için)"
+                label: "Hakkımda · Portre açıklaması (ekran okuyucular için)"
+                hint: "Nerede görünür: Görme engelli ziyaretçilere okunur, sayfada görünmez."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
-              - name: footLead
-                label: "Alt bölüm: büyük cümle"
-                widget: object
-                fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
-              - name: footNote
-                label: "Alt bölüm: küçük not"
-                widget: object
-                fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
-              - name: place
-                label: "Yer (alt bölümde)"
-                widget: object
-                fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,160}$", "160 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,160}$", "160 karakterden uzun olmasın"] }
               - name: prH2
-                label: "Çerçeve bölümü: başlık"
+                label: "Çerçeve bölümü · Başlık"
+                hint: "Nerede görünür: Çerçeve bölümünün büyük başlığı."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,90}$", "90 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,90}$", "90 karakterden uzun olmasın"] }
               - name: prSub
-                label: "Çerçeve bölümü: alt yazı"
+                label: "Çerçeve bölümü · Alt yazı"
+                hint: "Nerede görünür: Başlığın altındaki kısa yönlendirme."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,100}$", "100 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,100}$", "100 karakterden uzun olmasın"] }
               - name: prBuy
-                label: "Çerçeve bölümü: satın al düğmesi"
+                label: "Çerçeve bölümü · Satın al düğmesi"
+                hint: "Nerede görünür: Düğmenin üzerindeki yazı."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,24}$", "24 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,24}$", "24 karakterden uzun olmasın"] }
               - name: prNote
-                label: "Çerçeve bölümü: satın alma notu"
+                label: "Çerçeve bölümü · Satın alma notu"
+                hint: "Nerede görünür: Düğmenin yanındaki küçük not."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: text, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false }
+                  - { name: tr, label: Türkçe, widget: text, required: true, pattern: ["^[\\s\\S]{1,140}$", "140 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false, pattern: ["^[\\s\\S]{0,140}$", "140 karakterden uzun olmasın"] }
               - name: prMsg
-                label: "Çerçeve bölümü: satın alma mesajı (içindeki {p} fotoğraf adı, {f} çerçeve adı yerine geçer, silmeyin)"
+                label: "Çerçeve bölümü · Satın alma mesajı"
+                hint: "Nerede görünür: Düğmeye basınca e-postaya yazılan metin. İçindeki {p} fotoğraf adı, {f} çerçeve adı yerine geçer, bunları silmeyin."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: text, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false }
+                  - { name: tr, label: Türkçe, widget: text, required: true, pattern: ["^[\\s\\S]{1,200}$", "200 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: text, required: false, pattern: ["^[\\s\\S]{0,200}$", "200 karakterden uzun olmasın"] }
               - name: fr1
-                label: "Çerçeve 1 adı (siyah)"
+                label: "Çerçeve bölümü · Çerçeve 1 adı (siyah)"
+                hint: "Nerede görünür: Çerçeve adı, fotoğrafın altında görünür."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,30}$", "30 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,30}$", "30 karakterden uzun olmasın"] }
               - name: fr2
-                label: "Çerçeve 2 adı (paspartulu beyaz)"
+                label: "Çerçeve bölümü · Çerçeve 2 adı (paspartulu beyaz)"
+                hint: "Nerede görünür: Çerçeve adı."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,30}$", "30 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,30}$", "30 karakterden uzun olmasın"] }
               - name: fr3
-                label: "Çerçeve 3 adı (ince beyaz)"
+                label: "Çerçeve bölümü · Çerçeve 3 adı (ince beyaz)"
+                hint: "Nerede görünür: Çerçeve adı."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,30}$", "30 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,30}$", "30 karakterden uzun olmasın"] }
               - name: fr4
-                label: "Çerçeve 4 adı (meşe)"
+                label: "Çerçeve bölümü · Çerçeve 4 adı (meşe)"
+                hint: "Nerede görünür: Çerçeve adı."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,30}$", "30 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,30}$", "30 karakterden uzun olmasın"] }
               - name: fr5
-                label: "Çerçeve 5 adı (altın)"
+                label: "Çerçeve bölümü · Çerçeve 5 adı (altın)"
+                hint: "Nerede görünür: Çerçeve adı."
                 widget: object
                 fields:
-                  - { name: tr, label: Türkçe, widget: string, required: true }
-                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false }
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,30}$", "30 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,30}$", "30 karakterden uzun olmasın"] }
+              - name: contactH2
+                label: "İletişim · Başlık"
+                hint: "Nerede görünür: İletişim bölümünün büyük başlığı."
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,80}$", "80 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,80}$", "80 karakterden uzun olmasın"] }
+              - name: footLead
+                label: "Alt bölüm · Büyük cümle"
+                hint: "Nerede görünür: Sayfanın en altındaki büyük cümle."
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,80}$", "80 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,80}$", "80 karakterden uzun olmasın"] }
+              - name: footNote
+                label: "Alt bölüm · Küçük not"
+                hint: "Nerede görünür: En alttaki küçük not."
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,80}$", "80 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,80}$", "80 karakterden uzun olmasın"] }
+              - name: place
+                label: "Alt bölüm · Yer"
+                hint: "Nerede görünür: En alttaki yer yazısı."
+                widget: object
+                fields:
+                  - { name: tr, label: Türkçe, widget: string, required: true, pattern: ["^.{1,40}$", "40 karakterden uzun olmasın ve boş bırakılmasın"] }
+                  - { name: en, label: İngilizce (boş bırakılırsa Türkçe gösterilir), widget: string, required: false, pattern: ["^.{0,40}$", "40 karakterden uzun olmasın"] }

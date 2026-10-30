@@ -91,6 +91,7 @@ const S = {
 const fs = require('fs'), path = require('path');
 const readJson = f => JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'content', f), 'utf8'));
 const SITE = readJson('site.json'), PHOTOS = readJson('photos.json');
+require('./photo-url.cjs').normalize(PHOTOS.photos);
 const OLD_MAIL = 'berkaymavral@gmail.com';
 for (const [k, v] of Object.entries(SITE.texts || {})) S[k] = [v.tr, v.en || v.tr];
 S.fStatus = S.fStatus.map(t => t.split(OLD_MAIL).join(SITE.email));
