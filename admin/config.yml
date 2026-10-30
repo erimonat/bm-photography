@@ -40,7 +40,7 @@ collections:
               - { name: source, widget: hidden }
               - name: image
                 label: Fotoğraf (Cloudinary'den seçin ya da yükleyin)
-                hint: "Fotoğrafın yatay mı dikey mi olduğu otomatik anlaşılır. Eski Pexels fotoğraflarında bu alan boştur."
+                hint: "Açılan pencerede soldan CLOUDINARY'yi seçin (Tüm Medya Dosyaları'ndan değil). Fotoğrafın yatay mı dikey mi olduğu otomatik anlaşılır. Eski Pexels fotoğraflarında bu alan boştur."
                 widget: image
                 required: false
                 media_library: { name: cloudinary }

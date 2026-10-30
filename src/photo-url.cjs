@@ -32,19 +32,26 @@ const dims = id => {
 
 /* the editor panel stores either a Pexels number or a Cloudinary pick; everything after this point sees ref, source and orientation only */
 const normalize = photos => {
-  photos.forEach((p, i) => {
+  /* an unfinished or wrong entry is left out of the site with a warning; it must never stop the whole build (and with it every other change) */
+  const skip = (name, why) => { console.warn('warning: photos.json ' + name + ' left out: ' + why); return false; };
+  const keep = photos.filter((p, i) => {
     const name = '#' + (i + 1) + ' ' + ((p.caption && p.caption.tr) || p.ref || p.image || '');
-    if (p.image) { p.source = 'cloudinary'; p.ref = publicId(p.image); }
-    if (!p.ref) throw new Error('photos.json ' + name + ': no photo chosen (pick one from Cloudinary or give a Pexels number)');
-    if (!p.caption || !p.caption.tr) throw new Error('photos.json ' + name + ': the Turkish caption is empty');
+    if (p.image) {
+      if (/^\//.test(p.image) || (/^https?:/i.test(p.image) && !/^https:\/\/res\.cloudinary\.com\//i.test(p.image))) return skip(name, 'the photo is not from Cloudinary (pick it from the Cloudinary list, not from the site files)');
+      p.source = 'cloudinary'; p.ref = publicId(p.image);
+    }
+    if (!p.ref) return skip(name, 'no photo chosen');
+    if (!p.caption || !p.caption.tr) return skip(name, 'the Turkish caption is empty');
+    if (!p.light) return skip(name, 'the light type is missing');
     if (p.source === 'cloudinary') {
       const d = dims(p.ref);
       if (d) p.orientation = d.width > d.height ? 'landscape' : 'portrait';
       else if (!p.orientation) { p.orientation = 'landscape'; console.warn('warning: could not read the size of Cloudinary photo "' + p.ref + '", treating it as landscape'); }
     }
-    if (p.orientation !== 'landscape' && p.orientation !== 'portrait') throw new Error('photos.json ' + name + ': orientation is missing');
-    if (!p.light) throw new Error('photos.json ' + name + ': the light type is missing');
+    if (p.orientation !== 'landscape' && p.orientation !== 'portrait') return skip(name, 'orientation is missing');
+    return true;
   });
+  photos.splice(0, photos.length, ...keep);
   return photos;
 };
 
