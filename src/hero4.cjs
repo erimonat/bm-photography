@@ -31,7 +31,7 @@ const pickScript = String.raw`<script>
 (function(){
   var L=${cap3(I18.PHOTOS.photos.filter(p => p.hero && p.orientation === 'landscape'))};
   var P=${cap3(I18.PHOTOS.photos.filter(p => p.hero && p.orientation === 'portrait'))};
-  var lg=(location.search.match(/[?&]lang=(tr|en)/)||[])[1];if(!lg){try{lg=localStorage.getItem('bm-lang')}catch(e){}}if(lg!=='en')lg='tr';var li=lg==='en'?2:1;
+  var lg=(location.search.match(/[?&]lang=(tr|en)/)||[])[1];if(!lg&&document.documentElement.lang==='en')lg='en';if(!lg){try{lg=localStorage.getItem('bm-lang')}catch(e){}}if(lg!=='en')lg='tr';var li=lg==='en'?2:1;
   function pick(pool,key){
     var last='';try{last=localStorage.getItem(key)||''}catch(e){}
     var opts=pool.filter(function(p){return p[0]!==last});
@@ -64,7 +64,7 @@ const pickScript = String.raw`<script>
 
 const reelHtml = `${platePic}
       <div class="seq" aria-hidden="true">
-        <img class="seq-poster" src="media/seq/01.webp" srcset="media/seq/01-m.webp 960w, media/seq/01.webp 1672w" sizes="100vw" width="1672" height="941" alt="" fetchpriority="high" decoding="async">
+        <img class="seq-poster" src="/media/seq/01.webp" srcset="/media/seq/01-m.webp 960w, /media/seq/01.webp 1672w" sizes="100vw" width="1672" height="941" alt="" fetchpriority="high" decoding="async">
         <canvas class="seq-cv" data-k="${K}" data-pos="${JSON.stringify([30,37.2,44.5,51.7,58.9,66.2,78.1,90,101.9,113.7,125.6,137.5,148.4,159.2,170.1,180.9,191.8,202.7,213.5,224.4,235.2,246.1,259.5,273,286.4,299.8,316.4,332.9,349.5,366].map(v => +sh(v).toFixed(1)))}" data-frames="${FRAMES}" data-t0="${T0}" data-step="${STEP}" data-end="${S.seqEnd[0]}"></canvas>
       </div>
       ${wallHtml.replace('</div>', '')}

@@ -10,7 +10,7 @@
   let lang = 'tr';
   try {
     const q = new URLSearchParams(location.search).get('lang'), s = localStorage.getItem('bm-lang');
-    lang = LANGS.includes(q) ? q : LANGS.includes(s) ? s : 'tr';
+    lang = LANGS.includes(q) ? q : document.documentElement.lang === 'en' ? 'en' : LANGS.includes(s) ? s : 'tr'; /* the English page is always English unless asked otherwise */
   } catch { /* storage can be blocked */ }
   const t = k => (I18N[lang] && I18N[lang][k]) ?? I18N.tr[k] ?? k;
   const onLang = fn => langHooks.push(fn);
@@ -52,7 +52,7 @@
     const small = matchMedia('(max-width: 820px)').matches;
     const ctx = cv.getContext('2d');
     const imgs = new Array(N), ok = new Array(N).fill(false);
-    const url = i => 'media/seq/' + String(i + 1).padStart(2, '0') + (small ? '-m' : '') + '.webp';
+    const url = i => '/media/seq/' + String(i + 1).padStart(2, '0') + (small ? '-m' : '') + '.webp';
     const probe = document.createElement('div');
     probe.style.cssText = 'position:fixed;left:-9px;top:0;width:1px;height:100svh;visibility:hidden;pointer-events:none';
     document.body.append(probe);

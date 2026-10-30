@@ -1,10 +1,12 @@
 const fs = require('fs');
 const H = require('./hero4.cjs');
 const dir = __dirname;
-let css = fs.readFileSync(dir + '/style.css', 'utf8');
+let css = fs.readFileSync(dir + '/fonts.css', 'utf8') + fs.readFileSync(dir + '/style.css', 'utf8');
 const I = require('./i18n.cjs');
 const PU = require('./photo-url.cjs');
-const T = k => I.S[k][0];
+const SEO = require('./seo.cjs');
+let LI = 0, LN = 'tr'; /* language index and code of the page being built */
+const T = k => I.S[k][LI];
 const js = 'const I18N = ' + JSON.stringify(I.DICT) + ';\nconst SITE = ' + JSON.stringify({ email: I.SITE.email }) + ';\n' + fs.readFileSync(dir + '/app.js', 'utf8');
 
 /* seven-sided polygons, computed once here and written as CSS calc() with cos() and sin() */
@@ -30,6 +32,8 @@ const base = id => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jp
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 const GLOW = { day: '#8c8270', gold: '#d27a2c', blue: '#3a6a98', dark: '#b0483a' };
 const P = 0.6667, L = 1.5;
+const build = lang => {
+LI = lang === 'en' ? 1 : 0; LN = lang;
 const photos = I.PHOTOS.photos.map(p => [p.light, p.ref, p.orientation === 'landscape' ? L : P, p.caption.en || p.caption.tr]);
 /* the gallery is paged by the script (25 at a time, the first page picked at random each visit): every tile starts hidden, so no gallery picture is requested before that choice is made */
 const PAGE = 25;
@@ -37,7 +41,7 @@ const tileHtml = photos.map(([cat, id, ar, cap], idx) => {
   const [w, h] = ar > 1 ? [1200, 800] : [800, 1200];
   const p = I.PHOTOS.photos[idx], U = (k, n) => PU.url(p, k, n);
   const sizes = ar > 1 ? '(min-width:1000px) 64vw, 100vw' : '(min-width:1000px) 32vw, 64vw';
-  return `<li class="tile${ar > 1 ? ' wide' : ''}" data-cat="${cat}"${' hidden'}><button class="shot" type="button" data-full="${U(ar > 1 ? 'w' : 'h', 3000)}" data-cap="${esc(I.CAP[id][0])}" data-i18n-attr="data-cap:cap.${id}" data-ar="${ar}" data-glow="${GLOW[cat]}"><span class="ph"><img src="${U('w', 900)}" srcset="${U('w', 600)} 600w, ${U('w', 900)} 900w, ${U('w', 1200)} 1200w, ${U('w', 1600)} 1600w, ${U('w', 2000)} 2000w" sizes="${sizes}" width="${w}" height="${h}" alt="${esc(I.CAP[id][0])}" data-i18n-attr="alt:cap.${id}" loading="lazy" decoding="async"></span></button></li>`;
+  return `<li class="tile${ar > 1 ? ' wide' : ''}" data-cat="${cat}"${' hidden'}><button class="shot" type="button" data-full="${U(ar > 1 ? 'w' : 'h', 3000)}" data-cap="${esc(I.CAP[id][LI])}" data-i18n-attr="data-cap:cap.${id}" data-ar="${ar}" data-glow="${GLOW[cat]}"><span class="ph"><img src="${U('w', 900)}" srcset="${U('w', 600)} 600w, ${U('w', 900)} 900w, ${U('w', 1200)} 1200w, ${U('w', 1600)} 1600w, ${U('w', 2000)} 2000w" sizes="${sizes}" width="${w}" height="${h}" alt="${esc(I.CAP[id][LI])}" data-i18n-attr="alt:cap.${id}" loading="lazy" decoding="async"></span></button></li>`;
 }).join('\n        ');
 
 /* "try a photo on a frame": photos slide sideways through a column of frames that scrolls up and down */
@@ -45,7 +49,7 @@ const chev = d => `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="
 const CH = { l: chev('M10 3 5 8l5 5'), r: chev('M6 3l5 5-5 5'), u: chev('M3 10l5-5 5 5'), d: chev('M3 6l5 5 5-5') };
 const cardHtml = I.PHOTOS.photos.map(p => {
   const u = PU.tpl(p);
-  return `<li class="pcl"><button class="pc" type="button" data-ref="${p.ref}" data-o="${p.orientation === 'landscape' ? 'landscape' : 'portrait'}" data-u="${esc(u)}"><img data-src="${esc(PU.url(p, 'h', 800))}" width="533" height="800" alt="${esc(I.CAP[p.ref][0])}" data-i18n-attr="alt:cap.${p.ref}" decoding="async"></button></li>`;
+  return `<li class="pcl"><button class="pc" type="button" data-ref="${p.ref}" data-o="${p.orientation === 'landscape' ? 'landscape' : 'portrait'}" data-u="${esc(u)}"><img data-src="${esc(PU.url(p, 'h', 800))}" width="533" height="800" alt="${esc(I.CAP[p.ref][LI])}" data-i18n-attr="alt:cap.${p.ref}" decoding="async"></button></li>`;
 }).join('\n          ');
 const FRAMES = [['black', ''], ['mat', ''], ['float', ''], ['oak', ''], ['gold', '']];
 const frameHtml = FRAMES.map(([k, c], i) => `<li class="fr${c}" data-k="${k}"><button class="fr-b" type="button" aria-current="false" data-i18n-attr="aria-label:fr${i + 1}" aria-label="${T('fr' + (i + 1))}"><span class="frm"><span class="mold"><i class="mt"></i><i class="mr"></i><i class="mb"></i><i class="ml"></i></span><span class="mat"></span><span class="win"><img alt="" width="600" height="400" decoding="async"></span><span class="glass"></span></span></button><span class="fr-name" data-i18n="fr${i + 1}">${T('fr' + (i + 1))}</span></li>`).join('\n          ');
@@ -64,7 +68,7 @@ const camBlock = H.reelHtml;
 
 const hero = base('15518197');
 const html = `<!doctype html>
-<html lang="tr" translate="no">
+<html lang="${LN}" translate="no">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -75,10 +79,7 @@ const html = `<!doctype html>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Berkay Mavral Photography">
 <meta property="og:site_name" content="Berkay Mavral Photography">
-<link rel="canonical" href="${I.SITE.url}/">
-<meta property="og:url" content="${I.SITE.url}/">
-<meta property="og:locale" content="tr_TR">
-<meta property="og:locale:alternate" content="en_US">
+${SEO.head(LN)}
 <meta property="og:description" content="${T('ogdesc')}" data-i18n-attr="content:ogdesc">
 <meta property="og:image" content="${I.SITE.url}/media/og-logo.png">
 <meta property="og:image:type" content="image/png">
@@ -87,15 +88,15 @@ const html = `<!doctype html>
 <meta property="og:image:alt" content="Berkay Mavral Photography">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Berkay Mavral Photography">
+<meta name="twitter:description" content="${T('ogdesc')}" data-i18n-attr="content:ogdesc">
 <meta name="twitter:image" content="${I.SITE.url}/media/og-logo.png">
+${SEO.jsonLd(LN)}
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308080a'/%3E%3Cpath d='M11 20V44' stroke='%23eeeae2' stroke-width='5.5'/%3E%3Cpath d='M11 22.75H17.6A4.6 4.6 0 0 1 17.6 32H11M11 32H18.6A4.6 4.6 0 0 1 18.6 41.25H11' stroke='%23eeeae2' stroke-width='5.5' fill='none' stroke-linejoin='miter'/%3E%3Cpolygon points='28,44 28,20 33.2,20 42.2,32.6 51.2,20 56.4,20 56.4,44 50.9,44 50.9,28.6 42.2,40.8 33.5,28.6 33.5,44' fill='%23eeeae2'/%3E%3Crect x='8.25' y='49' width='15' height='3' fill='%23ff5a1f'/%3E%3C/svg%3E" type="image/svg+xml">
-<link rel="icon" href="media/icons/favicon.ico" sizes="48x48">
-<link rel="apple-touch-icon" href="media/icons/apple-touch-icon.png">
+<link rel="icon" href="/media/icons/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/media/icons/apple-touch-icon.png">
 ${PU.hosts(I.PHOTOS.photos).map(h => '<link rel="preconnect" href="' + h + '" crossorigin>').join(String.fromCharCode(10))}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="media/seq/01.webp" imagesrcset="media/seq/01-m.webp 960w, media/seq/01.webp 1672w" imagesizes="100vw" type="image/webp" fetchpriority="high">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Geist+Mono:wght@400..600&display=swap">
+<link rel="preload" as="font" type="font/woff2" href="/media/fonts/archivo-latin.woff2" crossorigin>
+<link rel="preload" as="image" href="/media/seq/01.webp" imagesrcset="/media/seq/01-m.webp 960w, /media/seq/01.webp 1672w" imagesizes="100vw" type="image/webp" fetchpriority="high">
 <script>document.documentElement.classList.add('js')</script>
 <noscript><style>.tile[hidden]{display:block}.tile.wide[hidden]{display:block;grid-column:span 2}</style></noscript>
 <style>
@@ -111,7 +112,7 @@ ${css}
     <ul>
       <li><a href="#work" data-i18n="navFrames">${T('navFrames')}</a></li>
       <li><a href="#about" data-i18n="navAbout">${T('navAbout')}</a></li>
-      <li class="lang" role="group" aria-label="Dil / Language"><button type="button" data-lang="tr" aria-pressed="true" lang="tr">TR</button><button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button></li>
+      <li class="lang"><span role="group" aria-label="Dil / Language"><button type="button" data-lang="tr" aria-pressed="true" lang="tr">TR</button><button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button></span></li>
       <li><a class="cta" href="#contact" data-i18n="cta">${T('cta')}</a></li>
     </ul>
   </nav>
@@ -261,7 +262,7 @@ ${css}
 </main>
 
 <footer class="outro" data-i18n-attr="aria-label:footLabel" aria-label="${T('footLabel')}">
-  <div class="outro-lens" aria-hidden="true"><img src="media/seq/22.webp" alt="" width="1672" height="941" loading="lazy" decoding="async"></div>
+  <div class="outro-lens" aria-hidden="true"><img src="/media/seq/22.webp" alt="" width="1672" height="941" loading="lazy" decoding="async"></div>
   <div class="o-cols">
     <p class="o-lead" data-i18n="footLead">${T('footLead')}</p>
     <div>
@@ -312,13 +313,23 @@ ${js}
 </body>
 </html>
 `;
-fs.writeFileSync(require('path').join(__dirname, '..', 'index.html'), html);
-console.log(html.length, 'bytes; dashes:', (html.match(/—|–/g) || []).length);
+return html;
+};
+const pages = { tr: build('tr'), en: build('en') };
+const html = pages.tr;
+fs.writeFileSync(require('path').join(__dirname, '..', 'index.html'), pages.tr);
+fs.mkdirSync(require('path').join(__dirname, '..', 'en'), { recursive: true });
+fs.writeFileSync(require('path').join(__dirname, '..', 'en', 'index.html'), pages.en);
+console.log(pages.tr.length, 'bytes (tr),', pages.en.length, 'bytes (en); dashes:', (pages.tr.match(/—|–/g) || []).length);
 
 /* publish folder for Cloudflare: only what visitors and the admin panel need */
 const fsx = require('fs'), px = require('path');
 const root = px.join(__dirname, '..'), out = px.join(root, 'dist');
 fsx.rmSync(out, { recursive: true, force: true });
 fsx.mkdirSync(out, { recursive: true });
-for (const f of ['index.html', 'admin', 'media']) fsx.cpSync(px.join(root, f), px.join(out, f), { recursive: true });
+for (const f of ['index.html', 'en', 'admin', 'media']) fsx.cpSync(px.join(root, f), px.join(out, f), { recursive: true });
+fsx.writeFileSync(px.join(out, 'sitemap.xml'), SEO.sitemap());
+fsx.writeFileSync(px.join(out, 'robots.txt'), SEO.robots());
+fsx.writeFileSync(px.join(out, 'llms.txt'), SEO.llms());
+fsx.writeFileSync(px.join(out, '_headers'), SEO.headers());
 console.log('dist ready:', fsx.readdirSync(out).join(', '));

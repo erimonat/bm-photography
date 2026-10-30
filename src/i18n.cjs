@@ -1,7 +1,7 @@
 /* All visible copy, Turkish first (the default) and English second. Each entry is [tr, en]. */
 const S = {
-  title: ['Berkay Mavral, İstanbul’da Fotoğrafçı', 'Berkay Mavral, Photographer in Istanbul'],
-  desc: ['Berkay Mavral’dan, sabah yolculuğundan geceye İstanbul’da sokak ve şehir fotoğrafçılığı.', 'Street and city photography from Istanbul by Berkay Mavral, from the morning commute to after dark.'],
+  title: ['İstanbul Fotoğrafçısı Berkay Mavral | Sokak & Şehir', 'Istanbul Photographer Berkay Mavral | Street & City'],
+  desc: ['İstanbul’da sokak, şehir ve portre fotoğrafçısı Berkay Mavral. Altın saat, mavi saat ve gece kareleri; çekim ve baskı için iletişime geçin.', 'Berkay Mavral is an Istanbul street, city and portrait photographer. Golden hour, blue hour and night frames; get in touch for shoots and prints.'],
   ogdesc: ['İstanbul’dan sokak ve şehir fotoğrafçılığı, sabah yolculuğundan geceye.', 'Street and city photography from Istanbul, from the morning commute to after dark.'],
   skip: ['Fotoğraflara geç', 'Skip to Frames'],
   brandLabel: ['Berkay Mavral, sayfa başına dön', 'Berkay Mavral, back to top'],
