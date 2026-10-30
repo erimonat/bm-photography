@@ -1660,6 +1660,16 @@
         "tr": "aasdasd",
         "en": ""
       }
+    },
+    {
+      "image": "https://res.cloudinary.com/rnntoe86/image/upload/v1793384266/DSC03444.jpg",
+      "ref": "",
+      "light": "dark",
+      "hero": false,
+      "caption": {
+        "tr": "asdasda",
+        "en": ""
+      }
     }
   ]
 }
