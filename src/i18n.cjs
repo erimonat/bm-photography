@@ -93,7 +93,12 @@ const readJson = f => JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'con
 const SITE = readJson('site.json'), PHOTOS = readJson('photos.json');
 require('./photo-url.cjs').normalize(PHOTOS.photos);
 const OLD_MAIL = 'berkaymavral@gmail.com';
-for (const [k, v] of Object.entries(SITE.texts || {})) S[k] = [v.tr, v.en || v.tr];
+/* texts are grouped by page section in site.json (galeri, hakkimda, ...); a flat entry is still understood */
+const putText = (k, v) => { S[k] = [v.tr, v.en || v.tr]; };
+for (const [k, v] of Object.entries(SITE.texts || {})) {
+  if (v && 'tr' in v) putText(k, v);
+  else for (const [k2, v2] of Object.entries(v || {})) putText(k2, v2);
+}
 S.fStatus = S.fStatus.map(t => t.split(OLD_MAIL).join(SITE.email));
 /* photo ref -> [tr, en] caption */
 const CAP = {};
