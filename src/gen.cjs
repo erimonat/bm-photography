@@ -75,6 +75,7 @@ const html = `<!doctype html>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Berkay Mavral Photography">
 <meta property="og:site_name" content="Berkay Mavral Photography">
+<link rel="canonical" href="${I.SITE.url}/">
 <meta property="og:url" content="${I.SITE.url}/">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:locale:alternate" content="en_US">
