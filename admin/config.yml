@@ -5,7 +5,7 @@ backend:
   name: github
   repo: erimonat/bm-photography
   branch: main
-  # base_url: https://YOUR-AUTH-WORKER.workers.dev
+  base_url: https://auth.berkaymavral.com
 
 # Photographs are stored in Cloudinary, never in this repository. The API key is public by design; the API secret must never be put here.
 media_libraries:
