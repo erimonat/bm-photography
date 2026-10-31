@@ -1603,8 +1603,8 @@ const SITE = {"email":"berkaymavral@gmail.com"};
     const step = n => go(Math.round(goal) + n);
     /* a frame you click takes the shortest way to the middle */
     const toFrame = i => { const base = Math.round(goal); go(base + mod(i - base + M / 2, M) - M / 2); };
-    frs.forEach((f, k) => $('.fr-b', f).addEventListener('click', () => { if (mob.matches) { setFrame(k); return; } if (!fDrag.moved) toFrame(k); }));
-    chips.forEach((c, k) => c.addEventListener('click', () => setFrame(k)));
+    frs.forEach((f, k) => $('.fr-b', f).addEventListener('click', () => { if (mob.matches) { pos = goal = k; setFrame(k); return; } if (!fDrag.moved) toFrame(k); }));
+    chips.forEach((c, k) => c.addEventListener('click', () => { pos = goal = k; setFrame(k); }));
     up.addEventListener('click', () => step(-1));
     down.addEventListener('click', () => step(1));
     rail.addEventListener('keydown', e => {
@@ -1645,6 +1645,7 @@ const SITE = {"email":"berkaymavral@gmail.com"};
     const setCur = i => {
       cur = i;
       lis.forEach((li, k) => li.classList.toggle('is-cur', k === i));
+      capEl.textContent = t('cap.' + cards[i].dataset.ref); /* the caption follows the photo as it reaches the middle, not once the swipe has stopped */
       if (sec.dataset.o !== cards[i].dataset.o) { sec.dataset.o = cards[i].dataset.o; render(); }
     };
     /* jump one whole copy sideways without anyone seeing it */
