@@ -1650,26 +1650,6 @@
         "tr": "Karlı bir sokakta cam cepheli bir bina",
         "en": "A glass-fronted building on a snowy street"
       }
-    },
-    {
-      "image": "/media/uploads/DSC03523.jpg",
-      "ref": "",
-      "light": "dark",
-      "hero": false,
-      "caption": {
-        "tr": "aasdasd",
-        "en": ""
-      }
-    },
-    {
-      "image": "https://res.cloudinary.com/rnntoe86/image/upload/v1793384266/DSC03444.jpg",
-      "ref": "",
-      "light": "dark",
-      "hero": false,
-      "caption": {
-        "tr": "asdasda",
-        "en": ""
-      }
     }
   ]
 }
