@@ -13,3 +13,8 @@ Static portfolio site (single `index.html` plus `media/seq`). Turkish by default
 - The content files `content/photos.json` and `content/site.json` belong to `live`. After the split, do not change them on `main`.
 - To bring a template change to the site, merge `main` into `live` and check the result before it publishes (a push to `live` goes live within about a minute).
 - The admin panel setting `backend.branch` in `admin/config.yml` is `live` on `live` and `main` on `main`; keep that difference when merging.
+
+## Notes on panel changes
+
+- Every save in the admin panel is a commit on `live` whose message starts with a label: `[Panel · Galeri] fotograflar güncellendi`, `[Panel · Site ayarları] metinler-ve-iletisim güncellendi`, `[Panel · Medya] …` (set in `admin/config.yml`, `backend.commit_messages`).
+- After each push to `live`, the workflow `.github/workflows/panel-notes.yml` runs `.github/scripts/panel-notes.cjs` and writes a short note on the commit: photos added, removed or edited, which text sections changed, changed contact details, and a warning if a file was uploaded to the repository instead of Cloudinary. Commits that change no content get no note.

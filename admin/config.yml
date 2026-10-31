@@ -6,6 +6,14 @@ backend:
   repo: erimonat/bm-photography
   branch: live
   base_url: https://auth.berkaymavral.com
+  # every save made in the panel becomes a commit on live; the label in front says what kind of change it is
+  commit_messages:
+    create: "[Panel · {{collection}}] {{slug}} oluşturuldu"
+    update: "[Panel · {{collection}}] {{slug}} güncellendi"
+    delete: "[Panel · {{collection}}] {{slug}} silindi"
+    uploadMedia: "[Panel · Medya] {{path}} yüklendi"
+    deleteMedia: "[Panel · Medya] {{path}} silindi"
+    openAuthoring: "{{message}}"
 
 # Photographs are stored in Cloudinary, never in this repository. The API key is public by design; the API secret must never be put here.
 media_libraries:
@@ -24,7 +32,7 @@ collections:
   - name: gallery
     label: Galeri
     files:
-      - name: photos
+      - name: fotograflar
         label: Fotoğraflar
         file: content/photos.json
         format: json
@@ -65,7 +73,7 @@ collections:
   - name: settings
     label: Site ayarları
     files:
-      - name: site
+      - name: metinler-ve-iletisim
         label: İletişim ve metinler
         file: content/site.json
         format: json
